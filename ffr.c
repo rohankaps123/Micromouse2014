@@ -7,21 +7,41 @@
 
 extern StepperMotor leftMotor;
 extern StepperMotor rightMotor;
-//unsigned long milliseconds;
-//void startTimer(void);
+volatile unsigned long milliseconds;
+void startTimer(void);
 
 int main(void)
 {
+
 	setupStepperMotor();
+	startTimer();
+	
 	USART_init();
 	
-	setDirection(0, 1);
-	straight(4000, 0, 2000, 2000, 2000, 2000);
-	//turn(4000, 2000, 2500, 2000, 2000, 2000);
+	turnOnTimers(1,1);
+	setDirection(0, 0);
+	enableDrive(1);
 	
-	enableDrive(0, 0);
+	straight(8000, 0, 4000, 0, 4000, 4000);
+	
 	turnOnTimers(0, 0);
-	while(1==1)
-	{
-	}	
+	enableDrive(0);
+	
+	while(1==1){}	
+}
+
+void startTimer()
+{
+	//Refresh Loop Timer1  
+	TCCR0A = (1 << WGM01);//Set CTC
+	TCCR0B = (1 << CS00) | (1 << CS01);//prescalar to
+	OCR0A = 125;//Compare Ticks 
+    TIMSK0 = (1 << OCIE0A);//Enable Timer Interrupts
+	
+	milliseconds = 0;
+}
+
+ISR(TIMER0_COMPA_vect)
+{
+	milliseconds++;	
 }

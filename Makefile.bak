@@ -41,7 +41,7 @@
 
 
 # MCU name
-MCU = atmega32u4
+MCU = atmega32
 
 
 # Processor frequency.
