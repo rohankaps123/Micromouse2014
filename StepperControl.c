@@ -4,6 +4,7 @@
 #include <math.h>
 #include "StepperMotor.h"
 #include "StepperControl.h"
+#include "Sensors.h"
 
 extern StepperMotor leftMotor;
 extern StepperMotor rightMotor;
@@ -12,6 +13,8 @@ extern volatile unsigned long milliseconds;
 void straight(long stepTarget, int inSpeed, int maxSpeed, int exitSpeed, int accel, int decel)
 {	
 	unsigned long startTime = milliseconds;
+	rightMotor.stepCount = leftMotor.stepCount = 0;
+	
 	
 	while(inSpeed + accel*(float)((milliseconds-startTime)/1000.0) < maxSpeed)
 	{
@@ -27,6 +30,7 @@ void straight(long stepTarget, int inSpeed, int maxSpeed, int exitSpeed, int acc
 			maxSpeed = curSpeed;
 			break;
 		}
+		getIRSensorValue(&PORTD, PD4, 0);
 		_delay_ms(1);
 	}	
 	

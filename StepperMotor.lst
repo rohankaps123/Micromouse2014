@@ -404,7 +404,7 @@
  426               	.L29:
  427               	.LM55:
  428 0274 8091 9100 		lds r24,145
- 429 0278 8D7F      		andi r24,lo8(-3)
+ 429 0278 8C7F      		andi r24,lo8(-4)
  430               	.L33:
  431 027a 8093 9100 		sts 145,r24
  432 027e 0895      		ret
@@ -449,23 +449,23 @@
  562               	.Letext0:
 DEFINED SYMBOLS
                             *ABS*:00000000 StepperMotor.c
-C:\Users\Justin\AppData\Local\Temp/ccb74QQH.s:2      *ABS*:0000003f __SREG__
-C:\Users\Justin\AppData\Local\Temp/ccb74QQH.s:3      *ABS*:0000003e __SP_H__
-C:\Users\Justin\AppData\Local\Temp/ccb74QQH.s:4      *ABS*:0000003d __SP_L__
-C:\Users\Justin\AppData\Local\Temp/ccb74QQH.s:5      *ABS*:00000034 __CCP__
-C:\Users\Justin\AppData\Local\Temp/ccb74QQH.s:6      *ABS*:00000000 __tmp_reg__
-C:\Users\Justin\AppData\Local\Temp/ccb74QQH.s:7      *ABS*:00000001 __zero_reg__
-C:\Users\Justin\AppData\Local\Temp/ccb74QQH.s:18     .text:00000000 setupStepperMotor
-C:\Users\Justin\AppData\Local\Temp/ccb74QQH.s:72     .text:00000046 enableDrive
-C:\Users\Justin\AppData\Local\Temp/ccb74QQH.s:92     .text:00000052 pulseMotor
-C:\Users\Justin\AppData\Local\Temp/ccb74QQH.s:140    .text:00000078 __vector_32
+C:\Users\Justin\AppData\Local\Temp/ccfjk4h6.s:2      *ABS*:0000003f __SREG__
+C:\Users\Justin\AppData\Local\Temp/ccfjk4h6.s:3      *ABS*:0000003e __SP_H__
+C:\Users\Justin\AppData\Local\Temp/ccfjk4h6.s:4      *ABS*:0000003d __SP_L__
+C:\Users\Justin\AppData\Local\Temp/ccfjk4h6.s:5      *ABS*:00000034 __CCP__
+C:\Users\Justin\AppData\Local\Temp/ccfjk4h6.s:6      *ABS*:00000000 __tmp_reg__
+C:\Users\Justin\AppData\Local\Temp/ccfjk4h6.s:7      *ABS*:00000001 __zero_reg__
+C:\Users\Justin\AppData\Local\Temp/ccfjk4h6.s:18     .text:00000000 setupStepperMotor
+C:\Users\Justin\AppData\Local\Temp/ccfjk4h6.s:72     .text:00000046 enableDrive
+C:\Users\Justin\AppData\Local\Temp/ccfjk4h6.s:92     .text:00000052 pulseMotor
+C:\Users\Justin\AppData\Local\Temp/ccfjk4h6.s:140    .text:00000078 __vector_32
                             *COM*:00000018 rightMotor
-C:\Users\Justin\AppData\Local\Temp/ccb74QQH.s:219    .text:00000128 __vector_17
+C:\Users\Justin\AppData\Local\Temp/ccfjk4h6.s:219    .text:00000128 __vector_17
                             *COM*:00000018 leftMotor
-C:\Users\Justin\AppData\Local\Temp/ccb74QQH.s:298    .text:000001d8 setDirection
-C:\Users\Justin\AppData\Local\Temp/ccb74QQH.s:328    .text:000001ee eightBitTimerFix
-C:\Users\Justin\AppData\Local\Temp/ccb74QQH.s:397    .text:00000252 turnOnTimers
-C:\Users\Justin\AppData\Local\Temp/ccb74QQH.s:437    .text:00000280 getDelayFromVelocity
+C:\Users\Justin\AppData\Local\Temp/ccfjk4h6.s:298    .text:000001d8 setDirection
+C:\Users\Justin\AppData\Local\Temp/ccfjk4h6.s:328    .text:000001ee eightBitTimerFix
+C:\Users\Justin\AppData\Local\Temp/ccfjk4h6.s:397    .text:00000252 turnOnTimers
+C:\Users\Justin\AppData\Local\Temp/ccfjk4h6.s:437    .text:00000280 getDelayFromVelocity
 
 UNDEFINED SYMBOLS
 __fixunssfsi

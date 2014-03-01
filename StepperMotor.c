@@ -129,7 +129,7 @@ void turnOnTimers(int one, int two)
 	if(two)
 		TCCR3B |= (1 << CS31) | (1 << CS30);
 	else	
-		TCCR3B &= ~(1 << CS31) | (1 << CS30);
+		TCCR3B &= ~((1 << CS31) | (1 << CS30));
 }
 
 int getDelayFromVelocity(int stepsPerSecond)

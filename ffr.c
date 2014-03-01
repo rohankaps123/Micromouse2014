@@ -15,16 +15,16 @@ int main(void)
 {
 	setupStepperMotor();
 	startTimer();
-	setupADC();
-	
-//	USART_init();
-	
-	turnOnTimers(1,1);
+	setupADC();	
+
 	setDirection(0,0);
 	enableDrive(1);
-	
-	straight(4000, 0, 4000, 0, 4000, 4000);
-	
+	turnOnTimers(1,1);
+		
+	straight(3000, 0, 5000, 0, 3000, 12000);
+
+	//straight(4000, 0, 5000, 0, 3000, 4000);
+
 	turnOnTimers(0, 0);
 	enableDrive(0);
 	
@@ -45,5 +45,4 @@ void startTimer()
 ISR(TIMER0_COMPA_vect)
 {
 	milliseconds++;	
-	getIRSensorValue(&PORTD, PD4, 0);
 }
