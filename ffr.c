@@ -3,7 +3,8 @@
 #include <avr/interrupt.h>
 #include "StepperMotor.h"
 #include "StepperControl.h"
-#include "USART.h"
+//#include "USART.h"
+#include "sensors.h"
 
 extern StepperMotor leftMotor;
 extern StepperMotor rightMotor;
@@ -12,17 +13,17 @@ void startTimer(void);
 
 int main(void)
 {
-
 	setupStepperMotor();
 	startTimer();
+	setupADC();
 	
-	USART_init();
+//	USART_init();
 	
 	turnOnTimers(1,1);
-	setDirection(0, 0);
+	setDirection(0,0);
 	enableDrive(1);
 	
-	straight(8000, 0, 4000, 0, 4000, 4000);
+	straight(4000, 0, 4000, 0, 4000, 4000);
 	
 	turnOnTimers(0, 0);
 	enableDrive(0);
@@ -35,7 +36,7 @@ void startTimer()
 	//Refresh Loop Timer1  
 	TCCR0A = (1 << WGM01);//Set CTC
 	TCCR0B = (1 << CS00) | (1 << CS01);//prescalar to
-	OCR0A = 125;//Compare Ticks 
+	OCR0A = 250;//Compare Ticks 
     TIMSK0 = (1 << OCIE0A);//Enable Timer Interrupts
 	
 	milliseconds = 0;
@@ -44,4 +45,5 @@ void startTimer()
 ISR(TIMER0_COMPA_vect)
 {
 	milliseconds++;	
+	getIRSensorValue(&PORTD, PD4, 0);
 }

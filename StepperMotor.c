@@ -44,7 +44,7 @@ ISR(TIMER3_COMPA_vect)
 void setupStepperMotor()
 {
 	//Motor Pins are D2 and D4 on arduino nano
-	DDRD |= (1 << PORTD1) | (1 << PORTD2) | (1 << PORTD3) | (1 << PORTD4);
+	DDRD |= (1 << PORTD1) | (1 << PORTD2) | (1 << PORTD3);
 	DDRB |= (1 << PORTB1) | (1 << PORTB0) | (1 << PORTB6) | (1 << PORTB7);
 	
 	//Set to CTC

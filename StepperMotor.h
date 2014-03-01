@@ -2,7 +2,7 @@
 #define STEPPERMOTOR_H
 
 //If OCR0A is set to 1, how many interrupts would there be in one second?
-#define TIMER_FREQUENCY 125000
+#define TIMER_FREQUENCY 250000
 
 
 typedef struct StepperMotor

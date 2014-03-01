@@ -14,7 +14,7 @@
   22               	/* frame size = 0 */
   23               	.LM2:
   24 0000 8AB1      		in r24,42-32
-  25 0002 8E61      		ori r24,lo8(30)
+  25 0002 8E60      		ori r24,lo8(14)
   26 0004 8AB9      		out 42-32,r24
   27               	.LM3:
   28 0006 84B1      		in r24,36-32
@@ -431,10 +431,10 @@
  455 0292 4095      		com r20
  456 0294 542F      		mov r21,r20
  457               	.LVL15:
- 458 0296 68E4      		ldi r22,lo8(125000)
- 459 0298 78EE      		ldi r23,hi8(125000)
- 460 029a 81E0      		ldi r24,hlo8(125000)
- 461 029c 90E0      		ldi r25,hhi8(125000)
+ 458 0296 60E9      		ldi r22,lo8(250000)
+ 459 0298 70ED      		ldi r23,hi8(250000)
+ 460 029a 83E0      		ldi r24,hlo8(250000)
+ 461 029c 90E0      		ldi r25,hhi8(250000)
  462 029e 0E94 0000 		call __divmodsi4
  463               	.LVL16:
  464               	.L36:
@@ -449,23 +449,23 @@
  562               	.Letext0:
 DEFINED SYMBOLS
                             *ABS*:00000000 StepperMotor.c
-C:\Users\Justin\AppData\Local\Temp/ccsVukfm.s:2      *ABS*:0000003f __SREG__
-C:\Users\Justin\AppData\Local\Temp/ccsVukfm.s:3      *ABS*:0000003e __SP_H__
-C:\Users\Justin\AppData\Local\Temp/ccsVukfm.s:4      *ABS*:0000003d __SP_L__
-C:\Users\Justin\AppData\Local\Temp/ccsVukfm.s:5      *ABS*:00000034 __CCP__
-C:\Users\Justin\AppData\Local\Temp/ccsVukfm.s:6      *ABS*:00000000 __tmp_reg__
-C:\Users\Justin\AppData\Local\Temp/ccsVukfm.s:7      *ABS*:00000001 __zero_reg__
-C:\Users\Justin\AppData\Local\Temp/ccsVukfm.s:18     .text:00000000 setupStepperMotor
-C:\Users\Justin\AppData\Local\Temp/ccsVukfm.s:72     .text:00000046 enableDrive
-C:\Users\Justin\AppData\Local\Temp/ccsVukfm.s:92     .text:00000052 pulseMotor
-C:\Users\Justin\AppData\Local\Temp/ccsVukfm.s:140    .text:00000078 __vector_32
+C:\Users\Justin\AppData\Local\Temp/ccb74QQH.s:2      *ABS*:0000003f __SREG__
+C:\Users\Justin\AppData\Local\Temp/ccb74QQH.s:3      *ABS*:0000003e __SP_H__
+C:\Users\Justin\AppData\Local\Temp/ccb74QQH.s:4      *ABS*:0000003d __SP_L__
+C:\Users\Justin\AppData\Local\Temp/ccb74QQH.s:5      *ABS*:00000034 __CCP__
+C:\Users\Justin\AppData\Local\Temp/ccb74QQH.s:6      *ABS*:00000000 __tmp_reg__
+C:\Users\Justin\AppData\Local\Temp/ccb74QQH.s:7      *ABS*:00000001 __zero_reg__
+C:\Users\Justin\AppData\Local\Temp/ccb74QQH.s:18     .text:00000000 setupStepperMotor
+C:\Users\Justin\AppData\Local\Temp/ccb74QQH.s:72     .text:00000046 enableDrive
+C:\Users\Justin\AppData\Local\Temp/ccb74QQH.s:92     .text:00000052 pulseMotor
+C:\Users\Justin\AppData\Local\Temp/ccb74QQH.s:140    .text:00000078 __vector_32
                             *COM*:00000018 rightMotor
-C:\Users\Justin\AppData\Local\Temp/ccsVukfm.s:219    .text:00000128 __vector_17
+C:\Users\Justin\AppData\Local\Temp/ccb74QQH.s:219    .text:00000128 __vector_17
                             *COM*:00000018 leftMotor
-C:\Users\Justin\AppData\Local\Temp/ccsVukfm.s:298    .text:000001d8 setDirection
-C:\Users\Justin\AppData\Local\Temp/ccsVukfm.s:328    .text:000001ee eightBitTimerFix
-C:\Users\Justin\AppData\Local\Temp/ccsVukfm.s:397    .text:00000252 turnOnTimers
-C:\Users\Justin\AppData\Local\Temp/ccsVukfm.s:437    .text:00000280 getDelayFromVelocity
+C:\Users\Justin\AppData\Local\Temp/ccb74QQH.s:298    .text:000001d8 setDirection
+C:\Users\Justin\AppData\Local\Temp/ccb74QQH.s:328    .text:000001ee eightBitTimerFix
+C:\Users\Justin\AppData\Local\Temp/ccb74QQH.s:397    .text:00000252 turnOnTimers
+C:\Users\Justin\AppData\Local\Temp/ccb74QQH.s:437    .text:00000280 getDelayFromVelocity
 
 UNDEFINED SYMBOLS
 __fixunssfsi
