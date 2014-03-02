@@ -25,9 +25,9 @@ Last Updated: March 1st 2014
 #include <avr/interrupt.h>
 
 //Mouse Profile
-#include "RobotModel.h"
-#include "RobotModel_Controls.h"
-#include "RobotModel_StepperMotor.h"
+#include "RobotModel/RobotModel.h"
+#include "RobotModel/RobotModel_Controls.h"
+#include "RobotModel/RobotModel_StepperMotor.h"
 
 //Debugging
 #include "USART.h"
@@ -44,14 +44,14 @@ int main(void)
 
 	USART_init();
 
-	//setDirection(0,0);
-	//enableDrive(1);
-	//turnOnTimers(1,1);
+	setDirection(0,0);
+	enableDrive(1);
+	turnOnTimers(1,1);
 	
 	//straight(3000, 0, 5000, 0, 3000, 12000);
-
-	//turnOnTimers(0, 0);
-	//enableDrive(0);
+	
+	turnOnTimers(0, 0);
+	enableDrive(0);
 	while(1==1)
 	{
 	}	
