@@ -70,7 +70,7 @@ FORMAT = ihex
 
 
 # Target file name (without extension).
-TARGET = ffr
+TARGET = main
 
 
 # Object files directory
@@ -81,9 +81,10 @@ OBJDIR = .
 
 # List C source files here. (C dependencies are automatically generated.)
 SRC = $(TARGET).c
-SRC += StepperMotor.c
-SRC += StepperControl.c
-SRC += sensors.c
+SRC += RobotModel.c
+SRC += RobotModel_controls.c
+SRC += RobotModel_StepperMotor.c
+SRC += USART.c
 
 # List C++ source files here. (C dependencies are automatically generated.)
 CPPSRC = 

@@ -137,14 +137,14 @@
  190               	.Letext0:
 DEFINED SYMBOLS
                             *ABS*:00000000 sensors.c
-C:\Users\Justin\AppData\Local\Temp/ccpcamX8.s:2      *ABS*:0000003f __SREG__
-C:\Users\Justin\AppData\Local\Temp/ccpcamX8.s:3      *ABS*:0000003e __SP_H__
-C:\Users\Justin\AppData\Local\Temp/ccpcamX8.s:4      *ABS*:0000003d __SP_L__
-C:\Users\Justin\AppData\Local\Temp/ccpcamX8.s:5      *ABS*:00000034 __CCP__
-C:\Users\Justin\AppData\Local\Temp/ccpcamX8.s:6      *ABS*:00000000 __tmp_reg__
-C:\Users\Justin\AppData\Local\Temp/ccpcamX8.s:7      *ABS*:00000001 __zero_reg__
-C:\Users\Justin\AppData\Local\Temp/ccpcamX8.s:18     .text:00000000 setupADC
-C:\Users\Justin\AppData\Local\Temp/ccpcamX8.s:38     .text:00000010 getIRSensorValue
-C:\Users\Justin\AppData\Local\Temp/ccpcamX8.s:117    .text:00000044 ReadADC
+C:\Users\Justin\AppData\Local\Temp/cc7rRXXv.s:2      *ABS*:0000003f __SREG__
+C:\Users\Justin\AppData\Local\Temp/cc7rRXXv.s:3      *ABS*:0000003e __SP_H__
+C:\Users\Justin\AppData\Local\Temp/cc7rRXXv.s:4      *ABS*:0000003d __SP_L__
+C:\Users\Justin\AppData\Local\Temp/cc7rRXXv.s:5      *ABS*:00000034 __CCP__
+C:\Users\Justin\AppData\Local\Temp/cc7rRXXv.s:6      *ABS*:00000000 __tmp_reg__
+C:\Users\Justin\AppData\Local\Temp/cc7rRXXv.s:7      *ABS*:00000001 __zero_reg__
+C:\Users\Justin\AppData\Local\Temp/cc7rRXXv.s:18     .text:00000000 setupADC
+C:\Users\Justin\AppData\Local\Temp/cc7rRXXv.s:38     .text:00000010 getIRSensorValue
+C:\Users\Justin\AppData\Local\Temp/cc7rRXXv.s:117    .text:00000044 ReadADC
 
 NO UNDEFINED SYMBOLS
