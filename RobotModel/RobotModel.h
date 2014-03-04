@@ -25,18 +25,39 @@ typedef struct Mouse
 	volatile StepperMotor leftMotor;
 	volatile StepperMotor rightMotor;
 	
+	//Mouse Movements Values
+	volatile float acceleration;
+	volatile float deceleration;
+	volatile float maxVelocity;
+	volatile float velocity;
+	
+	//Values
+	volatile int IR_CORRECT;
 	//FloodFill maze;
 	
 } Mouse;
 
 //Read Sensors to determine if there is a wall
-int isWallForward(void);
+int isWallFront(void);
 int isWallRight(void);
 int isWallLeft(void);
 
+//Motor Controls
+void moveForward(void);
+void moveForwardAndStop(void);
+void rotateLeft(void);
+void rotateRight(void);
+void moveBackwards(void);
+void moveBackwardsAndCorrect(void);
+
+
 //Sensor Functions
+float getLeftIR(void);
+float getRightIR(void);
+float getFrontIR(void);
 int getIRSensorValue(volatile uint8_t *port, uint8_t pin, int analogChannel);
 void setupADC(void);
 uint16_t ReadADC(uint8_t ch);
+float linearizeIRSensorValues(float input);
 
 #endif

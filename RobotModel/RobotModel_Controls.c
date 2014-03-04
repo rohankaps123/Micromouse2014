@@ -7,6 +7,7 @@
 extern volatile long milliseconds;
 extern volatile Mouse mouse;
 
+
 void straight(long stepTarget, int inSpeed, int maxSpeed, int exitSpeed, int accel, int decel)
 {
 	unsigned long startTime = milliseconds;
@@ -16,17 +17,35 @@ void straight(long stepTarget, int inSpeed, int maxSpeed, int exitSpeed, int acc
 	{
 		float curSpeed = inSpeed + accel*(float)((milliseconds-startTime)/1000.0);
 		
-		mouse.leftMotor.currentStepDelay = getDelayFromVelocity(curSpeed);
-		mouse.rightMotor.currentStepDelay = getDelayFromVelocity(curSpeed);
-		float decelStepsUntilStop = curSpeed*curSpeed / (2.0 * decel) - (float)exitSpeed * (float)exitSpeed / (2.0 * decel);
+		//Get Sensor Values
+		float left = getLeftIR();
+		float right = getRightIR();
 		
-		//If we need to start decelerating
+		float error = (right-left)*mouse.IR_CORRECT;
+		
+		if(right-left > 3)
+			error = 3*mouse.IR_CORRECT;
+		if(right-left < -3)
+			error = -3*mouse.IR_CORRECT;
+		
+		mouse.velocity = curSpeed;
+		mouse.leftMotor.currentStepDelay = getDelayFromVelocity(curSpeed - error);
+		mouse.rightMotor.currentStepDelay = getDelayFromVelocity(curSpeed + error);
+		
+		float decelStepsUntilStop = curSpeed * curSpeed / (2.0 * decel) - (float)exitSpeed * (float)exitSpeed / (2.0 * decel);
+		
+		//If we need to start deceleratings
 		if(mouse.leftMotor.stepCount + decelStepsUntilStop >= stepTarget)
 		{
 			maxSpeed = curSpeed;
 			break;
 		}
-		getIRSensorValue(&PORTD, PD4, 0);
+		
+		//If we're accelerating past our stepTarget;
+		if(mouse.leftMotor.stepCount >= stepTarget)
+		{
+			return;
+		}
 		_delay_ms(1);
 	}	
 	
@@ -40,8 +59,14 @@ void straight(long stepTarget, int inSpeed, int maxSpeed, int exitSpeed, int acc
 		
 	while(maxSpeed - decel*(float)((milliseconds-startTime)/1000.0) > exitSpeed)
 	{
-		mouse.leftMotor.currentStepDelay =  getDelayFromVelocity(maxSpeed - decel*(float)((milliseconds-startTime)/1000.0));
-		mouse.rightMotor.currentStepDelay = getDelayFromVelocity(maxSpeed - decel*(float)((milliseconds-startTime)/1000.0));
+		float curSpeed = maxSpeed - decel*(float)((milliseconds-startTime)/1000.0);
+		
+		mouse.velocity = curSpeed;
+		mouse.leftMotor.currentStepDelay =  getDelayFromVelocity(curSpeed);
+		mouse.rightMotor.currentStepDelay = getDelayFromVelocity(curSpeed);
+		
 		_delay_ms(1);
 	}
+
 }
+

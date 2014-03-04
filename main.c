@@ -23,6 +23,7 @@ Last Updated: March 1st 2014
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
+#include <math.h>
 
 //Mouse Profile
 #include "RobotModel/RobotModel.h"
@@ -33,6 +34,7 @@ Last Updated: March 1st 2014
 #include "USART.h"
 
 volatile unsigned long milliseconds;
+extern volatile Mouse mouse;
 void startTimer(void);
 
 int main(void)
@@ -41,19 +43,53 @@ int main(void)
 	setupStepperMotor();
 	startTimer();
 
-
 	USART_init();
+	
+	mouse.velocity = 0;
+	mouse.maxVelocity = 5000;
+	mouse.acceleration = 2000;
+	mouse.deceleration = 10000;
 
-	setDirection(0,0);
 	enableDrive(1);
 	turnOnTimers(1,1);
 	
-	//straight(3000, 0, 5000, 0, 3000, 12000);
+	for(int i = 0; i < 10; i++)
+	{		
+		int right = isWallRight();
+		int front = isWallFront();
+		int left = isWallLeft();
+		
+		if(!right)
+		{
+			rotateRight();
+		}
+		else if(front && !left)
+		{
+			rotateLeft();
+		}
+		else if(front)
+		{
+			moveBackwardsAndCorrect();
+		}	
+		
+		if(left && right)		
+			mouse.IR_CORRECT = 20;
+		
+		moveForwardAndStop();
+		
+		mouse.IR_CORRECT = 0;
+		
+		
+	}
+
 	
 	turnOnTimers(0, 0);
 	enableDrive(0);
+	
+	
 	while(1==1)
 	{
+
 	}	
 }
 
