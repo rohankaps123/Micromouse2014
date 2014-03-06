@@ -20,10 +20,14 @@ volatile Mouse mouse;
 
 int isWallFront()
 {
-    float value = getFrontIR();
+    float value = getFrontLeftIR();
+	float value2 = getFrontRightIR();
+	
+	//Average front sensors
+	value = (value + value2)/2;
 	
 	//If there is something less then 16 cm away from sensor
-	return (value < 16);		
+	return (value < 10);		
 }
 
 int isWallRight()
@@ -31,7 +35,7 @@ int isWallRight()
 	float value = getRightIR();
 	
 	//If there is something less then 8 cm away from sensor 
-	return (value < 8);
+	return (value < 14);
 }
 
 int isWallLeft()
@@ -39,7 +43,7 @@ int isWallLeft()
 	float value = getLeftIR();
 	
 	//If there is something less then 8 cm away from sensor 
-	return (value < 8);
+	return (value < 14);
 }
 
 void moveForward()
@@ -69,6 +73,22 @@ void moveBackwards()
 	straight(640, 0, mouse.maxVelocity, 0, mouse.acceleration, mouse.deceleration);
 }
 
+void moveFix(int length)
+{
+	if(length > 0)
+	{
+		setDirection(1, 1);
+	}
+	else
+	{
+		setDirection(0, 0);
+		length = -length;
+	}
+
+	setDirection(0, 0);
+	straight(length*42, mouse.velocity, mouse.maxVelocity, 0, mouse.acceleration, mouse.deceleration);
+}
+
 void moveBackwardsAndCorrect()
 {
 	//Rotate Left 180
@@ -90,7 +110,7 @@ void rotateLeft()
 	setDirection(0, 1);
 	
 	//Move Mouse
-	straight(307, 0, mouse.maxVelocity, 0, mouse.acceleration, mouse.deceleration);
+	straight(320, 0, mouse.maxVelocity, 0, mouse.acceleration, mouse.deceleration);
 }
 
 void rotateRight()
@@ -100,6 +120,40 @@ void rotateRight()
 	
 	//Move Mouse
 	straight(320, 0, mouse.maxVelocity, 0, mouse.acceleration, mouse.deceleration);
+}
+
+void rotateLeftWithFix(float angle)
+{
+	//Rotate Left
+	setDirection(0, 1);
+	
+	int addAngle = angle*3;
+	
+	straight(320+addAngle, 0, mouse.maxVelocity, 0, mouse.acceleration, mouse.deceleration); 	
+}
+
+void rotateRightWithFix(float angle)
+{
+	setDirection(1, 0);
+	
+	int addAngle = -angle*3;
+	
+	straight(320+addAngle, 0, mouse.maxVelocity, 0, mouse.acceleration, mouse.deceleration); 	
+}
+
+void fixAngle(float angle)
+{
+	if(angle > 0)
+	{
+		setDirection(0, 1);
+	}
+	else
+	{
+		setDirection(1, 0);
+		angle = -angle;
+	}
+	
+	straight((int)angle*3, 0, mouse.maxVelocity, 0, mouse.acceleration, mouse.deceleration); 
 }
 
 

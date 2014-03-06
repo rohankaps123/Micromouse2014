@@ -1,5 +1,6 @@
 #include <avr/io.h>
 #include <util/delay.h>
+#include <avr/interrupt.h>
 
 #include "RobotModel.h"
 #include "RobotModel_Controls.h" 
@@ -17,6 +18,7 @@ void straight(long stepTarget, int inSpeed, int maxSpeed, int exitSpeed, int acc
 	
 	while(inSpeed + accel*(float)((milliseconds-startTime)/1000.0) < maxSpeed)
 	{
+		
 		float curSpeed = inSpeed + accel*(float)((milliseconds-startTime)/1000.0);
 		
 		int error = getOffsetError();
@@ -51,7 +53,7 @@ void straight(long stepTarget, int inSpeed, int maxSpeed, int exitSpeed, int acc
 	startTime = milliseconds;
 		
 	while(maxSpeed - decel*(float)((milliseconds-startTime)/1000.0) > exitSpeed)
-	{
+	{		
 		float curSpeed = maxSpeed - decel*(float)((milliseconds-startTime)/1000.0);
 		
 		mouse.velocity = curSpeed;
@@ -91,13 +93,29 @@ int getOffsetError()
 	
 	float error = (right-left)*mouse.IR_CORRECT;
 	
-	if(right-left > 3)
+	if(right-left > 6)
 		error = 3*mouse.IR_CORRECT;
-	if(right-left < -3)
+	if(right-left < -6)
 		error = -3*mouse.IR_CORRECT;
 
 		
 	lPrevious = left;
 	rPrevious = right;
 	return error;
+}
+
+void startTimer()
+{
+	//Refresh Loop Timer1  
+	TCCR0A = (1 << WGM01);//Set CTC
+	TCCR0B = (1 << CS00) | (1 << CS01);//prescalar to
+	OCR0A = 250;//Compare Ticks 
+    TIMSK0 = (1 << OCIE0A);//Enable Timer Interrupts
+	
+	milliseconds = 0;
+}
+
+ISR(TIMER0_COMPA_vect)
+{
+	milliseconds++;		
 }

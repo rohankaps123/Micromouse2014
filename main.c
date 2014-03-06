@@ -22,7 +22,6 @@ Last Updated: March 1st 2014
 //Basic Avr-gcc includes
 #include <avr/io.h>
 #include <util/delay.h>
-#include <avr/interrupt.h>
 #include <math.h>
 
 //Mouse Profile
@@ -36,14 +35,17 @@ Last Updated: March 1st 2014
 
 volatile unsigned long milliseconds;
 extern volatile Mouse mouse;
-void startTimer(void);
+
+extern volatile int gyroSum;
+extern volatile int gyroComp;
 
 int main(void)
 {
 	setupADC();	
 	setupStepperMotor();
 	startTimer();
-
+	
+	
 	USART_init();
 	
 	mouse.velocity = 0;
@@ -53,20 +55,27 @@ int main(void)
 
 	enableDrive(1);
 	turnOnTimers(1,1);
-	
-	/*for(int i = 0; i < 20; i++)
+	//2.8
+	for(int i = 0; i < 30; i++)
 	{		
 		int right = isWallRight();
 		int front = isWallFront();
 		int left = isWallLeft();
+		float angle = getFrontAngle();
+		
+		int lFront = getFrontLeftIR();
+		int rFront = getFrontRightIR();
 		
 		if(!right)
 		{
-			rotateRight();
+			if(front)
+				rotateRightWithFix(angle);
+			else
+				rotateRight();
 		}
 		else if(front && !left)
 		{
-			rotateLeft();
+			rotateLeftWithFix(angle);
 		}
 		else if(front)
 		{
@@ -74,48 +83,34 @@ int main(void)
 		}	
 		
 		if(left && right)		
+		{
 			mouse.IR_CORRECT = 20;
-		
+			turnOnLeds(1);
+		}
+		else
+		{
+			turnOnLeds(0);
+		}
 		moveForwardAndStop();
 		
-		mouse.IR_CORRECT = 0;
-		
-		
-	}*/
-
+		mouse.IR_CORRECT = 0;		
+	}
+	
+	/*
+	
+	printlnNum(angle);
+	
+	rotateRightWithFix(angle);
+	*/
+	
 	turnOnTimers(0, 0);
 	enableDrive(0);
-
+	
 	while(1==1)
 	{
-		//Testing Pot, Button and led's on front panel
-		//float but = isButtonPushed(1);
-		//float pot = getPotSensorValue(0);
-		//int num = pot / 129;
+		printNum((float)getFrontLeftIR());
+		print(",");
+		printlnNum((float)getFrontRightIR());	
 		
-		//if(but)
-		//	turnOnLeds(num);
-		//else
-		//	turnOnLeds(0);
-		
-		printlnNum(getPotSensorValue(7));
-		
-
 	}	
-}
-
-void startTimer()
-{
-	//Refresh Loop Timer1  
-	TCCR0A = (1 << WGM01);//Set CTC
-	TCCR0B = (1 << CS00) | (1 << CS01);//prescalar to
-	OCR0A = 250;//Compare Ticks 
-    TIMSK0 = (1 << OCIE0A);//Enable Timer Interrupts
-	
-	milliseconds = 0;
-}
-
-ISR(TIMER0_COMPA_vect)
-{
-	milliseconds++;	
 }
