@@ -3,7 +3,9 @@
 
 #include "RobotModel.h"
 #include "RobotModel_Controls.h" 
+#include "RobotModel_Sensors.h"
 
+#include "../USART.h"
 extern volatile long milliseconds;
 extern volatile Mouse mouse;
 
@@ -17,16 +19,7 @@ void straight(long stepTarget, int inSpeed, int maxSpeed, int exitSpeed, int acc
 	{
 		float curSpeed = inSpeed + accel*(float)((milliseconds-startTime)/1000.0);
 		
-		//Get Sensor Values
-		float left = getLeftIR();
-		float right = getRightIR();
-		
-		float error = (right-left)*mouse.IR_CORRECT;
-		
-		if(right-left > 3)
-			error = 3*mouse.IR_CORRECT;
-		if(right-left < -3)
-			error = -3*mouse.IR_CORRECT;
+		int error = getOffsetError();
 		
 		mouse.velocity = curSpeed;
 		mouse.leftMotor.currentStepDelay = getDelayFromVelocity(curSpeed - error);
@@ -70,3 +63,41 @@ void straight(long stepTarget, int inSpeed, int maxSpeed, int exitSpeed, int acc
 
 }
 
+volatile float lPrevious;
+volatile float rPrevious;
+volatile int flag;
+
+int getOffsetError()
+{
+	if(flag != 1)
+	{
+		lPrevious = getLeftIR();
+		rPrevious = getRightIR();
+		flag = 1;
+	}
+	
+	float left = getLeftIR();
+	float right = getRightIR();
+			
+	//If derivative of IR readings is greater then 1
+	if(left-lPrevious > 1)
+	{		
+		mouse.IR_CORRECT = 0;
+	}
+	if(right-rPrevious > 1)
+	{
+		mouse.IR_CORRECT = 0;
+	}
+	
+	float error = (right-left)*mouse.IR_CORRECT;
+	
+	if(right-left > 3)
+		error = 3*mouse.IR_CORRECT;
+	if(right-left < -3)
+		error = -3*mouse.IR_CORRECT;
+
+		
+	lPrevious = left;
+	rPrevious = right;
+	return error;
+}

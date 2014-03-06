@@ -29,6 +29,7 @@ Last Updated: March 1st 2014
 #include "RobotModel/RobotModel.h"
 #include "RobotModel/RobotModel_Controls.h"
 #include "RobotModel/RobotModel_StepperMotor.h"
+#include "RobotModel/RobotModel_Sensors.h"
 
 //Debugging
 #include "USART.h"
@@ -53,7 +54,7 @@ int main(void)
 	enableDrive(1);
 	turnOnTimers(1,1);
 	
-	for(int i = 0; i < 10; i++)
+	/*for(int i = 0; i < 20; i++)
 	{		
 		int right = isWallRight();
 		int front = isWallFront();
@@ -80,15 +81,25 @@ int main(void)
 		mouse.IR_CORRECT = 0;
 		
 		
-	}
+	}*/
 
-	
 	turnOnTimers(0, 0);
 	enableDrive(0);
-	
-	
+
 	while(1==1)
 	{
+		//Testing Pot, Button and led's on front panel
+		//float but = isButtonPushed(1);
+		//float pot = getPotSensorValue(0);
+		//int num = pot / 129;
+		
+		//if(but)
+		//	turnOnLeds(num);
+		//else
+		//	turnOnLeds(0);
+		
+		printlnNum(getPotSensorValue(7));
+		
 
 	}	
 }

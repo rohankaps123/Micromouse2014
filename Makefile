@@ -84,6 +84,7 @@ SRC = $(TARGET).c
 SRC += RobotModel/RobotModel.c
 SRC += RobotModel/RobotModel_controls.c
 SRC += RobotModel/RobotModel_StepperMotor.c
+SRC += RobotModel/RobotModel_Sensors.c
 SRC += USART.c
 
 # List C++ source files here. (C dependencies are automatically generated.)

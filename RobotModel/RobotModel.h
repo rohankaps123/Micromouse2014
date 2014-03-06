@@ -51,13 +51,6 @@ void moveBackwards(void);
 void moveBackwardsAndCorrect(void);
 
 
-//Sensor Functions
-float getLeftIR(void);
-float getRightIR(void);
-float getFrontIR(void);
-int getIRSensorValue(volatile uint8_t *port, uint8_t pin, int analogChannel);
-void setupADC(void);
-uint16_t ReadADC(uint8_t ch);
-float linearizeIRSensorValues(float input);
+
 
 #endif
