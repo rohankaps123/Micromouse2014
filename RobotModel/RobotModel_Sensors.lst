@@ -8,7 +8,7 @@
   15               	.Ltext0:
   16               	.global	turnOnLeds
   18               	turnOnLeds:
-  19               	.LFB12:
+  19               	.LFB16:
   20               	.LM1:
   21               	.LVL0:
   22               	/* prologue: function */
@@ -28,335 +28,530 @@
   36 000c 00C0      		rjmp .L4
   37               	.LM6:
   38 000e 2D9A      		sbi 37-32,5
-  39 0010 00C0      		rjmp .L5
+  39 0010 0895      		ret
   40               	.L4:
   41               	.LM7:
   42 0012 2D98      		cbi 37-32,5
-  43               	.L5:
-  44               	.LM8:
-  45 0014 80FF      		sbrs r24,0
-  46 0016 00C0      		rjmp .L6
-  47               	.LM9:
-  48 0018 2C9A      		sbi 37-32,4
-  49 001a 0895      		ret
-  50               	.L6:
-  51               	.LM10:
-  52 001c 2C98      		cbi 37-32,4
-  53 001e 0895      		ret
-  54               	.LFE12:
-  56               	.global	setupADC
-  58               	setupADC:
-  59               	.LFB13:
-  60               	.LM11:
-  61               	/* prologue: function */
-  62               	/* frame size = 0 */
+  43 0014 0895      		ret
+  44               	.LFE16:
+  46               	.global	setupADC
+  48               	setupADC:
+  49               	.LFB17:
+  50               	.LM8:
+  51               	/* prologue: function */
+  52               	/* frame size = 0 */
+  53               	.LM9:
+  54 0016 80E4      		ldi r24,lo8(64)
+  55 0018 8093 7C00 		sts 124,r24
+  56               	.LM10:
+  57 001c 87E8      		ldi r24,lo8(-121)
+  58 001e 8093 7A00 		sts 122,r24
+  59               	.LM11:
+  60 0022 8AB1      		in r24,42-32
+  61 0024 8069      		ori r24,lo8(-112)
+  62 0026 8AB9      		out 42-32,r24
   63               	.LM12:
-  64 0020 80E4      		ldi r24,lo8(64)
-  65 0022 8093 7C00 		sts 124,r24
-  66               	.LM13:
-  67 0026 86E8      		ldi r24,lo8(-122)
-  68 0028 8093 7A00 		sts 122,r24
-  69               	.LM14:
-  70 002c 8AB1      		in r24,42-32
-  71 002e 8069      		ori r24,lo8(-112)
-  72 0030 8AB9      		out 42-32,r24
-  73               	.LM15:
-  74 0032 3E9A      		sbi 39-32,6
-  75               	.LM16:
-  76 0034 249A      		sbi 36-32,4
-  77               	.LM17:
-  78 0036 259A      		sbi 36-32,5
-  79               	.LM18:
-  80 0038 6E9A      		sbi 45-32,6
-  81               	/* epilogue start */
-  82               	.LM19:
-  83 003a 0895      		ret
-  84               	.LFE13:
-  86               	.global	ReadADC
-  88               	ReadADC:
-  89               	.LFB14:
-  90               	.LM20:
-  91               	.LVL1:
-  92               	/* prologue: function */
-  93               	/* frame size = 0 */
-  94               	.LM21:
-  95 003c 8770      		andi r24,lo8(7)
-  96               	.LVL2:
-  97 003e 8064      		ori r24,lo8(64)
-  98 0040 8093 7C00 		sts 124,r24
-  99               	.LM22:
- 100 0044 8091 7A00 		lds r24,122
- 101 0048 8064      		ori r24,lo8(64)
- 102 004a 8093 7A00 		sts 122,r24
- 103               	.L12:
- 104               	.LM23:
- 105 004e 8091 7A00 		lds r24,122
- 106 0052 84FF      		sbrs r24,4
- 107 0054 00C0      		rjmp .L12
- 108               	.LM24:
- 109 0056 8091 7A00 		lds r24,122
- 110 005a 8061      		ori r24,lo8(16)
- 111 005c 8093 7A00 		sts 122,r24
- 112               	.LM25:
- 113 0060 2091 7800 		lds r18,120
- 114 0064 3091 7900 		lds r19,(120)+1
- 115               	.LM26:
- 116 0068 C901      		movw r24,r18
- 117               	/* epilogue start */
- 118 006a 0895      		ret
- 119               	.LFE14:
- 121               	.global	isButtonPushed
- 123               	isButtonPushed:
- 124               	.LFB11:
- 125               	.LM27:
- 126               	.LVL3:
- 127               	/* prologue: function */
- 128               	/* frame size = 0 */
- 129               	.LM28:
- 130 006c 0E94 0000 		call ReadADC
- 131               	.LVL4:
- 132 0070 20E0      		ldi r18,lo8(0)
- 133 0072 30E0      		ldi r19,hi8(0)
- 134 0074 8150      		subi r24,lo8(513)
- 135 0076 9240      		sbci r25,hi8(513)
- 136 0078 00F4      		brsh .L16
- 137 007a 21E0      		ldi r18,lo8(1)
- 138 007c 30E0      		ldi r19,hi8(1)
- 139               	.L16:
- 140               	.LM29:
- 141 007e C901      		movw r24,r18
- 142               	/* epilogue start */
- 143 0080 0895      		ret
- 144               	.LFE11:
- 146               	.global	getPotSensorValue
- 148               	getPotSensorValue:
- 149               	.LFB10:
- 150               	.LM30:
- 151               	.LVL5:
- 152               	/* prologue: function */
- 153               	/* frame size = 0 */
- 154               	.LM31:
- 155 0082 0E94 0000 		call ReadADC
- 156               	.LVL6:
- 157               	/* epilogue start */
- 158               	.LM32:
- 159 0086 0895      		ret
- 160               	.LFE10:
- 162               	.global	getIRSensorValue
- 164               	getIRSensorValue:
- 165               	.LFB9:
- 166               	.LM33:
- 167               	.LVL7:
- 168 0088 CF92      		push r12
- 169 008a DF92      		push r13
- 170 008c EF92      		push r14
- 171 008e FF92      		push r15
- 172 0090 0F93      		push r16
- 173 0092 1F93      		push r17
- 174               	/* prologue: function */
- 175               	/* frame size = 0 */
- 176 0094 7C01      		movw r14,r24
- 177 0096 842F      		mov r24,r20
- 178               	.LVL8:
- 179               	.LM34:
- 180 0098 F701      		movw r30,r14
- 181 009a 9081      		ld r25,Z
- 182 009c 01E0      		ldi r16,lo8(1)
- 183 009e 10E0      		ldi r17,hi8(1)
- 184 00a0 00C0      		rjmp 2f
- 185 00a2 000F      	1:	lsl r16
- 186 00a4 111F      		rol r17
- 187 00a6 6A95      	2:	dec r22
- 188 00a8 02F4      		brpl 1b
- 189 00aa 902B      		or r25,r16
- 190 00ac 9083      		st Z,r25
- 191               	.LBB34:
- 192               	.LBB35:
- 193               	.LBB36:
- 194               	.LBB37:
- 195               	.LBB38:
- 196               	.LBB39:
- 197               	.LM35:
- 198 00ae 90E4      		ldi r25,lo8(320)
- 199 00b0 C92E      		mov r12,r25
- 200 00b2 91E0      		ldi r25,hi8(320)
- 201 00b4 D92E      		mov r13,r25
- 202 00b6 F601      		movw r30,r12
- 203               	.LVL9:
- 204               	/* #APP */
- 205               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
- 206 00b8 3197      		1: sbiw r30,1
- 207 00ba 01F4      		brne 1b
- 208               	 ;  0 "" 2
- 209               	/* #NOAPP */
- 210               	.LBE39:
- 211               	.LBE38:
- 212               	.LBE37:
- 213               	.LBE36:
- 214               	.LBE35:
- 215               	.LBE34:
- 216               	.LM36:
- 217 00bc 0E94 0000 		call ReadADC
- 218               	.LVL10:
- 219               	.LM37:
- 220 00c0 F701      		movw r30,r14
- 221 00c2 2081      		ld r18,Z
- 222 00c4 0095      		com r16
- 223 00c6 0223      		and r16,r18
- 224 00c8 0083      		st Z,r16
- 225               	.LBB40:
- 226               	.LBB41:
- 227               	.LBB42:
- 228               	.LBB43:
- 229               	.LBB44:
- 230               	.LBB45:
- 231               	.LM38:
- 232 00ca F601      		movw r30,r12
- 233               	.LVL11:
- 234               	/* #APP */
- 235               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
- 236 00cc 3197      		1: sbiw r30,1
- 237 00ce 01F4      		brne 1b
- 238               	 ;  0 "" 2
- 239               	/* epilogue start */
- 240               	/* #NOAPP */
- 241               	.LBE45:
- 242               	.LBE44:
- 243               	.LBE43:
- 244               	.LBE42:
- 245               	.LBE41:
- 246               	.LBE40:
- 247               	.LM39:
- 248 00d0 1F91      		pop r17
- 249 00d2 0F91      		pop r16
- 250 00d4 FF90      		pop r15
- 251 00d6 EF90      		pop r14
- 252               	.LVL12:
- 253 00d8 DF90      		pop r13
- 254 00da CF90      		pop r12
- 255 00dc 0895      		ret
- 256               	.LFE9:
- 258               	.global	linearizeIRSensorValues
- 260               	linearizeIRSensorValues:
- 261               	.LFB15:
- 262               	.LM40:
- 263               	.LVL13:
- 264               	/* prologue: function */
- 265               	/* frame size = 0 */
- 266               	.LM41:
- 267 00de 0E94 0000 		call log
- 268               	.LVL14:
- 269 00e2 22EA      		ldi r18,lo8(0xc0c0b4a2)
- 270 00e4 34EB      		ldi r19,hi8(0xc0c0b4a2)
- 271 00e6 40EC      		ldi r20,hlo8(0xc0c0b4a2)
- 272 00e8 50EC      		ldi r21,hhi8(0xc0c0b4a2)
- 273 00ea 0E94 0000 		call __mulsf3
- 274 00ee 21E2      		ldi r18,lo8(0x422e2a21)
- 275 00f0 3AE2      		ldi r19,hi8(0x422e2a21)
- 276 00f2 4EE2      		ldi r20,hlo8(0x422e2a21)
- 277 00f4 52E4      		ldi r21,hhi8(0x422e2a21)
- 278 00f6 0E94 0000 		call __addsf3
- 279               	/* epilogue start */
- 280               	.LM42:
- 281 00fa 0895      		ret
- 282               	.LFE15:
- 284               	.global	getFrontIR
- 286               	getFrontIR:
- 287               	.LFB8:
- 288               	.LM43:
- 289               	/* prologue: function */
- 290               	/* frame size = 0 */
- 291               	.LM44:
- 292 00fc 8BE2      		ldi r24,lo8(43)
- 293 00fe 90E0      		ldi r25,hi8(43)
- 294 0100 64E0      		ldi r22,lo8(4)
- 295 0102 45E0      		ldi r20,lo8(5)
- 296 0104 50E0      		ldi r21,hi8(5)
- 297 0106 0E94 0000 		call getIRSensorValue
- 298 010a AA27      		clr r26
- 299 010c 97FD      		sbrc r25,7
- 300 010e A095      		com r26
- 301 0110 BA2F      		mov r27,r26
- 302 0112 BC01      		movw r22,r24
- 303 0114 CD01      		movw r24,r26
- 304 0116 0E94 0000 		call __floatsisf
- 305 011a 0E94 0000 		call linearizeIRSensorValues
- 306               	/* epilogue start */
- 307               	.LM45:
- 308 011e 0895      		ret
- 309               	.LFE8:
- 311               	.global	getRightIR
- 313               	getRightIR:
- 314               	.LFB7:
- 315               	.LM46:
- 316               	/* prologue: function */
- 317               	/* frame size = 0 */
- 318               	.LM47:
- 319 0120 88E2      		ldi r24,lo8(40)
- 320 0122 90E0      		ldi r25,hi8(40)
- 321 0124 66E0      		ldi r22,lo8(6)
- 322 0126 44E0      		ldi r20,lo8(4)
- 323 0128 50E0      		ldi r21,hi8(4)
- 324 012a 0E94 0000 		call getIRSensorValue
- 325 012e AA27      		clr r26
- 326 0130 97FD      		sbrc r25,7
- 327 0132 A095      		com r26
- 328 0134 BA2F      		mov r27,r26
- 329 0136 BC01      		movw r22,r24
- 330 0138 CD01      		movw r24,r26
- 331 013a 0E94 0000 		call __floatsisf
- 332 013e 0E94 0000 		call linearizeIRSensorValues
- 333               	/* epilogue start */
- 334               	.LM48:
- 335 0142 0895      		ret
- 336               	.LFE7:
- 338               	.global	getLeftIR
- 340               	getLeftIR:
- 341               	.LFB6:
- 342               	.LM49:
- 343               	/* prologue: function */
- 344               	/* frame size = 0 */
- 345               	.LM50:
- 346 0144 8BE2      		ldi r24,lo8(43)
- 347 0146 90E0      		ldi r25,hi8(43)
- 348 0148 67E0      		ldi r22,lo8(7)
- 349 014a 46E0      		ldi r20,lo8(6)
- 350 014c 50E0      		ldi r21,hi8(6)
- 351 014e 0E94 0000 		call getIRSensorValue
- 352 0152 AA27      		clr r26
- 353 0154 97FD      		sbrc r25,7
- 354 0156 A095      		com r26
- 355 0158 BA2F      		mov r27,r26
- 356 015a BC01      		movw r22,r24
- 357 015c CD01      		movw r24,r26
- 358 015e 0E94 0000 		call __floatsisf
- 359 0162 0E94 0000 		call linearizeIRSensorValues
- 360               	/* epilogue start */
- 361               	.LM51:
- 362 0166 0895      		ret
- 363               	.LFE6:
- 461               	.Letext0:
+  64 0028 3E9A      		sbi 39-32,6
+  65               	.LM13:
+  66 002a 249A      		sbi 36-32,4
+  67               	.LM14:
+  68 002c 259A      		sbi 36-32,5
+  69               	.LM15:
+  70 002e 6E9A      		sbi 45-32,6
+  71               	/* epilogue start */
+  72               	.LM16:
+  73 0030 0895      		ret
+  74               	.LFE17:
+  76               	.global	ReadADC
+  78               	ReadADC:
+  79               	.LFB18:
+  80               	.LM17:
+  81               	.LVL1:
+  82               	/* prologue: function */
+  83               	/* frame size = 0 */
+  84               	.LM18:
+  85 0032 8770      		andi r24,lo8(7)
+  86               	.LVL2:
+  87 0034 8064      		ori r24,lo8(64)
+  88 0036 8093 7C00 		sts 124,r24
+  89               	.LM19:
+  90 003a 8091 7A00 		lds r24,122
+  91 003e 8064      		ori r24,lo8(64)
+  92 0040 8093 7A00 		sts 122,r24
+  93               	.L10:
+  94               	.LM20:
+  95 0044 8091 7A00 		lds r24,122
+  96 0048 84FF      		sbrs r24,4
+  97 004a 00C0      		rjmp .L10
+  98               	.LM21:
+  99 004c 8091 7A00 		lds r24,122
+ 100 0050 8061      		ori r24,lo8(16)
+ 101 0052 8093 7A00 		sts 122,r24
+ 102               	.LM22:
+ 103 0056 2091 7800 		lds r18,120
+ 104 005a 3091 7900 		lds r19,(120)+1
+ 105               	.LM23:
+ 106 005e C901      		movw r24,r18
+ 107               	/* epilogue start */
+ 108 0060 0895      		ret
+ 109               	.LFE18:
+ 111               	.global	isButtonPushed
+ 113               	isButtonPushed:
+ 114               	.LFB15:
+ 115               	.LM24:
+ 116               	.LVL3:
+ 117               	/* prologue: function */
+ 118               	/* frame size = 0 */
+ 119               	.LM25:
+ 120 0062 0E94 0000 		call ReadADC
+ 121               	.LVL4:
+ 122 0066 20E0      		ldi r18,lo8(0)
+ 123 0068 30E0      		ldi r19,hi8(0)
+ 124 006a 8150      		subi r24,lo8(513)
+ 125 006c 9240      		sbci r25,hi8(513)
+ 126 006e 00F4      		brsh .L14
+ 127 0070 21E0      		ldi r18,lo8(1)
+ 128 0072 30E0      		ldi r19,hi8(1)
+ 129               	.L14:
+ 130               	.LM26:
+ 131 0074 C901      		movw r24,r18
+ 132               	/* epilogue start */
+ 133 0076 0895      		ret
+ 134               	.LFE15:
+ 136               	.global	calibrateGyro
+ 138               	calibrateGyro:
+ 139               	.LFB14:
+ 140               	.LM27:
+ 141               	/* prologue: function */
+ 142               	/* frame size = 0 */
+ 143               	.LM28:
+ 144 0078 87E0      		ldi r24,lo8(7)
+ 145 007a 0E94 0000 		call ReadADC
+ 146 007e 9093 0000 		sts (gyroComp)+1,r25
+ 147 0082 8093 0000 		sts gyroComp,r24
+ 148               	/* epilogue start */
+ 149               	.LM29:
+ 150 0086 0895      		ret
+ 151               	.LFE14:
+ 153               	.global	updateGyroValue
+ 155               	updateGyroValue:
+ 156               	.LFB13:
+ 157               	.LM30:
+ 158               	/* prologue: function */
+ 159               	/* frame size = 0 */
+ 160               	.LM31:
+ 161 0088 87E0      		ldi r24,lo8(7)
+ 162 008a 0E94 0000 		call ReadADC
+ 163 008e 2091 0000 		lds r18,gyroComp
+ 164 0092 3091 0000 		lds r19,(gyroComp)+1
+ 165 0096 821B      		sub r24,r18
+ 166 0098 930B      		sbc r25,r19
+ 167 009a 9C01      		movw r18,r24
+ 168               	.LM32:
+ 169 009c 0296      		adiw r24,2
+ 170 009e 0597      		sbiw r24,5
+ 171 00a0 00F0      		brlo .L19
+ 172               	.LM33:
+ 173 00a2 8091 0000 		lds r24,gyroSum
+ 174 00a6 9091 0000 		lds r25,(gyroSum)+1
+ 175 00aa 820F      		add r24,r18
+ 176 00ac 931F      		adc r25,r19
+ 177 00ae 9093 0000 		sts (gyroSum)+1,r25
+ 178 00b2 8093 0000 		sts gyroSum,r24
+ 179               	.L19:
+ 180               	.LM34:
+ 181 00b6 2091 0000 		lds r18,gyroSum
+ 182 00ba 3091 0000 		lds r19,(gyroSum)+1
+ 183               	.LM35:
+ 184 00be C901      		movw r24,r18
+ 185               	/* epilogue start */
+ 186 00c0 0895      		ret
+ 187               	.LFE13:
+ 189               	.global	getPotSensorValue
+ 191               	getPotSensorValue:
+ 192               	.LFB12:
+ 193               	.LM36:
+ 194               	.LVL5:
+ 195               	/* prologue: function */
+ 196               	/* frame size = 0 */
+ 197               	.LM37:
+ 198 00c2 0E94 0000 		call ReadADC
+ 199               	.LVL6:
+ 200               	/* epilogue start */
+ 201               	.LM38:
+ 202 00c6 0895      		ret
+ 203               	.LFE12:
+ 205               	.global	getIRSensorValue
+ 207               	getIRSensorValue:
+ 208               	.LFB11:
+ 209               	.LM39:
+ 210               	.LVL7:
+ 211 00c8 CF92      		push r12
+ 212 00ca DF92      		push r13
+ 213 00cc EF92      		push r14
+ 214 00ce FF92      		push r15
+ 215 00d0 0F93      		push r16
+ 216 00d2 1F93      		push r17
+ 217               	/* prologue: function */
+ 218               	/* frame size = 0 */
+ 219 00d4 7C01      		movw r14,r24
+ 220 00d6 842F      		mov r24,r20
+ 221               	.LVL8:
+ 222               	.LM40:
+ 223 00d8 F701      		movw r30,r14
+ 224 00da 9081      		ld r25,Z
+ 225 00dc 01E0      		ldi r16,lo8(1)
+ 226 00de 10E0      		ldi r17,hi8(1)
+ 227 00e0 00C0      		rjmp 2f
+ 228 00e2 000F      	1:	lsl r16
+ 229 00e4 111F      		rol r17
+ 230 00e6 6A95      	2:	dec r22
+ 231 00e8 02F4      		brpl 1b
+ 232 00ea 902B      		or r25,r16
+ 233 00ec 9083      		st Z,r25
+ 234               	.LBB34:
+ 235               	.LBB35:
+ 236               	.LBB36:
+ 237               	.LBB37:
+ 238               	.LBB38:
+ 239               	.LBB39:
+ 240               	.LM41:
+ 241 00ee 90E4      		ldi r25,lo8(320)
+ 242 00f0 C92E      		mov r12,r25
+ 243 00f2 91E0      		ldi r25,hi8(320)
+ 244 00f4 D92E      		mov r13,r25
+ 245 00f6 F601      		movw r30,r12
+ 246               	.LVL9:
+ 247               	/* #APP */
+ 248               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 249 00f8 3197      		1: sbiw r30,1
+ 250 00fa 01F4      		brne 1b
+ 251               	 ;  0 "" 2
+ 252               	/* #NOAPP */
+ 253               	.LBE39:
+ 254               	.LBE38:
+ 255               	.LBE37:
+ 256               	.LBE36:
+ 257               	.LBE35:
+ 258               	.LBE34:
+ 259               	.LM42:
+ 260 00fc 0E94 0000 		call ReadADC
+ 261               	.LVL10:
+ 262               	.LM43:
+ 263 0100 F701      		movw r30,r14
+ 264 0102 2081      		ld r18,Z
+ 265 0104 0095      		com r16
+ 266 0106 0223      		and r16,r18
+ 267 0108 0083      		st Z,r16
+ 268               	.LBB40:
+ 269               	.LBB41:
+ 270               	.LBB42:
+ 271               	.LBB43:
+ 272               	.LBB44:
+ 273               	.LBB45:
+ 274               	.LM44:
+ 275 010a F601      		movw r30,r12
+ 276               	.LVL11:
+ 277               	/* #APP */
+ 278               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 279 010c 3197      		1: sbiw r30,1
+ 280 010e 01F4      		brne 1b
+ 281               	 ;  0 "" 2
+ 282               	/* epilogue start */
+ 283               	/* #NOAPP */
+ 284               	.LBE45:
+ 285               	.LBE44:
+ 286               	.LBE43:
+ 287               	.LBE42:
+ 288               	.LBE41:
+ 289               	.LBE40:
+ 290               	.LM45:
+ 291 0110 1F91      		pop r17
+ 292 0112 0F91      		pop r16
+ 293 0114 FF90      		pop r15
+ 294 0116 EF90      		pop r14
+ 295               	.LVL12:
+ 296 0118 DF90      		pop r13
+ 297 011a CF90      		pop r12
+ 298 011c 0895      		ret
+ 299               	.LFE11:
+ 301               	.global	linearizeIRSensorValues_Front
+ 303               	linearizeIRSensorValues_Front:
+ 304               	.LFB20:
+ 305               	.LM46:
+ 306               	.LVL13:
+ 307 011e EF92      		push r14
+ 308 0120 FF92      		push r15
+ 309 0122 0F93      		push r16
+ 310 0124 1F93      		push r17
+ 311               	/* prologue: function */
+ 312               	/* frame size = 0 */
+ 313 0126 7B01      		movw r14,r22
+ 314 0128 8C01      		movw r16,r24
+ 315               	.LM47:
+ 316 012a 20E0      		ldi r18,lo8(0x44748000)
+ 317 012c 30E8      		ldi r19,hi8(0x44748000)
+ 318 012e 44E7      		ldi r20,hlo8(0x44748000)
+ 319 0130 54E4      		ldi r21,hhi8(0x44748000)
+ 320 0132 0E94 0000 		call __gtsf2
+ 321               	.LVL14:
+ 322 0136 1816      		cp __zero_reg__,r24
+ 323 0138 04F4      		brge .L31
+ 324               	.LM48:
+ 325 013a C801      		movw r24,r16
+ 326 013c B701      		movw r22,r14
+ 327 013e 2BE6      		ldi r18,lo8(0xbe30df6b)
+ 328 0140 3FED      		ldi r19,hi8(0xbe30df6b)
+ 329 0142 40E3      		ldi r20,hlo8(0xbe30df6b)
+ 330 0144 5EEB      		ldi r21,hhi8(0xbe30df6b)
+ 331 0146 0E94 0000 		call __mulsf3
+ 332 014a 24EE      		ldi r18,lo8(0x432da9e4)
+ 333 014c 39EA      		ldi r19,hi8(0x432da9e4)
+ 334 014e 4DE2      		ldi r20,hlo8(0x432da9e4)
+ 335 0150 53E4      		ldi r21,hhi8(0x432da9e4)
+ 336 0152 00C0      		rjmp .L32
+ 337               	.L31:
+ 338               	.LM49:
+ 339 0154 C801      		movw r24,r16
+ 340 0156 B701      		movw r22,r14
+ 341 0158 0E94 0000 		call log
+ 342 015c 2DEC      		ldi r18,lo8(0xc0768acd)
+ 343 015e 3AE8      		ldi r19,hi8(0xc0768acd)
+ 344 0160 46E7      		ldi r20,hlo8(0xc0768acd)
+ 345 0162 50EC      		ldi r21,hhi8(0xc0768acd)
+ 346 0164 0E94 0000 		call __mulsf3
+ 347 0168 27EF      		ldi r18,lo8(0x41fa05f7)
+ 348 016a 35E0      		ldi r19,hi8(0x41fa05f7)
+ 349 016c 4AEF      		ldi r20,hlo8(0x41fa05f7)
+ 350 016e 51E4      		ldi r21,hhi8(0x41fa05f7)
+ 351               	.L32:
+ 352 0170 0E94 0000 		call __addsf3
+ 353 0174 E62F      		mov r30,r22
+ 354               	.LM50:
+ 355 0176 2E2F      		mov r18,r30
+ 356 0178 372F      		mov r19,r23
+ 357 017a 482F      		mov r20,r24
+ 358 017c 592F      		mov r21,r25
+ 359 017e B901      		movw r22,r18
+ 360 0180 CA01      		movw r24,r20
+ 361               	/* epilogue start */
+ 362 0182 1F91      		pop r17
+ 363 0184 0F91      		pop r16
+ 364 0186 FF90      		pop r15
+ 365 0188 EF90      		pop r14
+ 366               	.LVL15:
+ 367 018a 0895      		ret
+ 368               	.LFE20:
+ 370               	.global	getFrontRightIR
+ 372               	getFrontRightIR:
+ 373               	.LFB9:
+ 374               	.LM51:
+ 375               	/* prologue: function */
+ 376               	/* frame size = 0 */
+ 377               	.LM52:
+ 378 018c 8BE2      		ldi r24,lo8(43)
+ 379 018e 90E0      		ldi r25,hi8(43)
+ 380 0190 64E0      		ldi r22,lo8(4)
+ 381 0192 47E0      		ldi r20,lo8(7)
+ 382 0194 50E0      		ldi r21,hi8(7)
+ 383 0196 0E94 0000 		call getIRSensorValue
+ 384 019a AA27      		clr r26
+ 385 019c 97FD      		sbrc r25,7
+ 386 019e A095      		com r26
+ 387 01a0 BA2F      		mov r27,r26
+ 388 01a2 BC01      		movw r22,r24
+ 389 01a4 CD01      		movw r24,r26
+ 390 01a6 0E94 0000 		call __floatsisf
+ 391 01aa 0E94 0000 		call linearizeIRSensorValues_Front
+ 392               	/* epilogue start */
+ 393               	.LM53:
+ 394 01ae 0895      		ret
+ 395               	.LFE9:
+ 397               	.global	getFrontLeftIR
+ 399               	getFrontLeftIR:
+ 400               	.LFB8:
+ 401               	.LM54:
+ 402               	/* prologue: function */
+ 403               	/* frame size = 0 */
+ 404               	.LM55:
+ 405 01b0 85E2      		ldi r24,lo8(37)
+ 406 01b2 90E0      		ldi r25,hi8(37)
+ 407 01b4 64E0      		ldi r22,lo8(4)
+ 408 01b6 45E0      		ldi r20,lo8(5)
+ 409 01b8 50E0      		ldi r21,hi8(5)
+ 410 01ba 0E94 0000 		call getIRSensorValue
+ 411 01be AA27      		clr r26
+ 412 01c0 97FD      		sbrc r25,7
+ 413 01c2 A095      		com r26
+ 414 01c4 BA2F      		mov r27,r26
+ 415 01c6 BC01      		movw r22,r24
+ 416 01c8 CD01      		movw r24,r26
+ 417 01ca 0E94 0000 		call __floatsisf
+ 418 01ce 0E94 0000 		call linearizeIRSensorValues_Front
+ 419               	/* epilogue start */
+ 420               	.LM56:
+ 421 01d2 0895      		ret
+ 422               	.LFE8:
+ 424               	.global	linearizeIRSensorValues
+ 426               	linearizeIRSensorValues:
+ 427               	.LFB19:
+ 428               	.LM57:
+ 429               	.LVL16:
+ 430               	/* prologue: function */
+ 431               	/* frame size = 0 */
+ 432               	.LM58:
+ 433 01d4 0E94 0000 		call log
+ 434               	.LVL17:
+ 435 01d8 22EA      		ldi r18,lo8(0xc0c0b4a2)
+ 436 01da 34EB      		ldi r19,hi8(0xc0c0b4a2)
+ 437 01dc 40EC      		ldi r20,hlo8(0xc0c0b4a2)
+ 438 01de 50EC      		ldi r21,hhi8(0xc0c0b4a2)
+ 439 01e0 0E94 0000 		call __mulsf3
+ 440 01e4 21E2      		ldi r18,lo8(0x422e2a21)
+ 441 01e6 3AE2      		ldi r19,hi8(0x422e2a21)
+ 442 01e8 4EE2      		ldi r20,hlo8(0x422e2a21)
+ 443 01ea 52E4      		ldi r21,hhi8(0x422e2a21)
+ 444 01ec 0E94 0000 		call __addsf3
+ 445               	/* epilogue start */
+ 446               	.LM59:
+ 447 01f0 0895      		ret
+ 448               	.LFE19:
+ 450               	.global	getRightIR
+ 452               	getRightIR:
+ 453               	.LFB7:
+ 454               	.LM60:
+ 455               	/* prologue: function */
+ 456               	/* frame size = 0 */
+ 457               	.LM61:
+ 458 01f2 88E2      		ldi r24,lo8(40)
+ 459 01f4 90E0      		ldi r25,hi8(40)
+ 460 01f6 66E0      		ldi r22,lo8(6)
+ 461 01f8 44E0      		ldi r20,lo8(4)
+ 462 01fa 50E0      		ldi r21,hi8(4)
+ 463 01fc 0E94 0000 		call getIRSensorValue
+ 464 0200 AA27      		clr r26
+ 465 0202 97FD      		sbrc r25,7
+ 466 0204 A095      		com r26
+ 467 0206 BA2F      		mov r27,r26
+ 468 0208 BC01      		movw r22,r24
+ 469 020a CD01      		movw r24,r26
+ 470 020c 0E94 0000 		call __floatsisf
+ 471 0210 0E94 0000 		call linearizeIRSensorValues
+ 472               	/* epilogue start */
+ 473               	.LM62:
+ 474 0214 0895      		ret
+ 475               	.LFE7:
+ 477               	.global	getLeftIR
+ 479               	getLeftIR:
+ 480               	.LFB6:
+ 481               	.LM63:
+ 482               	/* prologue: function */
+ 483               	/* frame size = 0 */
+ 484               	.LM64:
+ 485 0216 8BE2      		ldi r24,lo8(43)
+ 486 0218 90E0      		ldi r25,hi8(43)
+ 487 021a 67E0      		ldi r22,lo8(7)
+ 488 021c 46E0      		ldi r20,lo8(6)
+ 489 021e 50E0      		ldi r21,hi8(6)
+ 490 0220 0E94 0000 		call getIRSensorValue
+ 491 0224 AA27      		clr r26
+ 492 0226 97FD      		sbrc r25,7
+ 493 0228 A095      		com r26
+ 494 022a BA2F      		mov r27,r26
+ 495 022c BC01      		movw r22,r24
+ 496 022e CD01      		movw r24,r26
+ 497 0230 0E94 0000 		call __floatsisf
+ 498 0234 0E94 0000 		call linearizeIRSensorValues
+ 499               	/* epilogue start */
+ 500               	.LM65:
+ 501 0238 0895      		ret
+ 502               	.LFE6:
+ 504               	.global	getFrontAngle
+ 506               	getFrontAngle:
+ 507               	.LFB10:
+ 508               	.LM66:
+ 509 023a EF92      		push r14
+ 510 023c FF92      		push r15
+ 511 023e 0F93      		push r16
+ 512 0240 1F93      		push r17
+ 513               	/* prologue: function */
+ 514               	/* frame size = 0 */
+ 515               	.LM67:
+ 516 0242 0E94 0000 		call getFrontLeftIR
+ 517 0246 7B01      		movw r14,r22
+ 518 0248 8C01      		movw r16,r24
+ 519               	.LVL18:
+ 520               	.LM68:
+ 521 024a 0E94 0000 		call getFrontRightIR
+ 522               	.LM69:
+ 523 024e A801      		movw r20,r16
+ 524 0250 9701      		movw r18,r14
+ 525 0252 0E94 0000 		call __subsf3
+ 526 0256 9B01      		movw r18,r22
+ 527 0258 AC01      		movw r20,r24
+ 528 025a 60E0      		ldi r22,lo8(0x40a00000)
+ 529 025c 70E0      		ldi r23,hi8(0x40a00000)
+ 530 025e 80EA      		ldi r24,hlo8(0x40a00000)
+ 531 0260 90E4      		ldi r25,hhi8(0x40a00000)
+ 532 0262 0E94 0000 		call atan2
+ 533 0266 21EE      		ldi r18,lo8(0xc2652ee1)
+ 534 0268 3EE2      		ldi r19,hi8(0xc2652ee1)
+ 535 026a 45E6      		ldi r20,hlo8(0xc2652ee1)
+ 536 026c 52EC      		ldi r21,hhi8(0xc2652ee1)
+ 537 026e 0E94 0000 		call __mulsf3
+ 538 0272 20E0      		ldi r18,lo8(0x42b40000)
+ 539 0274 30E0      		ldi r19,hi8(0x42b40000)
+ 540 0276 44EB      		ldi r20,hlo8(0x42b40000)
+ 541 0278 52E4      		ldi r21,hhi8(0x42b40000)
+ 542 027a 0E94 0000 		call __addsf3
+ 543               	/* epilogue start */
+ 544               	.LM70:
+ 545 027e 1F91      		pop r17
+ 546 0280 0F91      		pop r16
+ 547 0282 FF90      		pop r15
+ 548 0284 EF90      		pop r14
+ 549               	.LVL19:
+ 550 0286 0895      		ret
+ 551               	.LFE10:
+ 553               	.global	gyroSum
+ 554               	.global	gyroSum
+ 555               		.section .bss
+ 558               	gyroSum:
+ 559 0000 0000      		.skip 2,0
+ 560               		.comm gyroComp,2,1
+ 697               	.Letext0:
 DEFINED SYMBOLS
                             *ABS*:00000000 RobotModel_Sensors.c
-C:\Users\ENGIN_~1\AppData\Local\Temp/cc9A6OY2.s:2      *ABS*:0000003f __SREG__
-C:\Users\ENGIN_~1\AppData\Local\Temp/cc9A6OY2.s:3      *ABS*:0000003e __SP_H__
-C:\Users\ENGIN_~1\AppData\Local\Temp/cc9A6OY2.s:4      *ABS*:0000003d __SP_L__
-C:\Users\ENGIN_~1\AppData\Local\Temp/cc9A6OY2.s:5      *ABS*:00000034 __CCP__
-C:\Users\ENGIN_~1\AppData\Local\Temp/cc9A6OY2.s:6      *ABS*:00000000 __tmp_reg__
-C:\Users\ENGIN_~1\AppData\Local\Temp/cc9A6OY2.s:7      *ABS*:00000001 __zero_reg__
-C:\Users\ENGIN_~1\AppData\Local\Temp/cc9A6OY2.s:18     .text:00000000 turnOnLeds
-C:\Users\ENGIN_~1\AppData\Local\Temp/cc9A6OY2.s:58     .text:00000020 setupADC
-C:\Users\ENGIN_~1\AppData\Local\Temp/cc9A6OY2.s:88     .text:0000003c ReadADC
-C:\Users\ENGIN_~1\AppData\Local\Temp/cc9A6OY2.s:123    .text:0000006c isButtonPushed
-C:\Users\ENGIN_~1\AppData\Local\Temp/cc9A6OY2.s:148    .text:00000082 getPotSensorValue
-C:\Users\ENGIN_~1\AppData\Local\Temp/cc9A6OY2.s:164    .text:00000088 getIRSensorValue
-C:\Users\ENGIN_~1\AppData\Local\Temp/cc9A6OY2.s:260    .text:000000de linearizeIRSensorValues
-C:\Users\ENGIN_~1\AppData\Local\Temp/cc9A6OY2.s:286    .text:000000fc getFrontIR
-C:\Users\ENGIN_~1\AppData\Local\Temp/cc9A6OY2.s:313    .text:00000120 getRightIR
-C:\Users\ENGIN_~1\AppData\Local\Temp/cc9A6OY2.s:340    .text:00000144 getLeftIR
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:2      *ABS*:0000003f __SREG__
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:3      *ABS*:0000003e __SP_H__
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:4      *ABS*:0000003d __SP_L__
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:5      *ABS*:00000034 __CCP__
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:6      *ABS*:00000000 __tmp_reg__
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:7      *ABS*:00000001 __zero_reg__
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:18     .text:00000000 turnOnLeds
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:48     .text:00000016 setupADC
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:78     .text:00000032 ReadADC
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:113    .text:00000062 isButtonPushed
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:138    .text:00000078 calibrateGyro
+                            *COM*:00000002 gyroComp
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:155    .text:00000088 updateGyroValue
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:558    .bss:00000000 gyroSum
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:191    .text:000000c2 getPotSensorValue
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:207    .text:000000c8 getIRSensorValue
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:303    .text:0000011e linearizeIRSensorValues_Front
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:372    .text:0000018c getFrontRightIR
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:399    .text:000001b0 getFrontLeftIR
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:426    .text:000001d4 linearizeIRSensorValues
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:452    .text:000001f2 getRightIR
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:479    .text:00000216 getLeftIR
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:506    .text:0000023a getFrontAngle
 
 UNDEFINED SYMBOLS
-log
+__gtsf2
 __mulsf3
+log
 __addsf3
 __floatsisf
+__subsf3
+atan2
+__do_clear_bss
