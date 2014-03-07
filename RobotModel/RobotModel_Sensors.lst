@@ -522,29 +522,29 @@
  697               	.Letext0:
 DEFINED SYMBOLS
                             *ABS*:00000000 RobotModel_Sensors.c
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:2      *ABS*:0000003f __SREG__
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:3      *ABS*:0000003e __SP_H__
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:4      *ABS*:0000003d __SP_L__
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:5      *ABS*:00000034 __CCP__
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:6      *ABS*:00000000 __tmp_reg__
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:7      *ABS*:00000001 __zero_reg__
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:18     .text:00000000 turnOnLeds
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:48     .text:00000016 setupADC
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:78     .text:00000032 ReadADC
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:113    .text:00000062 isButtonPushed
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:138    .text:00000078 calibrateGyro
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:2      *ABS*:0000003f __SREG__
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:3      *ABS*:0000003e __SP_H__
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:4      *ABS*:0000003d __SP_L__
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:5      *ABS*:00000034 __CCP__
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:6      *ABS*:00000000 __tmp_reg__
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:7      *ABS*:00000001 __zero_reg__
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:18     .text:00000000 turnOnLeds
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:48     .text:00000016 setupADC
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:78     .text:00000032 ReadADC
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:113    .text:00000062 isButtonPushed
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:138    .text:00000078 calibrateGyro
                             *COM*:00000002 gyroComp
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:155    .text:00000088 updateGyroValue
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:558    .bss:00000000 gyroSum
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:191    .text:000000c2 getPotSensorValue
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:207    .text:000000c8 getIRSensorValue
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:303    .text:0000011e linearizeIRSensorValues_Front
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:372    .text:0000018c getFrontRightIR
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:399    .text:000001b0 getFrontLeftIR
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:426    .text:000001d4 linearizeIRSensorValues
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:452    .text:000001f2 getRightIR
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:479    .text:00000216 getLeftIR
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccEuTeyI.s:506    .text:0000023a getFrontAngle
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:155    .text:00000088 updateGyroValue
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:558    .bss:00000000 gyroSum
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:191    .text:000000c2 getPotSensorValue
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:207    .text:000000c8 getIRSensorValue
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:303    .text:0000011e linearizeIRSensorValues_Front
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:372    .text:0000018c getFrontRightIR
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:399    .text:000001b0 getFrontLeftIR
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:426    .text:000001d4 linearizeIRSensorValues
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:452    .text:000001f2 getRightIR
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:479    .text:00000216 getLeftIR
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:506    .text:0000023a getFrontAngle
 
 UNDEFINED SYMBOLS
 __gtsf2
