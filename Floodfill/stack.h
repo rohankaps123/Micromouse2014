@@ -10,47 +10,12 @@ struct Node
 struct llstack{
 struct Node *top}
 
-void popStack(struct llstack *stack)
-{
-    struct Node *var=stack->top;
-    if(var==stack->top)
-    {
-        stack->top = stack->top->next;
-        free(var);
-    }
-    else
-    printf("\nStack Empty");
-}
+void popStack(struct llstack *stack);
 
-void push(int value, struct llstack *stack)
-{
-    struct Node *temp;
-    temp=(struct Node *)malloc(sizeof(struct Node));
-    temp->Data=value;
-    if (stack->top == NULL)
-    {
-         stack->top=temp;
-         stack->top->next=NULL;
-    }
-    else
-    {
-        temp->next=stack->top;
-        stack->top=temp;
-    }
-}
+void push(int value, struct llstack *stack);
 
 
-int top(struct llstack *stack)
-{
-     struct Node *var=stack->top;
-     if(var!=NULL)
-      return var->Data;
-     }
-     else
-     {return null;}
-}
+int top(struct llstack *stack);
 
-int init_stack(struct llstack *stack)
-{
-	stack->top = NULL;
-}
+int init_stack(struct llstack *stack);
+
