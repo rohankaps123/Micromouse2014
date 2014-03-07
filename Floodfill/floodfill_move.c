@@ -12,7 +12,7 @@ int determineNextMove() {
     int bestDirection;
 
     if ((bestDistance > getNeighborDistance(here, robotLocation.getDirection())) &&
-            (robotLocation.isWallFront() == false)) {
+            (isWallFront() == false)) {
         bestDirection = robotLocation.getDirection();
         bestDistance = getNeighborDistance(here, bestDirection);
     }

@@ -1,0 +1,849 @@
+   1               		.file	"RobotModel.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+  15               	.Ltext0:
+  16               	.global	rotateRight
+  18               	rotateRight:
+  19               	.LFB14:
+  20               	.LM1:
+  21 0000 2F92      		push r2
+  22 0002 3F92      		push r3
+  23 0004 4F92      		push r4
+  24 0006 5F92      		push r5
+  25 0008 6F92      		push r6
+  26 000a 7F92      		push r7
+  27 000c 8F92      		push r8
+  28 000e 9F92      		push r9
+  29 0010 AF92      		push r10
+  30 0012 BF92      		push r11
+  31 0014 CF92      		push r12
+  32 0016 DF92      		push r13
+  33 0018 EF92      		push r14
+  34 001a FF92      		push r15
+  35 001c 0F93      		push r16
+  36 001e 1F93      		push r17
+  37               	/* prologue: function */
+  38               	/* frame size = 0 */
+  39               	.LM2:
+  40 0020 81E0      		ldi r24,lo8(1)
+  41 0022 90E0      		ldi r25,hi8(1)
+  42 0024 60E0      		ldi r22,lo8(0)
+  43 0026 70E0      		ldi r23,hi8(0)
+  44 0028 0E94 0000 		call setDirection
+  45               	.LM3:
+  46 002c 6091 0000 		lds r22,mouse+62
+  47 0030 7091 0000 		lds r23,(mouse+62)+1
+  48 0034 8091 0000 		lds r24,(mouse+62)+2
+  49 0038 9091 0000 		lds r25,(mouse+62)+3
+  50 003c E0E0      		ldi r30,lo8(mouse+54)
+  51 003e F0E0      		ldi r31,hi8(mouse+54)
+  52 0040 E190      		ld r14,Z+
+  53 0042 F190      		ld r15,Z+
+  54 0044 0191      		ld r16,Z+
+  55 0046 1191      		ld r17,Z+
+  56 0048 A080      		ld r10,Z
+  57 004a B180      		ldd r11,Z+1
+  58 004c C280      		ldd r12,Z+2
+  59 004e D380      		ldd r13,Z+3
+  60 0050 0E94 0000 		call __fixsfsi
+  61 0054 1B01      		movw r2,r22
+  62 0056 2C01      		movw r4,r24
+  63 0058 C801      		movw r24,r16
+  64 005a B701      		movw r22,r14
+  65 005c 0E94 0000 		call __fixsfsi
+  66 0060 3B01      		movw r6,r22
+  67 0062 4C01      		movw r8,r24
+  68 0064 C601      		movw r24,r12
+  69 0066 B501      		movw r22,r10
+  70 0068 0E94 0000 		call __fixsfsi
+  71 006c 5B01      		movw r10,r22
+  72 006e 6C01      		movw r12,r24
+  73 0070 60E4      		ldi r22,lo8(320)
+  74 0072 71E0      		ldi r23,hi8(320)
+  75 0074 80E0      		ldi r24,hlo8(320)
+  76 0076 90E0      		ldi r25,hhi8(320)
+  77 0078 40E0      		ldi r20,lo8(0)
+  78 007a 50E0      		ldi r21,hi8(0)
+  79 007c 9101      		movw r18,r2
+  80 007e 00E0      		ldi r16,lo8(0)
+  81 0080 10E0      		ldi r17,hi8(0)
+  82 0082 7301      		movw r14,r6
+  83 0084 6501      		movw r12,r10
+  84 0086 0E94 0000 		call straight
+  85               	/* epilogue start */
+  86               	.LM4:
+  87 008a 1F91      		pop r17
+  88 008c 0F91      		pop r16
+  89 008e FF90      		pop r15
+  90 0090 EF90      		pop r14
+  91 0092 DF90      		pop r13
+  92 0094 CF90      		pop r12
+  93 0096 BF90      		pop r11
+  94 0098 AF90      		pop r10
+  95 009a 9F90      		pop r9
+  96 009c 8F90      		pop r8
+  97 009e 7F90      		pop r7
+  98 00a0 6F90      		pop r6
+  99 00a2 5F90      		pop r5
+ 100 00a4 4F90      		pop r4
+ 101 00a6 3F90      		pop r3
+ 102 00a8 2F90      		pop r2
+ 103 00aa 0895      		ret
+ 104               	.LFE14:
+ 106               	.global	rotateLeft
+ 108               	rotateLeft:
+ 109               	.LFB13:
+ 110               	.LM5:
+ 111 00ac 2F92      		push r2
+ 112 00ae 3F92      		push r3
+ 113 00b0 4F92      		push r4
+ 114 00b2 5F92      		push r5
+ 115 00b4 6F92      		push r6
+ 116 00b6 7F92      		push r7
+ 117 00b8 8F92      		push r8
+ 118 00ba 9F92      		push r9
+ 119 00bc AF92      		push r10
+ 120 00be BF92      		push r11
+ 121 00c0 CF92      		push r12
+ 122 00c2 DF92      		push r13
+ 123 00c4 EF92      		push r14
+ 124 00c6 FF92      		push r15
+ 125 00c8 0F93      		push r16
+ 126 00ca 1F93      		push r17
+ 127               	/* prologue: function */
+ 128               	/* frame size = 0 */
+ 129               	.LM6:
+ 130 00cc 80E0      		ldi r24,lo8(0)
+ 131 00ce 90E0      		ldi r25,hi8(0)
+ 132 00d0 61E0      		ldi r22,lo8(1)
+ 133 00d2 70E0      		ldi r23,hi8(1)
+ 134 00d4 0E94 0000 		call setDirection
+ 135               	.LM7:
+ 136 00d8 6091 0000 		lds r22,mouse+62
+ 137 00dc 7091 0000 		lds r23,(mouse+62)+1
+ 138 00e0 8091 0000 		lds r24,(mouse+62)+2
+ 139 00e4 9091 0000 		lds r25,(mouse+62)+3
+ 140 00e8 E0E0      		ldi r30,lo8(mouse+54)
+ 141 00ea F0E0      		ldi r31,hi8(mouse+54)
+ 142 00ec E190      		ld r14,Z+
+ 143 00ee F190      		ld r15,Z+
+ 144 00f0 0191      		ld r16,Z+
+ 145 00f2 1191      		ld r17,Z+
+ 146 00f4 A080      		ld r10,Z
+ 147 00f6 B180      		ldd r11,Z+1
+ 148 00f8 C280      		ldd r12,Z+2
+ 149 00fa D380      		ldd r13,Z+3
+ 150 00fc 0E94 0000 		call __fixsfsi
+ 151 0100 1B01      		movw r2,r22
+ 152 0102 2C01      		movw r4,r24
+ 153 0104 C801      		movw r24,r16
+ 154 0106 B701      		movw r22,r14
+ 155 0108 0E94 0000 		call __fixsfsi
+ 156 010c 3B01      		movw r6,r22
+ 157 010e 4C01      		movw r8,r24
+ 158 0110 C601      		movw r24,r12
+ 159 0112 B501      		movw r22,r10
+ 160 0114 0E94 0000 		call __fixsfsi
+ 161 0118 5B01      		movw r10,r22
+ 162 011a 6C01      		movw r12,r24
+ 163 011c 63E3      		ldi r22,lo8(307)
+ 164 011e 71E0      		ldi r23,hi8(307)
+ 165 0120 80E0      		ldi r24,hlo8(307)
+ 166 0122 90E0      		ldi r25,hhi8(307)
+ 167 0124 40E0      		ldi r20,lo8(0)
+ 168 0126 50E0      		ldi r21,hi8(0)
+ 169 0128 9101      		movw r18,r2
+ 170 012a 00E0      		ldi r16,lo8(0)
+ 171 012c 10E0      		ldi r17,hi8(0)
+ 172 012e 7301      		movw r14,r6
+ 173 0130 6501      		movw r12,r10
+ 174 0132 0E94 0000 		call straight
+ 175               	/* epilogue start */
+ 176               	.LM8:
+ 177 0136 1F91      		pop r17
+ 178 0138 0F91      		pop r16
+ 179 013a FF90      		pop r15
+ 180 013c EF90      		pop r14
+ 181 013e DF90      		pop r13
+ 182 0140 CF90      		pop r12
+ 183 0142 BF90      		pop r11
+ 184 0144 AF90      		pop r10
+ 185 0146 9F90      		pop r9
+ 186 0148 8F90      		pop r8
+ 187 014a 7F90      		pop r7
+ 188 014c 6F90      		pop r6
+ 189 014e 5F90      		pop r5
+ 190 0150 4F90      		pop r4
+ 191 0152 3F90      		pop r3
+ 192 0154 2F90      		pop r2
+ 193 0156 0895      		ret
+ 194               	.LFE13:
+ 196               	.global	moveBackwardsAndCorrect
+ 198               	moveBackwardsAndCorrect:
+ 199               	.LFB12:
+ 200               	.LM9:
+ 201 0158 2F92      		push r2
+ 202 015a 3F92      		push r3
+ 203 015c 4F92      		push r4
+ 204 015e 5F92      		push r5
+ 205 0160 6F92      		push r6
+ 206 0162 7F92      		push r7
+ 207 0164 8F92      		push r8
+ 208 0166 9F92      		push r9
+ 209 0168 AF92      		push r10
+ 210 016a BF92      		push r11
+ 211 016c CF92      		push r12
+ 212 016e DF92      		push r13
+ 213 0170 EF92      		push r14
+ 214 0172 FF92      		push r15
+ 215 0174 0F93      		push r16
+ 216 0176 1F93      		push r17
+ 217 0178 DF93      		push r29
+ 218 017a CF93      		push r28
+ 219 017c CDB7      		in r28,__SP_L__
+ 220 017e DEB7      		in r29,__SP_H__
+ 221 0180 2897      		sbiw r28,8
+ 222 0182 0FB6      		in __tmp_reg__,__SREG__
+ 223 0184 F894      		cli
+ 224 0186 DEBF      		out __SP_H__,r29
+ 225 0188 0FBE      		out __SREG__,__tmp_reg__
+ 226 018a CDBF      		out __SP_L__,r28
+ 227               	/* prologue: function */
+ 228               	/* frame size = 8 */
+ 229               	.LM10:
+ 230 018c 80E0      		ldi r24,lo8(0)
+ 231 018e 90E0      		ldi r25,hi8(0)
+ 232 0190 61E0      		ldi r22,lo8(1)
+ 233 0192 70E0      		ldi r23,hi8(1)
+ 234 0194 0E94 0000 		call setDirection
+ 235               	.LM11:
+ 236 0198 30E0      		ldi r19,lo8(mouse+62)
+ 237 019a 432E      		mov r4,r19
+ 238 019c 30E0      		ldi r19,hi8(mouse+62)
+ 239 019e 532E      		mov r5,r19
+ 240 01a0 6091 0000 		lds r22,mouse+62
+ 241 01a4 7091 0000 		lds r23,(mouse+62)+1
+ 242 01a8 8091 0000 		lds r24,(mouse+62)+2
+ 243 01ac 9091 0000 		lds r25,(mouse+62)+3
+ 244 01b0 28EF      		ldi r18,lo8(-8)
+ 245 01b2 222E      		mov r2,r18
+ 246 01b4 2FEF      		ldi r18,hi8(-8)
+ 247 01b6 322E      		mov r3,r18
+ 248 01b8 240C      		add r2,r4
+ 249 01ba 351C      		adc r3,r5
+ 250 01bc F101      		movw r30,r2
+ 251 01be E080      		ld r14,Z
+ 252 01c0 F180      		ldd r15,Z+1
+ 253 01c2 0281      		ldd r16,Z+2
+ 254 01c4 1381      		ldd r17,Z+3
+ 255 01c6 F201      		movw r30,r4
+ 256 01c8 D290      		ld r13,-Z
+ 257 01ca C290      		ld r12,-Z
+ 258 01cc B290      		ld r11,-Z
+ 259 01ce A290      		ld r10,-Z
+ 260 01d0 2F01      		movw r4,r30
+ 261 01d2 0E94 0000 		call __fixsfsi
+ 262 01d6 6983      		std Y+1,r22
+ 263 01d8 7A83      		std Y+2,r23
+ 264 01da 8B83      		std Y+3,r24
+ 265 01dc 9C83      		std Y+4,r25
+ 266 01de C801      		movw r24,r16
+ 267 01e0 B701      		movw r22,r14
+ 268 01e2 0E94 0000 		call __fixsfsi
+ 269 01e6 3B01      		movw r6,r22
+ 270 01e8 4C01      		movw r8,r24
+ 271 01ea C601      		movw r24,r12
+ 272 01ec B501      		movw r22,r10
+ 273 01ee 0E94 0000 		call __fixsfsi
+ 274 01f2 5B01      		movw r10,r22
+ 275 01f4 6C01      		movw r12,r24
+ 276 01f6 60E8      		ldi r22,lo8(640)
+ 277 01f8 72E0      		ldi r23,hi8(640)
+ 278 01fa 80E0      		ldi r24,hlo8(640)
+ 279 01fc 90E0      		ldi r25,hhi8(640)
+ 280 01fe 40E0      		ldi r20,lo8(0)
+ 281 0200 50E0      		ldi r21,hi8(0)
+ 282 0202 2981      		ldd r18,Y+1
+ 283 0204 3A81      		ldd r19,Y+2
+ 284 0206 00E0      		ldi r16,lo8(0)
+ 285 0208 10E0      		ldi r17,hi8(0)
+ 286 020a 7301      		movw r14,r6
+ 287 020c 6501      		movw r12,r10
+ 288 020e 0E94 0000 		call straight
+ 289               	.LM12:
+ 290 0212 81E0      		ldi r24,lo8(1)
+ 291 0214 90E0      		ldi r25,hi8(1)
+ 292 0216 61E0      		ldi r22,lo8(1)
+ 293 0218 70E0      		ldi r23,hi8(1)
+ 294 021a 0E94 0000 		call setDirection
+ 295               	.LM13:
+ 296 021e 6091 0000 		lds r22,mouse+62
+ 297 0222 7091 0000 		lds r23,(mouse+62)+1
+ 298 0226 8091 0000 		lds r24,(mouse+62)+2
+ 299 022a 9091 0000 		lds r25,(mouse+62)+3
+ 300 022e F101      		movw r30,r2
+ 301 0230 E080      		ld r14,Z
+ 302 0232 F180      		ldd r15,Z+1
+ 303 0234 0281      		ldd r16,Z+2
+ 304 0236 1381      		ldd r17,Z+3
+ 305 0238 F201      		movw r30,r4
+ 306 023a A080      		ld r10,Z
+ 307 023c B180      		ldd r11,Z+1
+ 308 023e C280      		ldd r12,Z+2
+ 309 0240 D380      		ldd r13,Z+3
+ 310 0242 0E94 0000 		call __fixsfsi
+ 311 0246 6D83      		std Y+5,r22
+ 312 0248 7E83      		std Y+6,r23
+ 313 024a 8F83      		std Y+7,r24
+ 314 024c 9887      		std Y+8,r25
+ 315 024e C801      		movw r24,r16
+ 316 0250 B701      		movw r22,r14
+ 317 0252 0E94 0000 		call __fixsfsi
+ 318 0256 3B01      		movw r6,r22
+ 319 0258 4C01      		movw r8,r24
+ 320 025a C601      		movw r24,r12
+ 321 025c B501      		movw r22,r10
+ 322 025e 0E94 0000 		call __fixsfsi
+ 323 0262 5B01      		movw r10,r22
+ 324 0264 6C01      		movw r12,r24
+ 325 0266 6AEF      		ldi r22,lo8(250)
+ 326 0268 70E0      		ldi r23,hi8(250)
+ 327 026a 80E0      		ldi r24,hlo8(250)
+ 328 026c 90E0      		ldi r25,hhi8(250)
+ 329 026e 40E0      		ldi r20,lo8(0)
+ 330 0270 50E0      		ldi r21,hi8(0)
+ 331 0272 2D81      		ldd r18,Y+5
+ 332 0274 3E81      		ldd r19,Y+6
+ 333 0276 00E0      		ldi r16,lo8(0)
+ 334 0278 10E0      		ldi r17,hi8(0)
+ 335 027a 7301      		movw r14,r6
+ 336 027c 6501      		movw r12,r10
+ 337 027e 0E94 0000 		call straight
+ 338               	.LM14:
+ 339 0282 80E0      		ldi r24,lo8(0)
+ 340 0284 90E0      		ldi r25,hi8(0)
+ 341 0286 60E0      		ldi r22,lo8(0)
+ 342 0288 70E0      		ldi r23,hi8(0)
+ 343 028a 0E94 0000 		call setDirection
+ 344               	.LM15:
+ 345 028e 6091 0000 		lds r22,mouse+62
+ 346 0292 7091 0000 		lds r23,(mouse+62)+1
+ 347 0296 8091 0000 		lds r24,(mouse+62)+2
+ 348 029a 9091 0000 		lds r25,(mouse+62)+3
+ 349 029e F101      		movw r30,r2
+ 350 02a0 E080      		ld r14,Z
+ 351 02a2 F180      		ldd r15,Z+1
+ 352 02a4 0281      		ldd r16,Z+2
+ 353 02a6 1381      		ldd r17,Z+3
+ 354 02a8 F201      		movw r30,r4
+ 355 02aa A080      		ld r10,Z
+ 356 02ac B180      		ldd r11,Z+1
+ 357 02ae C280      		ldd r12,Z+2
+ 358 02b0 D380      		ldd r13,Z+3
+ 359 02b2 0E94 0000 		call __fixsfsi
+ 360 02b6 1B01      		movw r2,r22
+ 361 02b8 2C01      		movw r4,r24
+ 362 02ba C801      		movw r24,r16
+ 363 02bc B701      		movw r22,r14
+ 364 02be 0E94 0000 		call __fixsfsi
+ 365 02c2 3B01      		movw r6,r22
+ 366 02c4 4C01      		movw r8,r24
+ 367 02c6 C601      		movw r24,r12
+ 368 02c8 B501      		movw r22,r10
+ 369 02ca 0E94 0000 		call __fixsfsi
+ 370 02ce 5B01      		movw r10,r22
+ 371 02d0 6C01      		movw r12,r24
+ 372 02d2 62E8      		ldi r22,lo8(130)
+ 373 02d4 70E0      		ldi r23,hi8(130)
+ 374 02d6 80E0      		ldi r24,hlo8(130)
+ 375 02d8 90E0      		ldi r25,hhi8(130)
+ 376 02da 40E0      		ldi r20,lo8(0)
+ 377 02dc 50E0      		ldi r21,hi8(0)
+ 378 02de 9101      		movw r18,r2
+ 379 02e0 00E0      		ldi r16,lo8(0)
+ 380 02e2 10E0      		ldi r17,hi8(0)
+ 381 02e4 7301      		movw r14,r6
+ 382 02e6 6501      		movw r12,r10
+ 383 02e8 0E94 0000 		call straight
+ 384               	/* epilogue start */
+ 385               	.LM16:
+ 386 02ec 2896      		adiw r28,8
+ 387 02ee 0FB6      		in __tmp_reg__,__SREG__
+ 388 02f0 F894      		cli
+ 389 02f2 DEBF      		out __SP_H__,r29
+ 390 02f4 0FBE      		out __SREG__,__tmp_reg__
+ 391 02f6 CDBF      		out __SP_L__,r28
+ 392 02f8 CF91      		pop r28
+ 393 02fa DF91      		pop r29
+ 394 02fc 1F91      		pop r17
+ 395 02fe 0F91      		pop r16
+ 396 0300 FF90      		pop r15
+ 397 0302 EF90      		pop r14
+ 398 0304 DF90      		pop r13
+ 399 0306 CF90      		pop r12
+ 400 0308 BF90      		pop r11
+ 401 030a AF90      		pop r10
+ 402 030c 9F90      		pop r9
+ 403 030e 8F90      		pop r8
+ 404 0310 7F90      		pop r7
+ 405 0312 6F90      		pop r6
+ 406 0314 5F90      		pop r5
+ 407 0316 4F90      		pop r4
+ 408 0318 3F90      		pop r3
+ 409 031a 2F90      		pop r2
+ 410 031c 0895      		ret
+ 411               	.LFE12:
+ 413               	.global	moveBackwards
+ 415               	moveBackwards:
+ 416               	.LFB11:
+ 417               	.LM17:
+ 418 031e 2F92      		push r2
+ 419 0320 3F92      		push r3
+ 420 0322 4F92      		push r4
+ 421 0324 5F92      		push r5
+ 422 0326 6F92      		push r6
+ 423 0328 7F92      		push r7
+ 424 032a 8F92      		push r8
+ 425 032c 9F92      		push r9
+ 426 032e AF92      		push r10
+ 427 0330 BF92      		push r11
+ 428 0332 CF92      		push r12
+ 429 0334 DF92      		push r13
+ 430 0336 EF92      		push r14
+ 431 0338 FF92      		push r15
+ 432 033a 0F93      		push r16
+ 433 033c 1F93      		push r17
+ 434               	/* prologue: function */
+ 435               	/* frame size = 0 */
+ 436               	.LM18:
+ 437 033e 80E0      		ldi r24,lo8(0)
+ 438 0340 90E0      		ldi r25,hi8(0)
+ 439 0342 61E0      		ldi r22,lo8(1)
+ 440 0344 70E0      		ldi r23,hi8(1)
+ 441 0346 0E94 0000 		call setDirection
+ 442               	.LM19:
+ 443 034a 6091 0000 		lds r22,mouse+62
+ 444 034e 7091 0000 		lds r23,(mouse+62)+1
+ 445 0352 8091 0000 		lds r24,(mouse+62)+2
+ 446 0356 9091 0000 		lds r25,(mouse+62)+3
+ 447 035a E0E0      		ldi r30,lo8(mouse+54)
+ 448 035c F0E0      		ldi r31,hi8(mouse+54)
+ 449 035e E190      		ld r14,Z+
+ 450 0360 F190      		ld r15,Z+
+ 451 0362 0191      		ld r16,Z+
+ 452 0364 1191      		ld r17,Z+
+ 453 0366 A080      		ld r10,Z
+ 454 0368 B180      		ldd r11,Z+1
+ 455 036a C280      		ldd r12,Z+2
+ 456 036c D380      		ldd r13,Z+3
+ 457 036e 0E94 0000 		call __fixsfsi
+ 458 0372 1B01      		movw r2,r22
+ 459 0374 2C01      		movw r4,r24
+ 460 0376 C801      		movw r24,r16
+ 461 0378 B701      		movw r22,r14
+ 462 037a 0E94 0000 		call __fixsfsi
+ 463 037e 3B01      		movw r6,r22
+ 464 0380 4C01      		movw r8,r24
+ 465 0382 C601      		movw r24,r12
+ 466 0384 B501      		movw r22,r10
+ 467 0386 0E94 0000 		call __fixsfsi
+ 468 038a 5B01      		movw r10,r22
+ 469 038c 6C01      		movw r12,r24
+ 470 038e 60E8      		ldi r22,lo8(640)
+ 471 0390 72E0      		ldi r23,hi8(640)
+ 472 0392 80E0      		ldi r24,hlo8(640)
+ 473 0394 90E0      		ldi r25,hhi8(640)
+ 474 0396 40E0      		ldi r20,lo8(0)
+ 475 0398 50E0      		ldi r21,hi8(0)
+ 476 039a 9101      		movw r18,r2
+ 477 039c 00E0      		ldi r16,lo8(0)
+ 478 039e 10E0      		ldi r17,hi8(0)
+ 479 03a0 7301      		movw r14,r6
+ 480 03a2 6501      		movw r12,r10
+ 481 03a4 0E94 0000 		call straight
+ 482               	/* epilogue start */
+ 483               	.LM20:
+ 484 03a8 1F91      		pop r17
+ 485 03aa 0F91      		pop r16
+ 486 03ac FF90      		pop r15
+ 487 03ae EF90      		pop r14
+ 488 03b0 DF90      		pop r13
+ 489 03b2 CF90      		pop r12
+ 490 03b4 BF90      		pop r11
+ 491 03b6 AF90      		pop r10
+ 492 03b8 9F90      		pop r9
+ 493 03ba 8F90      		pop r8
+ 494 03bc 7F90      		pop r7
+ 495 03be 6F90      		pop r6
+ 496 03c0 5F90      		pop r5
+ 497 03c2 4F90      		pop r4
+ 498 03c4 3F90      		pop r3
+ 499 03c6 2F90      		pop r2
+ 500 03c8 0895      		ret
+ 501               	.LFE11:
+ 503               	.global	moveForwardAndStop
+ 505               	moveForwardAndStop:
+ 506               	.LFB10:
+ 507               	.LM21:
+ 508 03ca 2F92      		push r2
+ 509 03cc 3F92      		push r3
+ 510 03ce 4F92      		push r4
+ 511 03d0 5F92      		push r5
+ 512 03d2 6F92      		push r6
+ 513 03d4 7F92      		push r7
+ 514 03d6 8F92      		push r8
+ 515 03d8 9F92      		push r9
+ 516 03da AF92      		push r10
+ 517 03dc BF92      		push r11
+ 518 03de CF92      		push r12
+ 519 03e0 DF92      		push r13
+ 520 03e2 EF92      		push r14
+ 521 03e4 FF92      		push r15
+ 522 03e6 0F93      		push r16
+ 523 03e8 1F93      		push r17
+ 524 03ea DF93      		push r29
+ 525 03ec CF93      		push r28
+ 526 03ee 00D0      		rcall .
+ 527 03f0 00D0      		rcall .
+ 528 03f2 CDB7      		in r28,__SP_L__
+ 529 03f4 DEB7      		in r29,__SP_H__
+ 530               	/* prologue: function */
+ 531               	/* frame size = 4 */
+ 532               	.LM22:
+ 533 03f6 80E0      		ldi r24,lo8(0)
+ 534 03f8 90E0      		ldi r25,hi8(0)
+ 535 03fa 60E0      		ldi r22,lo8(0)
+ 536 03fc 70E0      		ldi r23,hi8(0)
+ 537 03fe 0E94 0000 		call setDirection
+ 538               	.LM23:
+ 539 0402 6091 0000 		lds r22,mouse+66
+ 540 0406 7091 0000 		lds r23,(mouse+66)+1
+ 541 040a 8091 0000 		lds r24,(mouse+66)+2
+ 542 040e 9091 0000 		lds r25,(mouse+66)+3
+ 543 0412 E0E0      		ldi r30,lo8(mouse+62)
+ 544 0414 F0E0      		ldi r31,hi8(mouse+62)
+ 545 0416 E080      		ld r14,Z
+ 546 0418 F180      		ldd r15,Z+1
+ 547 041a 0281      		ldd r16,Z+2
+ 548 041c 1381      		ldd r17,Z+3
+ 549 041e 3897      		sbiw r30,8
+ 550 0420 A190      		ld r10,Z+
+ 551 0422 B190      		ld r11,Z+
+ 552 0424 C190      		ld r12,Z+
+ 553 0426 D190      		ld r13,Z+
+ 554 0428 2080      		ld r2,Z
+ 555 042a 3180      		ldd r3,Z+1
+ 556 042c 4280      		ldd r4,Z+2
+ 557 042e 5380      		ldd r5,Z+3
+ 558 0430 0E94 0000 		call __fixsfsi
+ 559 0434 6983      		std Y+1,r22
+ 560 0436 7A83      		std Y+2,r23
+ 561 0438 8B83      		std Y+3,r24
+ 562 043a 9C83      		std Y+4,r25
+ 563 043c C801      		movw r24,r16
+ 564 043e B701      		movw r22,r14
+ 565 0440 0E94 0000 		call __fixsfsi
+ 566 0444 7B01      		movw r14,r22
+ 567 0446 8C01      		movw r16,r24
+ 568 0448 C601      		movw r24,r12
+ 569 044a B501      		movw r22,r10
+ 570 044c 0E94 0000 		call __fixsfsi
+ 571 0450 3B01      		movw r6,r22
+ 572 0452 4C01      		movw r8,r24
+ 573 0454 C201      		movw r24,r4
+ 574 0456 B101      		movw r22,r2
+ 575 0458 0E94 0000 		call __fixsfsi
+ 576 045c 5B01      		movw r10,r22
+ 577 045e 6C01      		movw r12,r24
+ 578 0460 6AEF      		ldi r22,lo8(762)
+ 579 0462 72E0      		ldi r23,hi8(762)
+ 580 0464 80E0      		ldi r24,hlo8(762)
+ 581 0466 90E0      		ldi r25,hhi8(762)
+ 582 0468 4981      		ldd r20,Y+1
+ 583 046a 5A81      		ldd r21,Y+2
+ 584 046c 9701      		movw r18,r14
+ 585 046e 00E0      		ldi r16,lo8(0)
+ 586 0470 10E0      		ldi r17,hi8(0)
+ 587 0472 7301      		movw r14,r6
+ 588 0474 6501      		movw r12,r10
+ 589 0476 0E94 0000 		call straight
+ 590               	/* epilogue start */
+ 591               	.LM24:
+ 592 047a 0F90      		pop __tmp_reg__
+ 593 047c 0F90      		pop __tmp_reg__
+ 594 047e 0F90      		pop __tmp_reg__
+ 595 0480 0F90      		pop __tmp_reg__
+ 596 0482 CF91      		pop r28
+ 597 0484 DF91      		pop r29
+ 598 0486 1F91      		pop r17
+ 599 0488 0F91      		pop r16
+ 600 048a FF90      		pop r15
+ 601 048c EF90      		pop r14
+ 602 048e DF90      		pop r13
+ 603 0490 CF90      		pop r12
+ 604 0492 BF90      		pop r11
+ 605 0494 AF90      		pop r10
+ 606 0496 9F90      		pop r9
+ 607 0498 8F90      		pop r8
+ 608 049a 7F90      		pop r7
+ 609 049c 6F90      		pop r6
+ 610 049e 5F90      		pop r5
+ 611 04a0 4F90      		pop r4
+ 612 04a2 3F90      		pop r3
+ 613 04a4 2F90      		pop r2
+ 614 04a6 0895      		ret
+ 615               	.LFE10:
+ 617               	.global	moveForward
+ 619               	moveForward:
+ 620               	.LFB9:
+ 621               	.LM25:
+ 622 04a8 2F92      		push r2
+ 623 04aa 3F92      		push r3
+ 624 04ac 4F92      		push r4
+ 625 04ae 5F92      		push r5
+ 626 04b0 6F92      		push r6
+ 627 04b2 7F92      		push r7
+ 628 04b4 8F92      		push r8
+ 629 04b6 9F92      		push r9
+ 630 04b8 AF92      		push r10
+ 631 04ba BF92      		push r11
+ 632 04bc CF92      		push r12
+ 633 04be DF92      		push r13
+ 634 04c0 EF92      		push r14
+ 635 04c2 FF92      		push r15
+ 636 04c4 0F93      		push r16
+ 637 04c6 1F93      		push r17
+ 638 04c8 DF93      		push r29
+ 639 04ca CF93      		push r28
+ 640 04cc CDB7      		in r28,__SP_L__
+ 641 04ce DEB7      		in r29,__SP_H__
+ 642 04d0 2897      		sbiw r28,8
+ 643 04d2 0FB6      		in __tmp_reg__,__SREG__
+ 644 04d4 F894      		cli
+ 645 04d6 DEBF      		out __SP_H__,r29
+ 646 04d8 0FBE      		out __SREG__,__tmp_reg__
+ 647 04da CDBF      		out __SP_L__,r28
+ 648               	/* prologue: function */
+ 649               	/* frame size = 8 */
+ 650               	.LM26:
+ 651 04dc 80E0      		ldi r24,lo8(0)
+ 652 04de 90E0      		ldi r25,hi8(0)
+ 653 04e0 60E0      		ldi r22,lo8(0)
+ 654 04e2 70E0      		ldi r23,hi8(0)
+ 655 04e4 0E94 0000 		call setDirection
+ 656               	.LM27:
+ 657 04e8 A0E0      		ldi r26,lo8(mouse+66)
+ 658 04ea B0E0      		ldi r27,hi8(mouse+66)
+ 659 04ec 6091 0000 		lds r22,mouse+66
+ 660 04f0 7091 0000 		lds r23,(mouse+66)+1
+ 661 04f4 8091 0000 		lds r24,(mouse+66)+2
+ 662 04f8 9091 0000 		lds r25,(mouse+66)+3
+ 663 04fc FD01      		movw r30,r26
+ 664 04fe 1291      		ld r17,-Z
+ 665 0500 0291      		ld r16,-Z
+ 666 0502 F290      		ld r15,-Z
+ 667 0504 E290      		ld r14,-Z
+ 668 0506 A080      		ld r10,Z
+ 669 0508 B180      		ldd r11,Z+1
+ 670 050a C280      		ldd r12,Z+2
+ 671 050c D380      		ldd r13,Z+3
+ 672 050e 1C97      		sbiw r26,12
+ 673 0510 6D90      		ld r6,X+
+ 674 0512 7D90      		ld r7,X+
+ 675 0514 8D90      		ld r8,X+
+ 676 0516 9D90      		ld r9,X+
+ 677 0518 2D91      		ld r18,X+
+ 678 051a 3D91      		ld r19,X+
+ 679 051c 4D91      		ld r20,X+
+ 680 051e 5C91      		ld r21,X
+ 681 0520 2983      		std Y+1,r18
+ 682 0522 3A83      		std Y+2,r19
+ 683 0524 4B83      		std Y+3,r20
+ 684 0526 5C83      		std Y+4,r21
+ 685 0528 0E94 0000 		call __fixsfsi
+ 686 052c 6D83      		std Y+5,r22
+ 687 052e 7E83      		std Y+6,r23
+ 688 0530 8F83      		std Y+7,r24
+ 689 0532 9887      		std Y+8,r25
+ 690 0534 C801      		movw r24,r16
+ 691 0536 B701      		movw r22,r14
+ 692 0538 0E94 0000 		call __fixsfsi
+ 693 053c 1B01      		movw r2,r22
+ 694 053e 2C01      		movw r4,r24
+ 695 0540 C601      		movw r24,r12
+ 696 0542 B501      		movw r22,r10
+ 697 0544 0E94 0000 		call __fixsfsi
+ 698 0548 7B01      		movw r14,r22
+ 699 054a 8C01      		movw r16,r24
+ 700 054c C401      		movw r24,r8
+ 701 054e B301      		movw r22,r6
+ 702 0550 0E94 0000 		call __fixsfsi
+ 703 0554 3B01      		movw r6,r22
+ 704 0556 4C01      		movw r8,r24
+ 705 0558 6981      		ldd r22,Y+1
+ 706 055a 7A81      		ldd r23,Y+2
+ 707 055c 8B81      		ldd r24,Y+3
+ 708 055e 9C81      		ldd r25,Y+4
+ 709 0560 0E94 0000 		call __fixsfsi
+ 710 0564 5B01      		movw r10,r22
+ 711 0566 6C01      		movw r12,r24
+ 712 0568 6AEF      		ldi r22,lo8(762)
+ 713 056a 72E0      		ldi r23,hi8(762)
+ 714 056c 80E0      		ldi r24,hlo8(762)
+ 715 056e 90E0      		ldi r25,hhi8(762)
+ 716 0570 4D81      		ldd r20,Y+5
+ 717 0572 5E81      		ldd r21,Y+6
+ 718 0574 9101      		movw r18,r2
+ 719 0576 8701      		movw r16,r14
+ 720 0578 7301      		movw r14,r6
+ 721 057a 6501      		movw r12,r10
+ 722 057c 0E94 0000 		call straight
+ 723               	/* epilogue start */
+ 724               	.LM28:
+ 725 0580 2896      		adiw r28,8
+ 726 0582 0FB6      		in __tmp_reg__,__SREG__
+ 727 0584 F894      		cli
+ 728 0586 DEBF      		out __SP_H__,r29
+ 729 0588 0FBE      		out __SREG__,__tmp_reg__
+ 730 058a CDBF      		out __SP_L__,r28
+ 731 058c CF91      		pop r28
+ 732 058e DF91      		pop r29
+ 733 0590 1F91      		pop r17
+ 734 0592 0F91      		pop r16
+ 735 0594 FF90      		pop r15
+ 736 0596 EF90      		pop r14
+ 737 0598 DF90      		pop r13
+ 738 059a CF90      		pop r12
+ 739 059c BF90      		pop r11
+ 740 059e AF90      		pop r10
+ 741 05a0 9F90      		pop r9
+ 742 05a2 8F90      		pop r8
+ 743 05a4 7F90      		pop r7
+ 744 05a6 6F90      		pop r6
+ 745 05a8 5F90      		pop r5
+ 746 05aa 4F90      		pop r4
+ 747 05ac 3F90      		pop r3
+ 748 05ae 2F90      		pop r2
+ 749 05b0 0895      		ret
+ 750               	.LFE9:
+ 752               	.global	isWallLeft
+ 754               	isWallLeft:
+ 755               	.LFB8:
+ 756               	.LM29:
+ 757 05b2 CF93      		push r28
+ 758 05b4 DF93      		push r29
+ 759               	/* prologue: function */
+ 760               	/* frame size = 0 */
+ 761               	.LM30:
+ 762 05b6 0E94 0000 		call getLeftIR
+ 763 05ba C0E0      		ldi r28,lo8(0)
+ 764 05bc D0E0      		ldi r29,hi8(0)
+ 765 05be 20E0      		ldi r18,lo8(0x41000000)
+ 766 05c0 30E0      		ldi r19,hi8(0x41000000)
+ 767 05c2 40E0      		ldi r20,hlo8(0x41000000)
+ 768 05c4 51E4      		ldi r21,hhi8(0x41000000)
+ 769 05c6 0E94 0000 		call __ltsf2
+ 770 05ca 8823      		tst r24
+ 771 05cc 04F4      		brge .L14
+ 772 05ce C1E0      		ldi r28,lo8(1)
+ 773 05d0 D0E0      		ldi r29,hi8(1)
+ 774               	.L14:
+ 775               	.LM31:
+ 776 05d2 CE01      		movw r24,r28
+ 777               	/* epilogue start */
+ 778 05d4 DF91      		pop r29
+ 779 05d6 CF91      		pop r28
+ 780 05d8 0895      		ret
+ 781               	.LFE8:
+ 783               	.global	isWallRight
+ 785               	isWallRight:
+ 786               	.LFB7:
+ 787               	.LM32:
+ 788 05da CF93      		push r28
+ 789 05dc DF93      		push r29
+ 790               	/* prologue: function */
+ 791               	/* frame size = 0 */
+ 792               	.LM33:
+ 793 05de 0E94 0000 		call getRightIR
+ 794 05e2 C0E0      		ldi r28,lo8(0)
+ 795 05e4 D0E0      		ldi r29,hi8(0)
+ 796 05e6 20E0      		ldi r18,lo8(0x41000000)
+ 797 05e8 30E0      		ldi r19,hi8(0x41000000)
+ 798 05ea 40E0      		ldi r20,hlo8(0x41000000)
+ 799 05ec 51E4      		ldi r21,hhi8(0x41000000)
+ 800 05ee 0E94 0000 		call __ltsf2
+ 801 05f2 8823      		tst r24
+ 802 05f4 04F4      		brge .L18
+ 803 05f6 C1E0      		ldi r28,lo8(1)
+ 804 05f8 D0E0      		ldi r29,hi8(1)
+ 805               	.L18:
+ 806               	.LM34:
+ 807 05fa CE01      		movw r24,r28
+ 808               	/* epilogue start */
+ 809 05fc DF91      		pop r29
+ 810 05fe CF91      		pop r28
+ 811 0600 0895      		ret
+ 812               	.LFE7:
+ 814               	.global	isWallFront
+ 816               	isWallFront:
+ 817               	.LFB6:
+ 818               	.LM35:
+ 819 0602 CF93      		push r28
+ 820 0604 DF93      		push r29
+ 821               	/* prologue: function */
+ 822               	/* frame size = 0 */
+ 823               	.LM36:
+ 824 0606 0E94 0000 		call getFrontIR
+ 825 060a C0E0      		ldi r28,lo8(0)
+ 826 060c D0E0      		ldi r29,hi8(0)
+ 827 060e 20E0      		ldi r18,lo8(0x41800000)
+ 828 0610 30E0      		ldi r19,hi8(0x41800000)
+ 829 0612 40E8      		ldi r20,hlo8(0x41800000)
+ 830 0614 51E4      		ldi r21,hhi8(0x41800000)
+ 831 0616 0E94 0000 		call __ltsf2
+ 832 061a 8823      		tst r24
+ 833 061c 04F4      		brge .L22
+ 834 061e C1E0      		ldi r28,lo8(1)
+ 835 0620 D0E0      		ldi r29,hi8(1)
+ 836               	.L22:
+ 837               	.LM37:
+ 838 0622 CE01      		movw r24,r28
+ 839               	/* epilogue start */
+ 840 0624 DF91      		pop r29
+ 841 0626 CF91      		pop r28
+ 842 0628 0895      		ret
+ 843               	.LFE6:
+ 845               		.comm mouse,72,1
+ 934               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 RobotModel.c
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccimNF77.s:2      *ABS*:0000003f __SREG__
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccimNF77.s:3      *ABS*:0000003e __SP_H__
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccimNF77.s:4      *ABS*:0000003d __SP_L__
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccimNF77.s:5      *ABS*:00000034 __CCP__
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccimNF77.s:6      *ABS*:00000000 __tmp_reg__
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccimNF77.s:7      *ABS*:00000001 __zero_reg__
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccimNF77.s:18     .text:00000000 rotateRight
+                            *COM*:00000048 mouse
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccimNF77.s:108    .text:000000ac rotateLeft
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccimNF77.s:198    .text:00000158 moveBackwardsAndCorrect
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccimNF77.s:415    .text:0000031e moveBackwards
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccimNF77.s:505    .text:000003ca moveForwardAndStop
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccimNF77.s:619    .text:000004a8 moveForward
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccimNF77.s:754    .text:000005b2 isWallLeft
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccimNF77.s:785    .text:000005da isWallRight
+C:\Users\ENGIN_~1\AppData\Local\Temp/ccimNF77.s:816    .text:00000602 isWallFront
+
+UNDEFINED SYMBOLS
+setDirection
+__fixsfsi
+straight
+getLeftIR
+__ltsf2
+getRightIR
+getFrontIR
+__do_clear_bss

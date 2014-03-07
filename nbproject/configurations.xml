@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="90">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df root="." name="0">
+      <df name="Floodfill">
+        <in>floodfill_move.c</in>
+        <in>floodfill_move.h</in>
+      </df>
+      <df name="RobotModel">
+        <in>RobotModel.c</in>
+        <in>RobotModel_Controls.c</in>
+        <in>RobotModel_Sensors.c</in>
+        <in>RobotModel_StepperMotor.c</in>
+      </df>
+      <in>USART.c</in>
+      <in>main.c</in>
+    </df>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
+  <sourceRootList>
+    <Elem>.</Elem>
+  </sourceRootList>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>false</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <codeAssistance>
+      </codeAssistance>
+      <makefileType>
+        <makeTool>
+          <buildCommandWorkingDir>.</buildCommandWorkingDir>
+          <buildCommand>${MAKE} -f Makefile</buildCommand>
+          <cleanCommand>${MAKE} -f Makefile clean</cleanCommand>
+          <executablePath></executablePath>
+        </makeTool>
+      </makefileType>
+      <item path="Floodfill/floodfill_move.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="Floodfill/floodfill_move.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RobotModel/RobotModel.c" ex="false" tool="0" flavor2="0">
+        <cTool>
+          <incDir>
+            <pElem>RobotModel</pElem>
+            <pElem></pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>F_CPU=16000000UL</Elem>
+          </preprocessorList>
+        </cTool>
+      </item>
+      <item path="RobotModel/RobotModel_Controls.c" ex="false" tool="0" flavor2="0">
+        <cTool>
+          <incDir>
+            <pElem>C:/WinAVR-20100110/avr/include/util</pElem>
+            <pElem>RobotModel</pElem>
+            <pElem></pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>F_CPU=16000000UL</Elem>
+          </preprocessorList>
+        </cTool>
+      </item>
+      <item path="RobotModel/RobotModel_Sensors.c" ex="false" tool="0" flavor2="0">
+        <cTool>
+          <incDir>
+            <pElem>C:/WinAVR-20100110/avr/include/util</pElem>
+            <pElem>RobotModel</pElem>
+            <pElem></pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>F_CPU=16000000UL</Elem>
+          </preprocessorList>
+        </cTool>
+      </item>
+      <item path="RobotModel/RobotModel_StepperMotor.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+        <cTool>
+          <incDir>
+            <pElem>C:/WinAVR-20100110/avr/include/util</pElem>
+            <pElem>RobotModel</pElem>
+            <pElem></pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>F_CPU=16000000UL</Elem>
+          </preprocessorList>
+        </cTool>
+      </item>
+      <item path="USART.c" ex="false" tool="0" flavor2="0">
+        <cTool>
+          <incDir>
+            <pElem></pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>F_CPU=16000000UL</Elem>
+          </preprocessorList>
+        </cTool>
+      </item>
+      <item path="main.c" ex="false" tool="0" flavor2="0">
+        <cTool>
+          <incDir>
+            <pElem>RobotModel</pElem>
+            <pElem></pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>F_CPU=16000000UL</Elem>
+          </preprocessorList>
+        </cTool>
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>
