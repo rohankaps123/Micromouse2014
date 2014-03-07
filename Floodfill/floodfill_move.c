@@ -8,54 +8,49 @@
 #define USELESS 1024
 
 int determineNextMove() {
-    int bestDistance = getDistance(here);
+    int bestDistance = getDistance(mouse.x, mouse.y);
     int bestDirection;
 
-    if ((bestDistance > getNeighborDistance(here, robotLocation.getDirection())) &&
-            (isWallFront() == false)) {
-        bestDirection = robotLocation.getDirection();
-        bestDistance = getNeighborDistance(here, bestDirection);
+    if ((bestDistance > getNeighborDistance(mouse.x, mouse.y, mouse.direction)) &&
+            (isWallFront() == 0)) {
+        bestDirection = mouse.direction;
+        bestDistance = getNeighborDistance(mouse.x, mouse.y, bestDirection);
     }
 
-    if ((bestDistance > getNeighborDistance(here, Direction.North)) &&
-            (maze.getWall(here, Direction.North).isSet() == false)) {
-        bestDirection = Direction.North;
-        bestDistance = getNeighborDistance(here, bestDirection);
+    if ((bestDistance > getNeighborDistance(mouse.x, mouse.y, NORTH)) &&
+            (getWall(mouse.direction, NORTH) == 0)) {
+        bestDirection = NORTH;
+        bestDistance = getNeighborDistance(mouse.x, mouse.y, bestDirection);
     }
-    if ((bestDistance > getNeighborDistance(here, Direction.East)) &&
-            (maze.getWall(here, Direction.East).isSet() == false)) {
-        bestDirection = Direction.East;
-        bestDistance = getNeighborDistance(here, bestDirection);
+    if ((bestDistance > getNeighborDistance(mouse.x, mouse.y, EAST)) &&
+            (getWall(mouse.direction, EAST) == 0)) {
+        bestDirection = EAST;
+        bestDistance = getNeighborDistance(mouse.x, mouse.y, bestDirection);
     }
-    if ((bestDistance > getNeighborDistance(here, Direction.West)) &&
-            (maze.getWall(here, Direction.West).isSet() == false)) {
-        bestDirection = Direction.West;
-        bestDistance = getNeighborDistance(here, bestDirection);
+    if ((bestDistance > getNeighborDistance(mouse.x, mouse.y, WEST)) &&
+            (getWall(mouse.direction, WEST) == 0)) {
+        bestDirection = WEST;
+        bestDistance = getNeighborDistance(mouse.x, mouse.y, bestDirection);
     }
-    if ((bestDistance > getNeighborDistance(here, Direction.South)) &&
-            (maze.getWall(here, Direction.South).isSet() == false)) {
-        bestDirection = Direction.South;
-        bestDistance = getNeighborDistance(here, bestDirection);
+    if ((bestDistance > getNeighborDistance(mouse.x, mouse.y, SOUTH)) &&
+            (getWall(mouse.direction, SOUTH) == 0)) {
+        bestDirection = SOUTH;
+        bestDistance = getNeighborDistance(mouse.x, mouse.y, bestDirection);
     }
-
-    if (bestDirection == null) {
-        floodfill();
-        return getBestDirection();
-    } else {
-        return bestDirection;
-    }
+    
+    return bestDirection;
 }
 
 int getNeighborDistance(int x, int y, int direction) {
     int neighbor;
-    if ((direction == NORTH) && (mouse.y != 1)) {
-        neighbor = cells[mouse.x][mouse.y - 1];
-    } else if ((direction == SOUTH) && (mouse.y != 16)) {
-        neighbor = cells[mouse.x][mouse.y + 1];
-    } else if ((direction == EAST) && (mouse.x != 16)) {
-        neighbor = cells[mouse.x + 1][mouse.y];
+    if ((direction == NORTH) && (y != 1)) {
+        neighbor = cells[x][y - 1];
+    } else if ((direction == SOUTH) && (y != 16)) {
+        neighbor = cells[x][y + 1];
+    } else if ((direction == EAST) && (x != 16)) {
+        neighbor = cells[x + 1][y];
     } else if ((direction == WEST) && (x != 1)) {
-        neighbor = cells[mouse.x - 1][mouse.y];
+        neighbor = cells[x - 1][y];
     } else {
         return USELESS;
     }
@@ -64,5 +59,5 @@ int getNeighborDistance(int x, int y, int direction) {
 }
 
 int getDistance(int x, int y) {
-    return cells[mouse.x - 1][mouse.y - 1];
+    return cells[x - 1][y - 1];
 }
