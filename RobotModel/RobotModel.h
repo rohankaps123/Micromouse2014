@@ -46,9 +46,12 @@ int isWallLeft(void);
 void moveForward(void);
 void moveForwardAndStop(void);
 void rotateLeft(void);
+void rotateLeftWithFix(float angle);
 void rotateRight(void);
+void rotateRightWithFix(float angle);
 void moveBackwards(void);
 void moveBackwardsAndCorrect(void);
+void fixAngle(float angle);
 
 
 

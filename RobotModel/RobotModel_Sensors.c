@@ -1,5 +1,6 @@
 #include <avr/io.h>
 #include <util/delay.h>
+#include <avr/interrupt.h>
 
 #include "RobotModel_Sensors.h"
 
@@ -13,9 +14,22 @@ float getRightIR()
 	return linearizeIRSensorValues( getIRSensorValue(&PORTC, PC6, 4) );
 }
 
-float getFrontIR()
+float getFrontLeftIR()
 {
-	return linearizeIRSensorValues( getIRSensorValue(&PORTD, PD4, 5) );
+	return linearizeIRSensorValues_Front( getIRSensorValue(&PORTB, PB4, 5) );
+}
+
+float getFrontRightIR()
+{
+	return linearizeIRSensorValues_Front( getIRSensorValue(&PORTD, PD4, 7) );
+}
+
+float getFrontAngle()
+{
+	float value = getFrontLeftIR();
+	float value2 = getFrontRightIR();
+		
+	return 90.0 - atan2(5,value2-value) * 57.2957795; 
 }
 
 int getIRSensorValue(volatile uint8_t *port, uint8_t pin, int analogChannel)
@@ -40,6 +54,24 @@ int getPotSensorValue(int analogChannel)
 	return ReadADC(analogChannel);
 }
 
+volatile int gyroSum = 0;
+volatile int gyroComp;
+
+int updateGyroValue()
+{
+	int dif = ReadADC(7) - gyroComp;
+	
+	if(dif > 2 || dif < -2)
+		gyroSum += dif;
+		
+	return gyroSum; 
+}
+
+void calibrateGyro()
+{
+	gyroComp = ReadADC(7);
+}
+
 int isButtonPushed(int analogChannel)
 {
 	return !(ReadADC(analogChannel) > 512);
@@ -58,12 +90,6 @@ void turnOnLeds(int num)
 		
 	else
 		PORTB &= ~(1 << PB5);
-		
-	if((num & 1) == 1)
-		PORTB |= (1 << PB4);
-		
-	else
-		PORTB &= ~(1 << PB4);
 }
 
 /* Setup Analog To Digital Converter */
@@ -71,7 +97,7 @@ void setupADC()
 {
 	//Setup Registers
 	ADMUX = (1 << REFS0);// | (1 << MUX0) | (1 << MUX1) | (1 << MUX2);
-	ADCSRA = (1 << ADEN) | (ADPS0) | (1 << ADPS1) | (1 << ADPS2);	
+	ADCSRA = (1 << ADEN) | (1 << ADPS0) | (1 << ADPS1) | (1 << ADPS2);	
 	
 	//IR Triggers
 	DDRD |= (1 << PORTD4) | (1 << PORTD7);
@@ -103,5 +129,14 @@ uint16_t ReadADC(uint8_t ch)
 float linearizeIRSensorValues(float input)
 {
 	return -6.0220498115*log( input ) + 43.5411429577;
+}
+
+float linearizeIRSensorValues_Front(float input)
+{
+	if(input > 978)
+		return -0.17272727272*input + 173.6636363636;
+	
+	else
+		return -3.8522217222*log( input ) + 31.2529127395;
 }
 
