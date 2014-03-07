@@ -36,6 +36,7 @@ Last Updated: March 1st 2014
 
 volatile unsigned long milliseconds;
 extern volatile Mouse mouse;
+extern volatile int cells[16][16];
 void startTimer(void);
 
 int main(void)
