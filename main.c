@@ -35,7 +35,7 @@ Last Updated: March 1st 2014
 
 volatile unsigned long milliseconds;
 extern volatile Mouse mouse;
-
+extern volatile int cells[16][16];
 extern volatile int gyroSum;
 extern volatile int gyroComp;
 
