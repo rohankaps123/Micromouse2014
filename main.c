@@ -55,35 +55,16 @@ int main(void)
 
 	enableDrive(1);
 	turnOnTimers(1,1);
-	
-	
+	//2.8
 	for(int i = 0; i < 30; i++)
 	{		
 		int right = isWallRight();
 		int front = isWallFront();
 		int left = isWallLeft();
-
-		if(front)
-		{
-			float left = getFrontLeftIR();
-			float right = getFrontRightIR();
-			float length = (left+right)/2;
-			
-			length = length - 3;
-			if(length < 0)
-			{
-				setDirection(1, 1);
-				length = -length;
-			}
-			straight((length)*42, mouse.velocity, mouse.maxVelocity, 0, mouse.acceleration, mouse.deceleration);
-			
-		}
-		
 		float angle = getFrontAngle();
 		
 		int lFront = getFrontLeftIR();
 		int rFront = getFrontRightIR();
-		
 		
 		if(!right)
 		{
@@ -103,43 +84,33 @@ int main(void)
 		
 		if(left && right)		
 		{
-			mouse.IR_CORRECT = 30;			
-		}
-		else if(left)
-		{
-			mouse.IR_CORRECT_LEFT = 30;
-		}
-		else if(right)
-		{
-			mouse.IR_CORRECT_RIGHT = 30;
+			mouse.IR_CORRECT = 20;
+			turnOnLeds(1);
 		}
 		else
 		{
 			turnOnLeds(0);
 		}
-		
 		moveForwardAndStop();
 		
-		mouse.IR_CORRECT = 0;	
-		mouse.IR_CORRECT_LEFT = 0;
-		mouse.IR_CORRECT_RIGHT = 0;
+		mouse.IR_CORRECT = 0;		
 	}
+	
+	/*
+	
+	printlnNum(angle);
+	
+	rotateRightWithFix(angle);
+	*/
 	
 	turnOnTimers(0, 0);
 	enableDrive(0);
 	
-
 	while(1==1)
 	{
-		float left = getLeftIR();
-		float right = getRightIR();
-	
-		printNum(left);
+		printNum((float)getFrontLeftIR());
 		print(",");
-		printlnNum(right);
-		//printlnNum((float)angle);
-		//print(",");
-		//printlnNum((float)getFrontRightIR());	
+		printlnNum((float)getFrontRightIR());	
 		
 	}	
 }
