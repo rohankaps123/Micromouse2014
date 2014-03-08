@@ -4,5 +4,6 @@
 void straight(long stepTarget, int inSpeed, int maxSpeed, int exitSpeed, int accel, int decel);
 int getOffsetError(void);
 void startTimer(void);
-
+float getRightError(void);
+float getLeftError(void);
 #endif

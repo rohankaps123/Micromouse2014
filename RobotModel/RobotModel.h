@@ -33,6 +33,8 @@ typedef struct Mouse
 	
 	//Values
 	volatile int IR_CORRECT;
+	volatile int IR_CORRECT_LEFT;
+	volatile int IR_CORRECT_RIGHT;
 	//FloodFill maze;
 	
 } Mouse;

@@ -24,6 +24,17 @@ float getFrontRightIR()
 	return linearizeIRSensorValues_Front( getIRSensorValue(&PORTD, PD4, 7) );
 }
 
+float getFrontLeftIRLong()
+{
+	return linearizeIRSensorValues( getIRSensorValue(&PORTB, PB4, 5) );
+}
+
+float getFrontRightIRLong()
+{
+	return linearizeIRSensorValues( getIRSensorValue(&PORTD, PD4, 7) );
+}
+
+
 float getFrontAngle()
 {
 	float value = getFrontLeftIR();
