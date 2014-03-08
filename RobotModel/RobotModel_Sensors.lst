@@ -8,7 +8,7 @@
   15               	.Ltext0:
   16               	.global	turnOnLeds
   18               	turnOnLeds:
-  19               	.LFB16:
+  19               	.LFB18:
   20               	.LM1:
   21               	.LVL0:
   22               	/* prologue: function */
@@ -33,10 +33,10 @@
   41               	.LM7:
   42 0012 2D98      		cbi 37-32,5
   43 0014 0895      		ret
-  44               	.LFE16:
+  44               	.LFE18:
   46               	.global	setupADC
   48               	setupADC:
-  49               	.LFB17:
+  49               	.LFB19:
   50               	.LM8:
   51               	/* prologue: function */
   52               	/* frame size = 0 */
@@ -61,10 +61,10 @@
   71               	/* epilogue start */
   72               	.LM16:
   73 0030 0895      		ret
-  74               	.LFE17:
+  74               	.LFE19:
   76               	.global	ReadADC
   78               	ReadADC:
-  79               	.LFB18:
+  79               	.LFB20:
   80               	.LM17:
   81               	.LVL1:
   82               	/* prologue: function */
@@ -94,10 +94,10 @@
  106 005e C901      		movw r24,r18
  107               	/* epilogue start */
  108 0060 0895      		ret
- 109               	.LFE18:
+ 109               	.LFE20:
  111               	.global	isButtonPushed
  113               	isButtonPushed:
- 114               	.LFB15:
+ 114               	.LFB17:
  115               	.LM24:
  116               	.LVL3:
  117               	/* prologue: function */
@@ -117,10 +117,10 @@
  131 0074 C901      		movw r24,r18
  132               	/* epilogue start */
  133 0076 0895      		ret
- 134               	.LFE15:
+ 134               	.LFE17:
  136               	.global	calibrateGyro
  138               	calibrateGyro:
- 139               	.LFB14:
+ 139               	.LFB16:
  140               	.LM27:
  141               	/* prologue: function */
  142               	/* frame size = 0 */
@@ -132,10 +132,10 @@
  148               	/* epilogue start */
  149               	.LM29:
  150 0086 0895      		ret
- 151               	.LFE14:
+ 151               	.LFE16:
  153               	.global	updateGyroValue
  155               	updateGyroValue:
- 156               	.LFB13:
+ 156               	.LFB15:
  157               	.LM30:
  158               	/* prologue: function */
  159               	/* frame size = 0 */
@@ -166,10 +166,10 @@
  184 00be C901      		movw r24,r18
  185               	/* epilogue start */
  186 00c0 0895      		ret
- 187               	.LFE13:
+ 187               	.LFE15:
  189               	.global	getPotSensorValue
  191               	getPotSensorValue:
- 192               	.LFB12:
+ 192               	.LFB14:
  193               	.LM36:
  194               	.LVL5:
  195               	/* prologue: function */
@@ -180,10 +180,10 @@
  200               	/* epilogue start */
  201               	.LM38:
  202 00c6 0895      		ret
- 203               	.LFE12:
+ 203               	.LFE14:
  205               	.global	getIRSensorValue
  207               	getIRSensorValue:
- 208               	.LFB11:
+ 208               	.LFB13:
  209               	.LM39:
  210               	.LVL7:
  211 00c8 CF92      		push r12
@@ -274,10 +274,10 @@
  296 0118 DF90      		pop r13
  297 011a CF90      		pop r12
  298 011c 0895      		ret
- 299               	.LFE11:
+ 299               	.LFE13:
  301               	.global	linearizeIRSensorValues_Front
  303               	linearizeIRSensorValues_Front:
- 304               	.LFB20:
+ 304               	.LFB22:
  305               	.LM46:
  306               	.LVL13:
  307 011e EF92      		push r14
@@ -341,7 +341,7 @@
  365 0188 EF90      		pop r14
  366               	.LVL15:
  367 018a 0895      		ret
- 368               	.LFE20:
+ 368               	.LFE22:
  370               	.global	getFrontRightIR
  372               	getFrontRightIR:
  373               	.LFB9:
@@ -394,7 +394,7 @@
  422               	.LFE8:
  424               	.global	linearizeIRSensorValues
  426               	linearizeIRSensorValues:
- 427               	.LFB19:
+ 427               	.LFB21:
  428               	.LM57:
  429               	.LVL16:
  430               	/* prologue: function */
@@ -415,19 +415,19 @@
  445               	/* epilogue start */
  446               	.LM59:
  447 01f0 0895      		ret
- 448               	.LFE19:
- 450               	.global	getRightIR
- 452               	getRightIR:
- 453               	.LFB7:
+ 448               	.LFE21:
+ 450               	.global	getFrontRightIRLong
+ 452               	getFrontRightIRLong:
+ 453               	.LFB11:
  454               	.LM60:
  455               	/* prologue: function */
  456               	/* frame size = 0 */
  457               	.LM61:
- 458 01f2 88E2      		ldi r24,lo8(40)
- 459 01f4 90E0      		ldi r25,hi8(40)
- 460 01f6 66E0      		ldi r22,lo8(6)
- 461 01f8 44E0      		ldi r20,lo8(4)
- 462 01fa 50E0      		ldi r21,hi8(4)
+ 458 01f2 8BE2      		ldi r24,lo8(43)
+ 459 01f4 90E0      		ldi r25,hi8(43)
+ 460 01f6 64E0      		ldi r22,lo8(4)
+ 461 01f8 47E0      		ldi r20,lo8(7)
+ 462 01fa 50E0      		ldi r21,hi8(7)
  463 01fc 0E94 0000 		call getIRSensorValue
  464 0200 AA27      		clr r26
  465 0202 97FD      		sbrc r25,7
@@ -440,19 +440,19 @@
  472               	/* epilogue start */
  473               	.LM62:
  474 0214 0895      		ret
- 475               	.LFE7:
- 477               	.global	getLeftIR
- 479               	getLeftIR:
- 480               	.LFB6:
+ 475               	.LFE11:
+ 477               	.global	getFrontLeftIRLong
+ 479               	getFrontLeftIRLong:
+ 480               	.LFB10:
  481               	.LM63:
  482               	/* prologue: function */
  483               	/* frame size = 0 */
  484               	.LM64:
- 485 0216 8BE2      		ldi r24,lo8(43)
- 486 0218 90E0      		ldi r25,hi8(43)
- 487 021a 67E0      		ldi r22,lo8(7)
- 488 021c 46E0      		ldi r20,lo8(6)
- 489 021e 50E0      		ldi r21,hi8(6)
+ 485 0216 85E2      		ldi r24,lo8(37)
+ 486 0218 90E0      		ldi r25,hi8(37)
+ 487 021a 64E0      		ldi r22,lo8(4)
+ 488 021c 45E0      		ldi r20,lo8(5)
+ 489 021e 50E0      		ldi r21,hi8(5)
  490 0220 0E94 0000 		call getIRSensorValue
  491 0224 AA27      		clr r26
  492 0226 97FD      		sbrc r25,7
@@ -465,86 +465,138 @@
  499               	/* epilogue start */
  500               	.LM65:
  501 0238 0895      		ret
- 502               	.LFE6:
- 504               	.global	getFrontAngle
- 506               	getFrontAngle:
- 507               	.LFB10:
+ 502               	.LFE10:
+ 504               	.global	getRightIR
+ 506               	getRightIR:
+ 507               	.LFB7:
  508               	.LM66:
- 509 023a EF92      		push r14
- 510 023c FF92      		push r15
- 511 023e 0F93      		push r16
- 512 0240 1F93      		push r17
- 513               	/* prologue: function */
- 514               	/* frame size = 0 */
- 515               	.LM67:
- 516 0242 0E94 0000 		call getFrontLeftIR
- 517 0246 7B01      		movw r14,r22
- 518 0248 8C01      		movw r16,r24
- 519               	.LVL18:
- 520               	.LM68:
- 521 024a 0E94 0000 		call getFrontRightIR
- 522               	.LM69:
- 523 024e A801      		movw r20,r16
- 524 0250 9701      		movw r18,r14
- 525 0252 0E94 0000 		call __subsf3
- 526 0256 9B01      		movw r18,r22
- 527 0258 AC01      		movw r20,r24
- 528 025a 60E0      		ldi r22,lo8(0x40a00000)
- 529 025c 70E0      		ldi r23,hi8(0x40a00000)
- 530 025e 80EA      		ldi r24,hlo8(0x40a00000)
- 531 0260 90E4      		ldi r25,hhi8(0x40a00000)
- 532 0262 0E94 0000 		call atan2
- 533 0266 21EE      		ldi r18,lo8(0xc2652ee1)
- 534 0268 3EE2      		ldi r19,hi8(0xc2652ee1)
- 535 026a 45E6      		ldi r20,hlo8(0xc2652ee1)
- 536 026c 52EC      		ldi r21,hhi8(0xc2652ee1)
- 537 026e 0E94 0000 		call __mulsf3
- 538 0272 20E0      		ldi r18,lo8(0x42b40000)
- 539 0274 30E0      		ldi r19,hi8(0x42b40000)
- 540 0276 44EB      		ldi r20,hlo8(0x42b40000)
- 541 0278 52E4      		ldi r21,hhi8(0x42b40000)
- 542 027a 0E94 0000 		call __addsf3
- 543               	/* epilogue start */
- 544               	.LM70:
- 545 027e 1F91      		pop r17
- 546 0280 0F91      		pop r16
- 547 0282 FF90      		pop r15
- 548 0284 EF90      		pop r14
- 549               	.LVL19:
- 550 0286 0895      		ret
- 551               	.LFE10:
- 553               	.global	gyroSum
- 554               	.global	gyroSum
- 555               		.section .bss
- 558               	gyroSum:
- 559 0000 0000      		.skip 2,0
- 560               		.comm gyroComp,2,1
- 697               	.Letext0:
+ 509               	/* prologue: function */
+ 510               	/* frame size = 0 */
+ 511               	.LM67:
+ 512 023a 88E2      		ldi r24,lo8(40)
+ 513 023c 90E0      		ldi r25,hi8(40)
+ 514 023e 66E0      		ldi r22,lo8(6)
+ 515 0240 44E0      		ldi r20,lo8(4)
+ 516 0242 50E0      		ldi r21,hi8(4)
+ 517 0244 0E94 0000 		call getIRSensorValue
+ 518 0248 AA27      		clr r26
+ 519 024a 97FD      		sbrc r25,7
+ 520 024c A095      		com r26
+ 521 024e BA2F      		mov r27,r26
+ 522 0250 BC01      		movw r22,r24
+ 523 0252 CD01      		movw r24,r26
+ 524 0254 0E94 0000 		call __floatsisf
+ 525 0258 0E94 0000 		call linearizeIRSensorValues
+ 526               	/* epilogue start */
+ 527               	.LM68:
+ 528 025c 0895      		ret
+ 529               	.LFE7:
+ 531               	.global	getLeftIR
+ 533               	getLeftIR:
+ 534               	.LFB6:
+ 535               	.LM69:
+ 536               	/* prologue: function */
+ 537               	/* frame size = 0 */
+ 538               	.LM70:
+ 539 025e 8BE2      		ldi r24,lo8(43)
+ 540 0260 90E0      		ldi r25,hi8(43)
+ 541 0262 67E0      		ldi r22,lo8(7)
+ 542 0264 46E0      		ldi r20,lo8(6)
+ 543 0266 50E0      		ldi r21,hi8(6)
+ 544 0268 0E94 0000 		call getIRSensorValue
+ 545 026c AA27      		clr r26
+ 546 026e 97FD      		sbrc r25,7
+ 547 0270 A095      		com r26
+ 548 0272 BA2F      		mov r27,r26
+ 549 0274 BC01      		movw r22,r24
+ 550 0276 CD01      		movw r24,r26
+ 551 0278 0E94 0000 		call __floatsisf
+ 552 027c 0E94 0000 		call linearizeIRSensorValues
+ 553               	/* epilogue start */
+ 554               	.LM71:
+ 555 0280 0895      		ret
+ 556               	.LFE6:
+ 558               	.global	getFrontAngle
+ 560               	getFrontAngle:
+ 561               	.LFB12:
+ 562               	.LM72:
+ 563 0282 EF92      		push r14
+ 564 0284 FF92      		push r15
+ 565 0286 0F93      		push r16
+ 566 0288 1F93      		push r17
+ 567               	/* prologue: function */
+ 568               	/* frame size = 0 */
+ 569               	.LM73:
+ 570 028a 0E94 0000 		call getFrontLeftIR
+ 571 028e 7B01      		movw r14,r22
+ 572 0290 8C01      		movw r16,r24
+ 573               	.LVL18:
+ 574               	.LM74:
+ 575 0292 0E94 0000 		call getFrontRightIR
+ 576               	.LM75:
+ 577 0296 A801      		movw r20,r16
+ 578 0298 9701      		movw r18,r14
+ 579 029a 0E94 0000 		call __subsf3
+ 580 029e 9B01      		movw r18,r22
+ 581 02a0 AC01      		movw r20,r24
+ 582 02a2 60E0      		ldi r22,lo8(0x40a00000)
+ 583 02a4 70E0      		ldi r23,hi8(0x40a00000)
+ 584 02a6 80EA      		ldi r24,hlo8(0x40a00000)
+ 585 02a8 90E4      		ldi r25,hhi8(0x40a00000)
+ 586 02aa 0E94 0000 		call atan2
+ 587 02ae 21EE      		ldi r18,lo8(0xc2652ee1)
+ 588 02b0 3EE2      		ldi r19,hi8(0xc2652ee1)
+ 589 02b2 45E6      		ldi r20,hlo8(0xc2652ee1)
+ 590 02b4 52EC      		ldi r21,hhi8(0xc2652ee1)
+ 591 02b6 0E94 0000 		call __mulsf3
+ 592 02ba 20E0      		ldi r18,lo8(0x42b40000)
+ 593 02bc 30E0      		ldi r19,hi8(0x42b40000)
+ 594 02be 44EB      		ldi r20,hlo8(0x42b40000)
+ 595 02c0 52E4      		ldi r21,hhi8(0x42b40000)
+ 596 02c2 0E94 0000 		call __addsf3
+ 597               	/* epilogue start */
+ 598               	.LM76:
+ 599 02c6 1F91      		pop r17
+ 600 02c8 0F91      		pop r16
+ 601 02ca FF90      		pop r15
+ 602 02cc EF90      		pop r14
+ 603               	.LVL19:
+ 604 02ce 0895      		ret
+ 605               	.LFE12:
+ 607               	.global	gyroSum
+ 608               	.global	gyroSum
+ 609               		.section .bss
+ 612               	gyroSum:
+ 613 0000 0000      		.skip 2,0
+ 614               		.comm gyroComp,2,1
+ 767               	.Letext0:
 DEFINED SYMBOLS
                             *ABS*:00000000 RobotModel_Sensors.c
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:2      *ABS*:0000003f __SREG__
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:3      *ABS*:0000003e __SP_H__
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:4      *ABS*:0000003d __SP_L__
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:5      *ABS*:00000034 __CCP__
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:6      *ABS*:00000000 __tmp_reg__
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:7      *ABS*:00000001 __zero_reg__
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:18     .text:00000000 turnOnLeds
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:48     .text:00000016 setupADC
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:78     .text:00000032 ReadADC
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:113    .text:00000062 isButtonPushed
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:138    .text:00000078 calibrateGyro
+C:\Users\Justin\AppData\Local\Temp/ccUkWmH6.s:2      *ABS*:0000003f __SREG__
+C:\Users\Justin\AppData\Local\Temp/ccUkWmH6.s:3      *ABS*:0000003e __SP_H__
+C:\Users\Justin\AppData\Local\Temp/ccUkWmH6.s:4      *ABS*:0000003d __SP_L__
+C:\Users\Justin\AppData\Local\Temp/ccUkWmH6.s:5      *ABS*:00000034 __CCP__
+C:\Users\Justin\AppData\Local\Temp/ccUkWmH6.s:6      *ABS*:00000000 __tmp_reg__
+C:\Users\Justin\AppData\Local\Temp/ccUkWmH6.s:7      *ABS*:00000001 __zero_reg__
+C:\Users\Justin\AppData\Local\Temp/ccUkWmH6.s:18     .text:00000000 turnOnLeds
+C:\Users\Justin\AppData\Local\Temp/ccUkWmH6.s:48     .text:00000016 setupADC
+C:\Users\Justin\AppData\Local\Temp/ccUkWmH6.s:78     .text:00000032 ReadADC
+C:\Users\Justin\AppData\Local\Temp/ccUkWmH6.s:113    .text:00000062 isButtonPushed
+C:\Users\Justin\AppData\Local\Temp/ccUkWmH6.s:138    .text:00000078 calibrateGyro
                             *COM*:00000002 gyroComp
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:155    .text:00000088 updateGyroValue
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:558    .bss:00000000 gyroSum
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:191    .text:000000c2 getPotSensorValue
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:207    .text:000000c8 getIRSensorValue
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:303    .text:0000011e linearizeIRSensorValues_Front
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:372    .text:0000018c getFrontRightIR
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:399    .text:000001b0 getFrontLeftIR
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:426    .text:000001d4 linearizeIRSensorValues
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:452    .text:000001f2 getRightIR
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:479    .text:00000216 getLeftIR
-C:\Users\ENGIN_~1\AppData\Local\Temp/ccZhiNVz.s:506    .text:0000023a getFrontAngle
+C:\Users\Justin\AppData\Local\Temp/ccUkWmH6.s:155    .text:00000088 updateGyroValue
+C:\Users\Justin\AppData\Local\Temp/ccUkWmH6.s:612    .bss:00000000 gyroSum
+C:\Users\Justin\AppData\Local\Temp/ccUkWmH6.s:191    .text:000000c2 getPotSensorValue
+C:\Users\Justin\AppData\Local\Temp/ccUkWmH6.s:207    .text:000000c8 getIRSensorValue
+C:\Users\Justin\AppData\Local\Temp/ccUkWmH6.s:303    .text:0000011e linearizeIRSensorValues_Front
+C:\Users\Justin\AppData\Local\Temp/ccUkWmH6.s:372    .text:0000018c getFrontRightIR
+C:\Users\Justin\AppData\Local\Temp/ccUkWmH6.s:399    .text:000001b0 getFrontLeftIR
+C:\Users\Justin\AppData\Local\Temp/ccUkWmH6.s:426    .text:000001d4 linearizeIRSensorValues
+C:\Users\Justin\AppData\Local\Temp/ccUkWmH6.s:452    .text:000001f2 getFrontRightIRLong
+C:\Users\Justin\AppData\Local\Temp/ccUkWmH6.s:479    .text:00000216 getFrontLeftIRLong
+C:\Users\Justin\AppData\Local\Temp/ccUkWmH6.s:506    .text:0000023a getRightIR
+C:\Users\Justin\AppData\Local\Temp/ccUkWmH6.s:533    .text:0000025e getLeftIR
+C:\Users\Justin\AppData\Local\Temp/ccUkWmH6.s:560    .text:00000282 getFrontAngle
 
 UNDEFINED SYMBOLS
 __gtsf2

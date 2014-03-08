@@ -1,2 +1,0 @@
-#ifndef FLOODFILL_MOVE_H
-#define	FLOODFILL_MOVE_H
