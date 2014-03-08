@@ -85,55 +85,24 @@ int getOffsetError()
 	if(left-lPrevious > 1)
 	{		
 		mouse.IR_CORRECT = 0;
-		mouse.IR_CORRECT_LEFT = 0;
-		mouse.IR_CORRECT_RIGHT = 0;
 	}
 	if(right-rPrevious > 1)
 	{
 		mouse.IR_CORRECT = 0;
-		mouse.IR_CORRECT_LEFT = 0;
-		mouse.IR_CORRECT_RIGHT = 0;
 	}
 	
-	float error = 0;
+	float error = (right-left)*mouse.IR_CORRECT;
 	
-	if(mouse.IR_CORRECT != 0)
-	{
-		error = (right-5)*mouse.IR_CORRECT;
-	
-		if(right-left > 10)
-			error = 3*mouse.IR_CORRECT;
-		if(right-left < -10)
-			error = -3*mouse.IR_CORRECT;
-	}
-	else if(mouse.IR_CORRECT_LEFT != 0)
-	{
-		error = getLeftError() * mouse.IR_CORRECT_LEFT;
-	}
-	else if(mouse.IR_CORRECT_RIGHT != 0)
-	{
-		error = getRightError() * mouse.IR_CORRECT_RIGHT;
-	}
+	if(right-left > 6)
+		error = 3*mouse.IR_CORRECT;
+	if(right-left < -6)
+		error = -3*mouse.IR_CORRECT;
+
 		
 	lPrevious = left;
 	rPrevious = right;
-	
 	return error;
 }
-
-float getRightError()
-{
-	float right = getRightIR();
-	return right - 5;
-}
-
-float getLeftError()
-{
-	float left = getLeftIR();
-	return left - 5;
-}
-
-
 
 void startTimer()
 {
