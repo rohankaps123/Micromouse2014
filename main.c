@@ -30,6 +30,9 @@ Last Updated: March 1st 2014
 #include "RobotModel/RobotModel_StepperMotor.h"
 #include "RobotModel/RobotModel_Sensors.h"
 
+//Maze Solving
+#include "FloodFill/DataComponents.h"
+
 //Debugging
 #include "USART.h"
 
@@ -56,8 +59,15 @@ int main(void)
 	enableDrive(1);
 	turnOnTimers(1,1);
 	
+	int var = 0;
 	
-	for(int i = 0; i < 30; i++)
+	setDistance(&var, 7);
+	setN(&var, 1);
+	
+	printlnNum(getN(var));
+	
+	//smoothTurn(90, 9, 0, 6000, 0, 3000, 3000);
+	/*for(int i = 0; i < 30; i++)
 	{		
 		int right = isWallRight();
 		int front = isWallFront();
@@ -123,23 +133,10 @@ int main(void)
 		mouse.IR_CORRECT = 0;	
 		mouse.IR_CORRECT_LEFT = 0;
 		mouse.IR_CORRECT_RIGHT = 0;
-	}
+	}*/
 	
 	turnOnTimers(0, 0);
-	enableDrive(0);
-	
+	enableDrive(0);	
 
-	while(1==1)
-	{
-		float left = getFrontLeftIR();
-		float right = getFrontRightIR();
-	
-		printNum(left);
-		print(",");
-		printlnNum(right);
-		//printlnNum((float)angle);
-		//print(",");
-		//printlnNum((float)getFrontRightIR());	
-		
-	}	
+	while(1==1){}	
 }
