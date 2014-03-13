@@ -49,36 +49,75 @@ void floodFill(long mazecells[16][16], char goal)
 	if(goal == 'C')
 	{
 		//Set our center to "0"
-		push(mazecells[7][7], &stack1);
-		
-		push(mazecells[7][8], &stack1);
-		
-		push(mazecells[8][7], &stack1);
-		
+		push(mazecells[7][7], &stack1);		
+		push(mazecells[7][8], &stack1);		
+		push(mazecells[8][7], &stack1);		
 		push(mazecells[8][8], &stack1);
 	}
 	//Otherwise, default to start point
 	else
 	{
-		setDistance(&mazecells[0][0], 0);
 		push(mazecells[0][0], &stack1);
 	}
 	
 	while(!stackIsEmpty(&stack1))
 	{
-		//Get value of stack
+		//Get value of value on stack
 		long temp = top(&stack1);
 		setDistance(&temp, level);
 		
+		//Get Cell Location
 		int x = getX(temp);
 		int y = getY(temp);
+		
+		//Save Data to Cell
 		mazecells[x][y] = temp;
 		
+		//Check each neighbouring cell and push it to the stack if possible
+		if(x < 15 && getDist(mazecells[x+1][y]) == 255)
+		{
+			push(mazecells[x+1][y], &stack2);
+		}
+		if(x > 0 && getDist(mazecells[x-1][y]) == 255)
+		{
+			push(mazecells[x-1][y], &stack2);
+		}
+		if(y < 15 && getDist(mazecells[x][y+1]) == 255)
+		{
+			push(mazecells[x][y+1], &stack2);
+		}
+		if(y > 0 && getDist(mazecells[x][y-1]) == 255)
+		{
+			push(mazecells[x][y-1], &stack2);
+		}
+		
+		//Remove From Stack
 		popStack(&stack1);
 	}	
 
 	//Increment Level
-	level++;	
+	level++;
+	
+	while(!stackIsEmpty(&stack2))
+	{
+		//Get value of value on stack
+		long temp = top(&stack2);
+		
+		//Get Cell Location
+		int x = getX(temp);
+		int y = getY(temp);
+		int dist = getDist(mazecells[x][y]);
+		
+		if(dist == 255)
+		{
+			//Save Data to Cell
+			setDistance(&temp, level);
+			mazecells[x][y] = temp;
+		}
+		//Remove From Stack
+		popStack(&stack2);
+	}
+	
 }
 
 //Reset Maze to 0
