@@ -30,21 +30,23 @@ volatile Mouse mouse;
 
 void solveMaze()
 {
-	//Reset maze to default values
+	//Reset maze to 0
 	initializeMaze(maze);
 	
+	floodFill(maze, Destination);
+	
+	//Print Maze Status
 	for(int i = 0; i < 16; i++)
 	{
-		for( int j = 0; j < 16; j++)
+		for(int j = 0; j < 16; j++)
 		{
 			print("[");
-			printNum(getX(maze[i][j]));
-			print(",");
-			printNum(getY(maze[i][j]));
+			printInt(getDist(maze[j][i]));
 			print("],");
 		}
 		print(" BREAK\n\r");
 	}
+	
 }
 
 //Reset and start all mouse constants and timers

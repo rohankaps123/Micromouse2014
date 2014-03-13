@@ -9,5 +9,6 @@ void USART_putstring(char* StringPtr);
 void printlnNum(double value);
 void printNum(float value);
 void print(char* string);
+void printInt(int value);
 
 #endif
