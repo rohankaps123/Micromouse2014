@@ -3,6 +3,6 @@
 
 int getDistance(int x, int y);
 int getNeighborDistance(int x, int y, int direction);
-int determineNextMove(void);
+int determineNextMove(int x, int y);
 
 #endif
