@@ -3,7 +3,7 @@
 
 typedef struct Node
 {
-    volatile int Data;
+    volatile long Data;
     volatile struct Node* next;
 }Node;
 
@@ -14,9 +14,9 @@ typedef struct llstack
 
 void popStack(struct llstack *stack);
 
-void push(int value, struct llstack *stack);
+void push(long value, struct llstack *stack);
 
-int top(struct llstack *stack);
+long top(struct llstack *stack);
 int stackIsEmpty(struct llstack *stack);
 void init_stack(struct llstack *stack);
 

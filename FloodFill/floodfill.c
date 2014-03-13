@@ -31,15 +31,15 @@ Last Updated: March 1st 2014
 //Debugging
 #include "USART.h"
 
+//These will hold which cells to add distances to
+struct llstack stack1;
+struct llstack stack2;
+	
 //Refresh Distances in FloodFill Maze
 void floodFill(long mazecells[16][16], char goal)
 {
 	//What is the current number?
 	int level=0;
-	
-	//These will hold which cells to add distances to
-	struct llstack stack1;
-	struct llstack stack2;
 	
 	//Reset Stack to null
 	init_stack(&stack1);
@@ -49,16 +49,12 @@ void floodFill(long mazecells[16][16], char goal)
 	if(goal == 'C')
 	{
 		//Set our center to "0"
-		setDistance(&mazecells[7][7], 0);
 		push(mazecells[7][7], &stack1);
 		
-		setDistance(&mazecells[7][8], 0);
 		push(mazecells[7][8], &stack1);
 		
-		setDistance(&mazecells[8][7], 0);
 		push(mazecells[8][7], &stack1);
 		
-		setDistance(&mazecells[8][8], 0);
 		push(mazecells[8][8], &stack1);
 	}
 	//Otherwise, default to start point
@@ -68,14 +64,21 @@ void floodFill(long mazecells[16][16], char goal)
 		push(mazecells[0][0], &stack1);
 	}
 	
-	//while(!stackIsEmpty(&stack1))
-	//{
-		//Get value of  
-		//long temp = top(&stack1);
-		//setDistance(temp);
-		//pop(&stack1);
-	//}	
-	
+	while(!stackIsEmpty(&stack1))
+	{
+		//Get value of stack
+		long temp = top(&stack1);
+		setDistance(&temp, level);
+		
+		int x = getX(temp);
+		int y = getY(temp);
+		mazecells[x][y] = temp;
+		
+		popStack(&stack1);
+	}	
+
+	//Increment Level
+	level++;	
 }
 
 //Reset Maze to 0

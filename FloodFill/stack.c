@@ -15,7 +15,7 @@ void popStack(struct llstack *stack)
     }	
 }
 
-void push(int value, struct llstack *stack)
+void push(long value, struct llstack *stack)
 {
     struct Node *temp;
     temp = (struct Node *)malloc(sizeof(struct Node));
@@ -33,7 +33,7 @@ void push(int value, struct llstack *stack)
 }
 
 
-int top(struct llstack *stack)
+long top(struct llstack *stack)
 {
      struct Node *var=stack->top;
      if(var!=NULL)
