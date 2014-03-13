@@ -10,7 +10,7 @@ typedef struct Node
 typedef struct llstack
 {
 	volatile struct Node* top;
-} llstack;
+}llstack;
 
 void popStack(struct llstack *stack);
 

@@ -8,7 +8,7 @@
 #include "RobotModel_Sensors.h"
 
 #include "../USART.h"
-extern volatile long milliseconds;
+volatile long milliseconds;
 extern volatile Mouse mouse;
 
 

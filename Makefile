@@ -81,6 +81,9 @@ OBJDIR = .
 
 # List C source files here. (C dependencies are automatically generated.)
 SRC = $(TARGET).c
+
+SRC += MouseManager.c
+
 SRC += RobotModel/RobotModel.c
 SRC += RobotModel/RobotModel_controls.c
 SRC += RobotModel/RobotModel_StepperMotor.c

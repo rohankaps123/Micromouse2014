@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include "stack.h"
 
-
 void popStack(struct llstack *stack)
 {
     struct Node *var=stack->top;
