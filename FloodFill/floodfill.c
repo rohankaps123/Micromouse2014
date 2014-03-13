@@ -49,10 +49,10 @@ void floodFill(long mazecells[16][16], char goal)
 	if(goal == 'C')
 	{
 		//Set our center to "0"
-		push(mazecells[7][7], &stack1);		
-		push(mazecells[7][8], &stack1);		
-		push(mazecells[8][7], &stack1);		
-		push(mazecells[8][8], &stack1);
+		push(&mazecells[7][7], &stack1);		
+		push(&mazecells[7][8], &stack1);		
+		push(&mazecells[8][7], &stack1);		
+		push(&mazecells[8][8], &stack1);
 	}
 	//Otherwise, default to start point
 	else
@@ -63,8 +63,8 @@ void floodFill(long mazecells[16][16], char goal)
 	while(!stackIsEmpty(&stack1))
 	{
 		//Get value of value on stack
-		long temp = top(&stack1);
-		setDistance(&temp, level);
+		long *temp = top(&stack1);
+		setDistance(temp, level);
 		
 		//Get Cell Location
 		int x = getX(temp);
