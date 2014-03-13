@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "stack.h"
-
 void popStack(struct llstack *stack)
 {
     struct Node *var=stack->top;
@@ -10,15 +9,16 @@ void popStack(struct llstack *stack)
         stack->top = stack->top->next;
         free(var);
     }
-    else if(var!=NULL&&var->next==NULL){
+    else if (var->next==NULL){
     	stack->top=NULL;
-    }	
+    }
+	return;
 }
 
 void push(long *value, struct llstack *stack)
 {
     struct Node *temp;
-    temp = (struct Node *)malloc(sizeof(struct Node));
+    temp=(struct Node *)malloc(sizeof(struct Node));
     temp->Data=value;
     if (stack->top == NULL)
     {
@@ -30,6 +30,7 @@ void push(long *value, struct llstack *stack)
         temp->next=stack->top;
         stack->top=temp;
     }
+	return;
 }
 
 
@@ -39,8 +40,8 @@ long* top(struct llstack *stack)
      if(var!=NULL)
       return var->Data;
      else
-      return -1;
-
+      return NULL;
+;
 }
 
 int stackIsEmpty(struct llstack *stack){
@@ -52,4 +53,5 @@ int stackIsEmpty(struct llstack *stack){
 void init_stack(struct llstack *stack)
 {
 	stack->top = NULL;
+	return;
 }
