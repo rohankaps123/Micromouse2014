@@ -24,19 +24,11 @@ Last Updated: March 1st 2014
 #include <util/delay.h>
 #include <math.h>
 
-//Mouse Profile
-#include "RobotModel/RobotModel.h"
-#include "RobotModel/RobotModel_Controls.h"
-#include "RobotModel/RobotModel_StepperMotor.h"
-#include "RobotModel/RobotModel_Sensors.h"
-
 //Debugging
 #include "USART.h"
 
-int currCell=0;
-extern int cells[MAZEHEIGHT][MAZEWIDTH];
  
-void initialize_maze(){
+void initialize_maze(long cells[][]){
 	for(int i=0; i< MAZEHEIGHT;i++)
 		for(int j=0;j<MAZEWIDTH;j++){
 			cells[i][j]=0;

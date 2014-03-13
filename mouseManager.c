@@ -29,6 +29,36 @@ volatile Mouse mouse;
 
 void solveMaze()
 {
+	initialize_maze(maze);
+}
+
+//Reset and start all mouse constants and timers
+void initializeMouse()
+{
+	setupADC();	
+	setupStepperMotor();
+	startTimer();
+	
+	USART_init();
+	
+	mouse.velocity = 0;
+	mouse.maxVelocity = 5000;
+	mouse.acceleration = 2000;
+	mouse.deceleration = 10000;
+
+	enableDrive(1);
+	turnOnTimers(1,1);
+}
+
+//Shut down motors from operating
+void stopMouse()
+{
+	turnOnTimers(0, 0);
+	enableDrive(0);	
+}
+
+void wallFallowingSolve()
+{
 	for(int i = 0; i < 30; i++)
 	{		
 		int right = isWallRight();
@@ -97,29 +127,3 @@ void solveMaze()
 		mouse.IR_CORRECT_RIGHT = 0;
 	}
 }
-
-//Reset and start all mouse constants and timers
-void initializeMouse()
-{
-	setupADC();	
-	setupStepperMotor();
-	startTimer();
-	
-	USART_init();
-	
-	mouse.velocity = 0;
-	mouse.maxVelocity = 5000;
-	mouse.acceleration = 2000;
-	mouse.deceleration = 10000;
-
-	enableDrive(1);
-	turnOnTimers(1,1);
-}
-
-//Shut down motors from operating
-void stopMouse()
-{
-	turnOnTimers(0, 0);
-	enableDrive(0);	
-}
-
