@@ -24,11 +24,13 @@ Last Updated: March 1st 2014
 #include <util/delay.h>
 #include <math.h>
 
+#include "floodfill.h"
+
 //Debugging
 #include "USART.h"
 
  
-void initialize_maze(long cells[][]){
+/*void initialize_maze(long cells[][]){
 	for(int i=0; i< MAZEHEIGHT;i++)
 		for(int j=0;j<MAZEWIDTH;j++){
 			cells[i][j]=0;
@@ -40,16 +42,16 @@ void initialize_maze(long cells[][]){
 			setSwall(cell[i][j],0); //sets Swall bit of cells to 0
 			setWwall(cell[i][j],0); //sets Wwall bit of cells to 0
 		}
-}
+}*/
 
-void solveMaze()
-{
-	initialize_maze();
+//void solveMaze()
+//{
+	/*initialize_maze();
 	
 	setDestination(Destination)
 	while(getValue(currCell)!=0)
 	{
 		check_walls_update();
 		floodfill(cells,'C');
-	}
-}
+	}*/
+//}

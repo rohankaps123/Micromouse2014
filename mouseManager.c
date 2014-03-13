@@ -29,7 +29,7 @@ volatile Mouse mouse;
 
 void solveMaze()
 {
-	initialize_maze(maze);
+	//initialize_maze(maze);
 }
 
 //Reset and start all mouse constants and timers
