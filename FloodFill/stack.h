@@ -3,7 +3,7 @@
 
 typedef struct Node
 {
-    volatile long Data;
+    volatile long *Data;
     volatile struct Node* next;
 }Node;
 
