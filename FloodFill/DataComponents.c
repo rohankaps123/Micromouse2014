@@ -41,93 +41,102 @@
 
 
 //Getting components
-int getN(int input)
+int getN(long input)
 {
-	return ((input<<12)>>15);
+	return (input & 0b1000) >> 3;
 }
-int getE(int input)
+int getE(long input)
 {
-	return ((input<<13)>>15);
+	return (input & 0b0100) >> 2;
 }
-int getS(int input)
+int getS(long input)
 {
-	return ((input<<14)>>15);
+	return (input & 0b0010) >> 1;
 }
-int getW(int input)
+int getW(long input)
 {
-	return ((input<<15)>>15);
+	return (input & 0b0001) >> 0;
 }
-int getExp(int input)
+int getExp(long input)
 {
-	return ((input<<11)>>15);
+	return (input & 0b00010000) >> 4;
 }
-int getExitDir(int input)
+int getExitDir(long input)
 {
-	return ((input<<9)>>14);
+	return (input & 0b01100000) >> 6;
 }
-int getDist(int input)
+int getDist(long input)
 {
-	return input>>7;
+	return (input & 0b0111111110000000) >> 7;
+}
+
+int getX(long input)
+{	
+	return (input & 0b11111111L << 15L) >> 15;
+}
+
+int getY(long input)
+{
+	return (input & 0b11111111L << 23L) >> 23;
 }
 
 //Setting components: var=variable to change, val=value to give
-void setN(int *var, int val)
+void setN(long *var, int val)
 {
-	setVarWithVal(var, NORTH, val);
-}
-void setE(int *var, int val)
-{
-	setVarWithVal(var, EAST, val);
-}
-void setS(int *var, int val)
-{
-	setVarWithVal(var, SOUTH, val);
-}
-void setW(int *var, int val)
-{
-	setVarWithVal(var, WEST, val);
-}
-void setExp(int *var, int val)
-{
-	setVarWithVal(var, EXPLORED, val);
+	setVarWithVal(var, val << 3, 0b1000);
 }
 
-void setExitDir(int *var, int val)
+//Set East Wall
+void setE(long *var, int val)
 {
-	//Erase Bits to 0
-	setVarWithVal(var, DEP_DIRECT, 0);
-	
-	//Set New Bits, ensure we're don't overwrite other bits
-	val = val & 0b00000011;
-	setVarWithVal(var, val << 5, 1);
-	
-}
-void setDistance(int *var, int val)
-{
-	//Erase Bits to 0
-	setVarWithVal(var, DISTANCE, 0);
-	
-	//Set New Bits, ensure we're not overwriting other bits
-	val = val & 0b011111111;
-	setVarWithVal(var, val << 7, 1);
+	setVarWithVal(var, val << 2, 0b0100);
 }
 
-void setVarWithVal(int *var, int val, int bitOn)
+//Set South Wall
+void setS(long *var, int val)
 {
-	//If we're setting a bit to zero
-	if(bitOn == 0)
-	{
-		//Say val = 0001, 
-		//  the ~ operand will flip all bits
-		//  then AND the current value of var
-		//  giving var AND 1110, which say var = 1011, 
-		//  will result in 1010, turning off the last bit
-		*var &= ~val;
-	}
-	else
-	{
-		//Say val = 0001
-		//	var OR val
-		*var |= val;
-	}
+	setVarWithVal(var, val << 1, 0b0010);
+}
+
+//Set West Wall
+void setW(long *var, int val)
+{
+	setVarWithVal(var, val << 0, 0b0001);
+}
+
+//Set the Explored bit
+void setExp(long *var, int val)
+{
+	setVarWithVal(var, val << 4, 0b00010000);
+}
+
+//Set Exit direction
+void setExitDir(long *var, int val)
+{
+	setVarWithVal(var, val << 5, 0b01100000);	
+}
+
+//Set Distance from Goal
+void setDistance(long *var, int val)
+{
+	setVarWithVal(var, val << 7, 0b0111111110000000);
+}
+
+void setXY(long *var, int x, int y)
+{
+	setVarWithVal(var, (long)x << 15L, 0b11111111L << 15L);
+	setVarWithVal(var, (long)y << 23L, 0b11111111L << 23L);
+}
+
+//Function that writes a bit
+void setVarWithVal(long *var, long val, long bits)
+{
+	//Cut Off any extra bits
+	val = val & bits;
+	
+	//Reset any bits in those spots
+	*var &= ~(bits);
+	
+	//Set our new data to those bits
+	*var |= val;
 }

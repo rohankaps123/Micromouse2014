@@ -4,5 +4,5 @@
 void solveMaze(void);
 void initializeMouse(void);
 void stopMouse(void);
-
+void wallFallowingSolve(void);
 #endif

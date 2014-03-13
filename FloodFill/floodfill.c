@@ -25,24 +25,29 @@ Last Updated: March 1st 2014
 #include <math.h>
 
 #include "floodfill.h"
+#include "DataComponents.h"
 
 //Debugging
 #include "USART.h"
 
- 
-/*void initialize_maze(long cells[][]){
-	for(int i=0; i< MAZEHEIGHT;i++)
-		for(int j=0;j<MAZEWIDTH;j++){
-			cells[i][j]=0;
-			setxy(cell[i][j],i,j); //set x,y coordinates of each cell
-			setValue(cell[i][j],255); //sets initial value of cells to 0
-			setExplored(cell[i][j],0); //sets initial value of cells to 0
-			setNwall(cell[i][j],0); //sets Nwall bit of cells to 0
-			setEwall(cell[i][j],0); //sets Ewall bit of cells to 0
-			setSwall(cell[i][j],0); //sets Swall bit of cells to 0
-			setWwall(cell[i][j],0); //sets Wwall bit of cells to 0
+//Reset Maze to 0
+void initializeMaze(long cell[16][16])
+{
+	for(int i=0; i < 16;i++)
+	{
+		for(int j=0; j < 16; j++)
+		{
+			cell[i][j]=0;
+			setXY(&cell[i][j],i,j); //set x,y coordinates of each cell
+			setDistance(&cell[i][j],255); //sets initial value of cells to 0
+			setExp(&cell[i][j],0); //sets initial value of cells to 0
+			setN(&cell[i][j],0); //sets Nwall bit of cells to 0
+			setE(&cell[i][j],0); //sets Ewall bit of cells to 0
+			setS(&cell[i][j],0); //sets Swall bit of cells to 0
+			setW(&cell[i][j],0); //sets Wwall bit of cells to 0
 		}
-}*/
+	}
+}
 
 //void solveMaze()
 //{
