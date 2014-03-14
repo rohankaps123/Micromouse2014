@@ -1,6 +1,6 @@
 # Hey Emacs, this is a -*- makefile -*-
 #----------------------------------------------------------------------------
-# WinAVR Makefile Template written by Eric B. Weddington, Jörg Wunsch, et al.
+# WinAVR Makefile Template written by Eric B. Weddington, Jï¿½rg Wunsch, et al.
 #
 # Released to the Public Domain
 #
@@ -92,6 +92,7 @@ SRC += RobotModel/RobotModel_Sensors.c
 SRC += FloodFill/DataComponents.c
 SRC += FloodFill/stack.c
 SRC += FloodFill/FloodFill.c
+SRC += FloodFill/floodfill_move.c
 
 SRC += USART.c
 

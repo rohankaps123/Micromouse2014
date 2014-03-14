@@ -1,49 +1,60 @@
-#include "../RobotModel/RobotModel.h"
-
-#define FORWARD 0
-#define REVERSE 1
-#define LEFT 2
-#define RIGHT 3
+#include "floodfill_move.h"
+#include "DataComponents.h"
 
 #define USELESS 1024
 
 int determineNextMove(long mazecells[16][16], int x, int y, int direction) {
-    int bestDistance = getDistance(x, y);
+    int bestDistance = getDistance(mazecells, x, y);
     int bestDirection = direction;
-
-    if ((bestDistance > getNeighborDistance(x, y, direction)) && (isWallFront() == 0)) {
+    
+    int wall;
+    switch (direction) {
+        case NORTH:
+            wall = getN(mazecells[x][y]);
+            break;
+        case EAST:
+            wall = getE(mazecells[x][y]);
+            break;
+        case WEST:
+            wall = getW(mazecells[x][y]);
+            break;
+        case SOUTH:
+            wall = getS(mazecells[x][y]);
+            break;
+    }
+    if ((bestDistance > getNeighborDistance(mazecells, x, y, direction)) && (wall == 0)) {
         bestDirection = direction;
-        bestDistance = getNeighborDistance(x, y, bestDirection);
+        bestDistance = getNeighborDistance(mazecells, x, y, bestDirection);
     }
-    if ((bestDistance > getNeighborDistance(x, y, NORTH)) && (getN(mazecells[x][y]) == 0)) {
+    if ((bestDistance > getNeighborDistance(mazecells, x, y, NORTH)) && (getN(mazecells[x][y]) == 0)) {
         bestDirection = NORTH;
-        bestDistance = getNeighborDistance(x, y, bestDirection);
+        bestDistance = getNeighborDistance(mazecells, x, y, bestDirection);
     }
-    if ((bestDistance > getNeighborDistance(x, y, EAST)) && (getE(mazecells[x][y]) == 0)) {
+    if ((bestDistance > getNeighborDistance(mazecells, x, y, EAST)) && (getE(mazecells[x][y]) == 0)) {
         bestDirection = EAST;
-        bestDistance = getNeighborDistance(x, y, bestDirection);
+        bestDistance = getNeighborDistance(mazecells, x, y, bestDirection);
     }
-    if ((bestDistance > getNeighborDistance(x, y, WEST)) && (getW(mazecells[x][y]) == 0)) {
+    if ((bestDistance > getNeighborDistance(mazecells, x, y, WEST)) && (getW(mazecells[x][y]) == 0)) {
         bestDirection = WEST;
-        bestDistance = getNeighborDistance(x, y, bestDirection);
+        bestDistance = getNeighborDistance(mazecells, x, y, bestDirection);
     }
-    if ((bestDistance > getNeighborDistance(x, y, SOUTH)) && (getS(mazecells[x][y]) == 0)) {
+    if ((bestDistance > getNeighborDistance(mazecells, x, y, SOUTH)) && (getS(mazecells[x][y]) == 0)) {
         bestDirection = SOUTH;
-        bestDistance = getNeighborDistance(x, y, bestDirection);
+        bestDistance = getNeighborDistance(mazecells, x, y, bestDirection);
     }
     
     return bestDirection;
 }
 
 //Get the distance of a neighboring cell 
-int getNeighborDistance(int x, int y, int direction) {
+int getNeighborDistance(long mazecells[16][16], int x, int y, int direction) {
     int neighborX;
     int neighborY;
     if ((direction == NORTH) && (y != 1)) {
         neighborX = x;
         neighborY = y - 1;
     } else if ((direction == SOUTH) && (y != 16)) {
-        neighbor = x;
+        neighborX = x;
         neighborY = y + 1;
     } else if ((direction == EAST) && (x != 16)) {
         neighborX = x + 1;
@@ -55,9 +66,9 @@ int getNeighborDistance(int x, int y, int direction) {
         return USELESS;
     }
 
-    return getDistance(neighborX, neighborY);
+    return getDistance(mazecells, neighborX, neighborY);
 }
 
-int getDistance(int x, int y) {
-    return getDist(cells[x - 1][y - 1]);
+int getDistance(long mazecells[16][16], int x, int y) {
+    return getDist(mazecells[x - 1][y - 1]);
 }
