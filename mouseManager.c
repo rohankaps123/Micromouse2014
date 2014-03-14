@@ -33,6 +33,9 @@ void solveMaze()
 	//Reset maze to 0
 	initializeMaze(maze);
 	
+	//Update Walls
+	
+	//Solve Updated Maze
 	floodFill(maze, Destination);
 	
 	//Print Maze Status
