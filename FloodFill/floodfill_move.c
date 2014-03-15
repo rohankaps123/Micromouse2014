@@ -7,7 +7,7 @@ int determineNextMove(long mazecells[16][16], int x, int y, int direction) {
     int bestDistance = getDistance(mazecells, x, y);
     int bestDirection = direction;
     
-    int wall;
+    int wall = USELESS;
     switch (direction) {
         case NORTH:
             wall = getN(mazecells[x][y]);
