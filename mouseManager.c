@@ -24,6 +24,8 @@ char Destination='C';
 
 //Our Maze
 volatile long maze[16][16];
+volatile long stack1[32];
+volatile long stack2[32];
 
 //Our Mouse
 volatile Mouse mouse;

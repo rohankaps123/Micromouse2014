@@ -3,14 +3,15 @@
 
 typedef struct Node
 {
-    volatile long Data;
-    volatile struct Node* next;
+    long Data;
+    struct Node* next;
 }Node;
 
 typedef struct llstack
 {
-	volatile int pos;
-	volatile struct Node* top;
+	int pos;
+	//struct Node* top;
+	long nodes[125];
 }llstack;
 
 void popStack(struct llstack *stack);
