@@ -38,7 +38,6 @@ Last Updated: March 15th 2014
 //Maze Solving
 #include "FloodFill/FloodFill.h"
 #include "FloodFill/FloodFill_BinaryOperations.h"
-#include "FloodFill/FloodFill_Move.h"
 #include "FloodFill/FloodFill_Stack.h"
 #include "FloodFill/FloodFill_Debug.h"
 
@@ -62,7 +61,7 @@ void solveMaze()
 	mouse.x = 0;
 	mouse.y = 0;
 	
-	for(int i = 0; i < 8; i++)
+	for(int i = 0; i < 40; i++)
 	{
 		turnOnTimers(0, 0);
 		enableDrive(0);
@@ -70,7 +69,7 @@ void solveMaze()
 		floodFill(maze, 'C');
 		turnOnTimers(1, 1);
 		enableDrive(1);
-		whereToGo();
+		determineNextMove();
 	}	
 	
 	stopMouse();
@@ -80,7 +79,7 @@ void solveMaze()
 		printWalls(maze);
 }
 
-void whereToGo()
+void determineNextMove()
 {
 	long current = maze[mouse.x][mouse.y];
 	long straight = maze[mouse.x + mouse.direction.x][mouse.y - mouse.direction.y];

@@ -71,8 +71,7 @@ void floodFill(long mazecells[16][16], char goal)
 	}
 
 	while(1==1)
-	{		
-		//printMaze(mazecells);
+	{	
 		while(!stackIsEmpty(&stack1))
 		{	
 			//Get value of value on stack
@@ -88,28 +87,28 @@ void floodFill(long mazecells[16][16], char goal)
 			if(dist == 255)
 			{
 				mazecells[x][y] = temp;
-			
+				
 				if(x == 0 && y == 0)
 					return;
 				
 				//Check each neighbouring cell and push it to the stack if possible
 				if(x < 15 && getE(temp) == 0 && getDist(mazecells[x+1][y]) == 255
-					&& ( (x==14) || (getW(mazecells[x+2][y])) ) )//Check the next cell too as it may contain wall data
+					&& !getW(mazecells[x+1][y]) )//Check the next cell too as it may contain wall data
 				{
 					push(mazecells[x+1][y], &stack2);
 				}
 				if(x > 0 && getW(temp) == 0 && getDist(mazecells[x-1][y]) == 255
-					&& ( (x==1) || (getE(mazecells[x-2][y])) ) )
+					&& !getE(mazecells[x-1][y]) )
 				{
 					push(mazecells[x-1][y], &stack2);
 				}
-				if(y < 15 && getN(temp) == 0 && getDist(mazecells[x][y+1]) == 255
-					&& ( (y==14) || (getS(mazecells[x][y+2])) ) )
+				if(y < 15 && getS(temp) == 0 && getDist(mazecells[x][y+1]) == 255
+					&& !getN(mazecells[x][y+1]) )
 				{
 					push(mazecells[x][y+1], &stack2);
 				}
-				if(y > 0 && getS(temp) == 0 && getDist(mazecells[x][y-1]) == 255
-					&& ( (y==1) || (getN(mazecells[x][y-2])) ) )
+				if(y > 0 && getN(temp) == 0 && getDist(mazecells[x][y-1]) == 255
+					&& !getS(mazecells[x][y-1]) )
 				{
 					push(mazecells[x][y-1], &stack2);
 				}
