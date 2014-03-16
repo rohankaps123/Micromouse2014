@@ -257,13 +257,13 @@ int getOffsetError()
 	float right = getRightIR();
 			
 	//If derivative of IR readings is greater then 1
-	if(left-lPrevious > 1)
+	if(left-lPrevious > 0.5)
 	{		
 		mouse.IR_CORRECT = 0;
 		mouse.IR_CORRECT_LEFT = 0;
 		mouse.IR_CORRECT_RIGHT = 0;
 	}
-	if(right-rPrevious > 1)
+	if(right-rPrevious > 0.5)
 	{
 		mouse.IR_CORRECT = 0;
 		mouse.IR_CORRECT_LEFT = 0;
@@ -276,9 +276,9 @@ int getOffsetError()
 	{
 		error = (right-5)*mouse.IR_CORRECT;
 	
-		if(right-left > 10)
+		if(right-left > 5)
 			error = 3*mouse.IR_CORRECT;
-		if(right-left < -10)
+		if(right-left < -5)
 			error = -3*mouse.IR_CORRECT;
 	}
 	else if(mouse.IR_CORRECT_LEFT != 0)

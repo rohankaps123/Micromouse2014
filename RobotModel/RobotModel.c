@@ -56,7 +56,7 @@ void moveForward()
 }
 
 void moveForwardAndStop()
-{	
+{
 	//Make the robot go forward
 	setDirection(0, 0);
 
