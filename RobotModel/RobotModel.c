@@ -90,7 +90,7 @@ void moveFix(int length)
 }
 
 void moveBackwardsAndCorrect()
-{
+{		
 	//Rotate Left 180
 	setDirection(0, 1);
 	straight(640, 0, mouse.maxVelocity, 0, mouse.acceleration, mouse.deceleration);
@@ -116,7 +116,7 @@ void rotateRight()
 {
 	//Rotate Right
 	setDirection(1, 0);
-	
+		
 	//Move Mouse
 	straight(320, 0, mouse.maxVelocity, 0, mouse.acceleration, mouse.deceleration);
 }
@@ -134,7 +134,7 @@ void rotateLeftWithFix(float angle)
 void rotateRightWithFix(float angle)
 {
 	setDirection(1, 0);
-	
+
 	int addAngle = -angle*3;
 	
 	straight(320+addAngle, 0, mouse.maxVelocity, 0, mouse.acceleration, mouse.deceleration); 	

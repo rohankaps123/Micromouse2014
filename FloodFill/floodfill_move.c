@@ -1,5 +1,5 @@
-#include "floodfill_move.h"
-#include "DataComponents.h"
+#include "FloodFill_Move.h"
+#include "FloodFill_BinaryOperations.h"
 
 #define USELESS 1024
 

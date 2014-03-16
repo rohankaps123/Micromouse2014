@@ -24,9 +24,10 @@ Last Updated: March 1st 2014
 #include <util/delay.h>
 #include <math.h>
 
-#include "floodfill.h"
-#include "DataComponents.h"
-#include "Stack.h"
+#include "Floodfill.h"
+#include "FloodFill_BinaryOperations.h"
+#include "FloodFill_Stack.h"
+#include "FloodFill_Debug.h"
 
 //Debugging
 #include "USART.h"
@@ -45,6 +46,15 @@ void floodFill(long mazecells[16][16], char goal)
 	init_stack(&stack1);
 	init_stack(&stack2);
 	
+	//Reset Maze distances!!
+	for(int i = 0; i < 16; i++)
+	{
+		for(int j = 0; j < 16; j++)
+		{
+			setDistance(&mazecells[i][j], 255);
+		}
+	}
+	
 	//If our goal is the center..
 	if(goal == 'C')
 	{
@@ -61,20 +71,18 @@ void floodFill(long mazecells[16][16], char goal)
 	}
 
 	while(1==1)
-	{
-		int test = 0;
-		
+	{		
+		//printMaze(mazecells);
 		while(!stackIsEmpty(&stack1))
-		{
-			test++;
+		{	
 			//Get value of value on stack
 			long temp = top(&stack1);
 			int x = getX(temp);
-			int y = getY(temp);	
-			
+			int y = getY(temp);				
 			setDistance(&temp, level);
-
-			int dist = getDist(mazecells[x][y]);		
+			
+			//Get current(non-updated) distance from cell
+			int dist = getDist(mazecells[x][y]);	
 			
 			//Save Data to Cell
 			if(dist == 255)
@@ -83,33 +91,38 @@ void floodFill(long mazecells[16][16], char goal)
 			
 				if(x == 0 && y == 0)
 					return;
-					
+				
 				//Check each neighbouring cell and push it to the stack if possible
-				if(x < 15 && getE(temp) == 0 && getDist(mazecells[x+1][y]) == 255)
+				if(x < 15 && getE(temp) == 0 && getDist(mazecells[x+1][y]) == 255
+					&& ( (x==14) || (getW(mazecells[x+2][y])) ) )//Check the next cell too as it may contain wall data
 				{
 					push(mazecells[x+1][y], &stack2);
 				}
-				if(x > 0 && getW(temp) == 0 && getDist(mazecells[x-1][y]) == 255)
+				if(x > 0 && getW(temp) == 0 && getDist(mazecells[x-1][y]) == 255
+					&& ( (x==1) || (getE(mazecells[x-2][y])) ) )
 				{
 					push(mazecells[x-1][y], &stack2);
 				}
-				if(y < 15 && getN(temp) == 0 && getDist(mazecells[x][y+1]) == 255)
+				if(y < 15 && getN(temp) == 0 && getDist(mazecells[x][y+1]) == 255
+					&& ( (y==14) || (getS(mazecells[x][y+2])) ) )
 				{
 					push(mazecells[x][y+1], &stack2);
 				}
-				if(y > 0 && getS(temp) == 0 && getDist(mazecells[x][y-1]) == 255)
+				if(y > 0 && getS(temp) == 0 && getDist(mazecells[x][y-1]) == 255
+					&& ( (y==1) || (getN(mazecells[x][y-2])) ) )
 				{
 					push(mazecells[x][y-1], &stack2);
 				}
-			}		
+			}	
 			//Remove From Stack
 			popStack(&stack1);	
 		}
-		printlnNum(test);
+		
+		//Increment what level we are checking
 		level++;
 		
 		while(!stackIsEmpty(&stack2))
-		{
+		{	
 			long tp = top(&stack2);
 			popStack(&stack2);
 			

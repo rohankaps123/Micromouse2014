@@ -89,10 +89,11 @@ SRC += RobotModel/RobotModel_controls.c
 SRC += RobotModel/RobotModel_StepperMotor.c
 SRC += RobotModel/RobotModel_Sensors.c
 
-SRC += FloodFill/DataComponents.c
-SRC += FloodFill/stack.c
 SRC += FloodFill/FloodFill.c
-SRC += FloodFill/floodfill_move.c
+SRC += FloodFill/FloodFill_BinaryOperations.c
+SRC += FloodFill/FloodFill_Stack.c
+SRC += FloodFill/FloodFill_Move.c
+SRC += FloodFill/FloodFill_Debug.c
 
 SRC += USART.c
 

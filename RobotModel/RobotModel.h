@@ -11,11 +11,23 @@
 
 #define TURN_CONST (2 * 3.141529 * STEPS_PER_ROTATION) / (360 * WHEEL_CIRCUM) //Multiply by Radius (cm) and Degrees to get arcLength
 
+#define dNORTH 	0
+#define dWEST 	1
+#define dSOUTH 	2
+#define dEAST	4
+
+typedef struct Vector
+{
+	int x;
+	int y;
+	
+} Vector;
+
 //Our Mouse Structure
 typedef struct Mouse
 {
 	//Which direction are we facing?
-	volatile int direction;
+	volatile Vector direction;
 	
 	//Robot Coordinantes
 	volatile int x;
@@ -38,6 +50,8 @@ typedef struct Mouse
 	//FloodFill maze;
 	
 } Mouse;
+
+
 
 //Read Sensors to determine if there is a wall
 int isWallFront(void);
