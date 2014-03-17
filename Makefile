@@ -83,6 +83,7 @@ OBJDIR = .
 SRC = $(TARGET).c
 
 SRC += MouseManager/MouseManager.c
+SRC += MouseManager/MouseManager_Search.c
 
 SRC += MouseManager/RobotModel/RobotModel.c
 SRC += MouseManager/RobotModel/RobotModel_controls.c
