@@ -82,19 +82,19 @@ OBJDIR = .
 # List C source files here. (C dependencies are automatically generated.)
 SRC = $(TARGET).c
 
-SRC += MouseManager.c
+SRC += MouseManager/MouseManager.c
 
-SRC += RobotModel/RobotModel.c
-SRC += RobotModel/RobotModel_controls.c
-SRC += RobotModel/RobotModel_StepperMotor.c
-SRC += RobotModel/RobotModel_Sensors.c
+SRC += MouseManager/RobotModel/RobotModel.c
+SRC += MouseManager/RobotModel/RobotModel_controls.c
+SRC += MouseManager/RobotModel/RobotModel_StepperMotor.c
+SRC += MouseManager/RobotModel/RobotModel_Sensors.c
 
-SRC += FloodFill/FloodFill.c
-SRC += FloodFill/FloodFill_BinaryOperations.c
-SRC += FloodFill/FloodFill_Stack.c
-SRC += FloodFill/FloodFill_Debug.c
+SRC += MouseManager/FloodFill/FloodFill.c
+SRC += MouseManager/FloodFill/FloodFill_BinaryOperations.c
+SRC += MouseManager/FloodFill/FloodFill_Stack.c
+SRC += MouseManager/FloodFill/FloodFill_Debug.c
 
-SRC += USART.c
+SRC += MouseManager/USART.c
 
 # List C++ source files here. (C dependencies are automatically generated.)
 CPPSRC = 

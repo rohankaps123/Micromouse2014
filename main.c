@@ -20,7 +20,7 @@ Last Updated: March 15th 2014
 **********************************************/
 
 //Everything is controlled via mouse manager
-#include "mouseManager.h"
+#include "MouseManager/mouseManager.h"
 
 //Start Point of our program
 int main(void)
