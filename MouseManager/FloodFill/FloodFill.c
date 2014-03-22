@@ -79,8 +79,10 @@ void floodFill(long mazecells[16][16], char goal, int endX, int endY)
 		push(mazecells[0][0], &stack1);
 	}
 
+	int lc = 0;
 	while(1==1)
 	{
+		//printMaze(mazecells);
 		while(!stackIsEmpty(&stack1))
 		{	
 			//Get value of value on stack
@@ -135,6 +137,23 @@ void floodFill(long mazecells[16][16], char goal, int endX, int endY)
 			popStack(&stack2);
 			
 			push(tp, &stack1);
+		}
+		
+		//Error in Code
+		lc++;
+		if(lc > 255)
+		{
+			TCCR1B &= ~((1 << CS11) | (1 << CS10));
+			TCCR3B &= ~((1 << CS31) | (1 << CS30));
+			while(!isButtonPushed(1))
+			{
+				turnOnLeds(7);
+				_delay_ms(20);
+				turnOnLeds(0);
+				_delay_ms(20);
+			}
+			printMaze(mazecells);
+			while(1==1);
 		}
 	}
 }

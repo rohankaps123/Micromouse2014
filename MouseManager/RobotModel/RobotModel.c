@@ -56,6 +56,24 @@ void moveForward()
 	straight(762, mouse.velocity, mouse.maxVelocity, mouse.maxVelocity, mouse.acceleration, mouse.deceleration);
 }
 
+void StopFromSpeedHalf()
+{
+	//Make the robot go forward
+	setDirection(0, 0);
+
+	//Move mouse
+	straight(381, mouse.velocity, mouse.maxVelocity, 0, mouse.acceleration, mouse.deceleration);
+
+}
+void moveForwardHalf()
+{
+	//Make the robot go forward
+	setDirection(0, 0);
+
+	//Move mouse
+	straight(381, 0, mouse.maxVelocity, mouse.maxVelocity, mouse.acceleration, mouse.deceleration);
+}
+
 void moveForwardAndStop()
 {
 	//Make the robot go forward
@@ -96,10 +114,12 @@ void moveBackwardsAndCorrect()
 	setDirection(0, 1);
 	straight(640, 0, mouse.maxVelocity, 0, mouse.acceleration, mouse.deceleration);
 	
+	mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
 	//Go Backwards
 	setDirection(1, 1);	
 	straight(250, 0, mouse.maxVelocity, 0, mouse.acceleration, mouse.deceleration);
 	
+	mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
 	setDirection(0, 0);
 	straight(130, 0, mouse.maxVelocity, 0, mouse.acceleration, mouse.deceleration);
 }

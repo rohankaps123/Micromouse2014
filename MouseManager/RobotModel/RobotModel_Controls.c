@@ -15,7 +15,7 @@ extern volatile Mouse mouse;
 void straight(long stepTarget, int inSpeed, int maxSpeed, int exitSpeed, int accel, int decel)
 {
 	unsigned long startTime = milliseconds;
-	mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
+	//mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
 	
 	while(inSpeed + accel*(float)((milliseconds-startTime)/1000.0) < maxSpeed)
 	{
@@ -174,12 +174,12 @@ float getOffsetError()
 	float rPrevious = mouse.sensor[RIGHT_IR].previousValue;
 	
 	//If derivative of IR readings is greater then 1
- 	if(left-lPrevious > 1)
+ 	if(left-lPrevious > 0.5)
 	{		
 		mouse.IR_CORRECT = 0;
 		mouse.IR_CORRECT_LEFT = 0;
 	}
-	if(right-rPrevious > 1)
+	if(right-rPrevious > 0.5)
 	{
 		mouse.IR_CORRECT = 0;
 		mouse.IR_CORRECT_RIGHT = 0;

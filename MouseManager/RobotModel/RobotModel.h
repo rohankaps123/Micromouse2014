@@ -77,8 +77,8 @@ void rotateRightWithFix(float angle);
 void moveBackwards(void);
 void moveBackwardsAndCorrect(void);
 void fixAngle(float angle);
-
-
+void StopFromSpeedHalf(void);
+void moveForwardHalf(void);
 
 
 #endif

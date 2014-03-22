@@ -4,17 +4,69 @@
 //Print the maze onto a console via USART
 void printMaze(long maze[16][16])
 {
+	print(":: Mouse Wall View :: \n\r");
 	//Print Maze Status
 	for(int i = 0; i < 16; i++)
 	{
-		for(int j = 0; j < 16; j++)
-		{
-			print("[");
-			printInt(getDist(maze[j][i]));
-			print("],");
-		}
-		print(" BREAK\n\r");
+		for(int q = 0; q < 3; q++)
+		{				
+			for(int j = 0; j < 16; j++)
+			{
+				if(q==0)
+				{		
+					print("+");
+					if(getN(maze[j][i]))
+					{
+						print("---");
+					}
+					else
+					{
+						print("   ");
+					}
+					print("+");
+				}
+				else if(q == 1)
+				{
+					if(getW(maze[j][i]))
+					{
+						print("|");
+					}
+					else
+					{
+						print(" ");
+					}
+					
+					printInt(getDist(maze[j][i]));
+					
+					if(getE(maze[j][i]))
+					{
+						print("|");
+					}
+					else
+					{
+						print(" ");
+					}
+				}
+				else if(q == 2)
+				{
+					print("+");
+					if(getS(maze[j][i]))
+					{
+						print("---");
+					}
+					else
+					{
+						print("   ");
+					}
+					print("+");
+				}
+			
+			}
+			print(" BREAK\n\r");				
+		}	
+		
 	}
+		print(":: End View :: \n\r");
 }
 
 //Print all the walls found onto a console via USART

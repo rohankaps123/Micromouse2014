@@ -53,7 +53,45 @@ volatile Mouse mouse;
 
 void solveMaze()
 {
-	//stopMouse();
+	//Reset maze to 0
+	initializeMaze(&maze);
+		
+	//We Know at the starting point, there's something behind us
+	setN(&maze[0][0], 1);
+	mouse.direction.x = 0;
+	mouse.direction.y = -1;
+	mouse.x = 0;
+	mouse.y = 0;
+	
+	updateSensors();
+	updateSensors();
+	
+	setDirection(0, 0);
+	updateWalls();
+	//printMaze(&maze);
+	straight(540, 0, mouse.maxVelocity, mouse.maxVelocity, mouse.acceleration, mouse.deceleration);
+	mouse.x += mouse.direction.x;
+	mouse.y -= mouse.direction.y;
+	
+	while(1==1)
+	{
+		updateWalls();
+		mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
+		floodFill(maze, '6', mouse.x, mouse.y);
+		searchMove();
+		if(mouse.x == 5 && mouse.y == 5)
+			break;
+	}	
+	
+	floodFill(maze, 'S', mouse.x, mouse.y);
+	
+	stopMouse();
+	
+	while(!isButtonPushed(1));
+		printMaze(maze);
+		printWalls(maze);  
+		
+	/* //stopMouse();
 	setDirection(0, 0);
 	mouse.IR_CORRECT_RIGHT = 40;
 	int speed = 3000;
@@ -78,6 +116,7 @@ void solveMaze()
 		}
 		else if(isWallFront())
 		{
+		
 			straight(381, mouse.velocity, speed, 0, 4000, 12000);
 			mouse.IR_CORRECT_RIGHT = 0;
 			mouse.IR_CORRECT_LEFT = 0;
@@ -102,127 +141,7 @@ void solveMaze()
 		}
 	
 	}	
-	//straight(762, mouse.velocity, speed, speed, 4000, 12000);
-	straight(381, mouse.velocity, speed, 0, 4000, 12000);
-	//Make the robot go forward
-	/* setDirection(0, 0);
-	int speed = 1500;
-	
-	if(isWallLeft())
-		mouse.IR_CORRECT_LEFT = 30;
-		
-	straight(400, 0, speed, speed, 3000, 12000);
-	
-	while(!isWallFront())
-	{
-		if(isWallLeft())
-		{
-			mouse.IR_CORRECT_LEFT = 50;			
-		}	
-		else if(isWallRight())
-		{
-			mouse.IR_CORRECT_RIGHT = 0;
-		}
-		else
-		{
-			mouse.IR_CORRECT_RIGHT = 0;
-			mouse.IR_CORRECT_LEFT = 0;	
-		}	
-			
-		straight(762, mouse.velocity, speed, speed, 3000, 12000);
-	}
-	mouse.IR_CORRECT_LEFT = 0;
-	mouse.IR_CORRECT_RIGHT = 0;
-	straight(331, mouse.velocity, speed, 0, 3000, 12000);
-		
-	moveBackwardsAndCorrect(); */
-	/* if(isWallFront())
-	{
-		float left = getFrontLeftIR();
-		float right = getFrontRightIR();
-
-		float distance = (left+right)/2;
-		
-		float offset = distance - 12.7;
-		straight(offset * 100, mouse.velocity, speed, speed, 3000, 12000);
-		
-		if(!isWallRight())
-		{
-			float angle = getFrontAngle();
-
-			turnOnLeds(7);
-			
-			smoothTurn(90 - angle/2, 6, mouse.velocity, speed, speed, 12000, 12000);
-			straight(762, mouse.velocity, speed, 0, 3000, 12000); 
-		}
-		else if(!isWallLeft())
-		{
-			float angle = getFrontAngle();
-
-			turnOnLeds(7);
-			
-			smoothTurn(-90-angle/2, 6, mouse.velocity, speed, speed, 12000, 12000);
-			straight(762, mouse.velocity, speed, 0, 3000, 12000); 
-		}
-		else
-		{	
-			straight(331, mouse.velocity, speed, 0, 3000, 12000);
-		
-			moveBackwardsAndCorrect();
-		}
-	}
-	else
-	{
-		straight(142, mouse.velocity, speed, speed, 3000, 12000);
-		straight(381, mouse.velocity, speed, 0, 3000, 12000);
-	} */
-	
- 	/* float left = getFrontLeftIR();
-	float right = getFrontRightIR();
-
-	float distance = (left+right)/2;
-		
-	float offset = distance - 13;
-	
-	straight(offset * 100, mouse.velocity, speed, speed, 3000, 12000);
-
-	float angle = getFrontAngle();
-
-	turnOnLeds(7);
-	
-	smoothTurn(90 - angle/2, 6, mouse.velocity, speed, speed, 12000, 12000);
-	straight(762, mouse.velocity, speed, 0, 3000, 12000); 
-	 */
-	//straight(331, mouse.velocity, speed, 0, 3000, 12000);
-	stopMouse();
-	
-	 
-	/* //Reset maze to 0
-	initializeMaze(&maze);
-		
-	//We Know at the starting point, there's something behind us
-	setN(&maze[0][0], 1);
-	mouse.direction.x = 0;
-	mouse.direction.y = -1;
-	mouse.x = 0;
-	mouse.y = 0;
-	
-	while(1==1)
-	{
-		updateWalls();
-		floodFill(maze, '6', mouse.x, mouse.y);
-		searchMove();
-		if(mouse.x == 5 && mouse.y == 5)
-			break;
-	}	
-	
-	floodFill(maze, 'S', mouse.x, mouse.y);
-	 	
-	stopMouse();
-	
-	while(!isButtonPushed(1));
-		printMaze(maze);
-		printWalls(maze);  */
+	stopMouse(); */
 }
 
 int wallExists(long data, int dirx, int diry)
@@ -247,9 +166,9 @@ void initializeMouse()
 	USART_init();
 	
 	mouse.velocity = 0;
-	mouse.maxVelocity = 5000;
-	mouse.acceleration = 2000;
-	mouse.deceleration = 10000;
+	mouse.maxVelocity = 2500;
+	mouse.acceleration = 3000;
+	mouse.deceleration = 12000;
 
 	enableDrive(1);
 	turnOnTimers(1,1);
@@ -264,9 +183,6 @@ void stopMouse()
 
 void updateWalls()
 {	
-	print("Mousex: ");printInt(mouse.x);
-	print(", Mousey: ");printInt(mouse.y);
-	print("\n\r");
 	int front = isWallFront();
 	int left = isWallLeft();
 	int right = isWallRight();
