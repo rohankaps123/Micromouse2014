@@ -143,8 +143,11 @@ void floodFill(long mazecells[16][16], char goal, int endX, int endY)
 		lc++;
 		if(lc > 255)
 		{
+			//Turn OFF Timers
 			TCCR1B &= ~((1 << CS11) | (1 << CS10));
 			TCCR3B &= ~((1 << CS31) | (1 << CS30));
+			
+			//Blink LED's, signalling something went wrong.  
 			while(!isButtonPushed(1))
 			{
 				turnOnLeds(7);
@@ -152,6 +155,8 @@ void floodFill(long mazecells[16][16], char goal, int endX, int endY)
 				turnOnLeds(0);
 				_delay_ms(20);
 			}
+			
+			//Print Data when button is pushed
 			printMaze(mazecells);
 			while(1==1);
 		}

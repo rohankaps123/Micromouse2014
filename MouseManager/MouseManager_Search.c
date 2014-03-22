@@ -177,9 +177,9 @@ void StopAndGoBack()
 	//Stop at Midpoint in Cell
 	StopFromSpeedHalf();
 	
-	mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;		
-	moveBackwardsAndCorrect();
+	mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
 	
+	moveBackwardsAndCorrect();
 	mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
 	moveForwardHalf();
 	

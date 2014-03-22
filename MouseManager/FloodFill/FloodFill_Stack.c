@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include "FloodFill_Stack.h"
 
-
-
 void popStack(struct llstack *stack)
 {
 	if(stack->pos < 0)

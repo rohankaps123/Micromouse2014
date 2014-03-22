@@ -85,6 +85,7 @@ SRC = $(TARGET).c
 SRC += MouseManager/MouseManager.c
 SRC += MouseManager/MouseManager_Search.c
 SRC += MouseManager/MouseManager_Fast.c
+SRC += MouseManager/MouseManager_Sensors.c
 
 SRC += MouseManager/RobotModel/RobotModel.c
 SRC += MouseManager/RobotModel/RobotModel_controls.c

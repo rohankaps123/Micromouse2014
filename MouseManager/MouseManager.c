@@ -31,6 +31,7 @@ Last Updated: March 16th 2014
 #include "MouseManager.h"
 #include "MouseManager_Search.h"
 #include "MouseManager_Fast.h"
+#include "MouseManager_Sensors.h"
 
 //Mouse Profile
 #include "RobotModel/RobotModel.h"
@@ -90,71 +91,8 @@ void solveMaze()
 	while(!isButtonPushed(1));
 		printMaze(maze);
 		printWalls(maze);  
-		
-	/* //stopMouse();
-	setDirection(0, 0);
-	mouse.IR_CORRECT_RIGHT = 40;
-	int speed = 3000;
-	
-	straight(545, 0, speed, speed, 4000, 12000);
-	
-	while(1==1)
-	{	
-		setDirection(0, 0);
-		
-		if(isWallRight())
-		{
-			mouse.IR_CORRECT_RIGHT = 40;
-		}		
-		
-		if(!isWallRight())
-		{
-			straight(381, mouse.velocity, speed, 0, 4000, 12000);
-			rotateRight();
-			setDirection(0, 0);
-			straight(381, 0, speed, speed, 4000, 12000);
-		}
-		else if(isWallFront())
-		{
-		
-			straight(381, mouse.velocity, speed, 0, 4000, 12000);
-			mouse.IR_CORRECT_RIGHT = 0;
-			mouse.IR_CORRECT_LEFT = 0;
-			
-			if(!isWallLeft())
-			{
-				rotateLeft();
-				setDirection(0, 0);
-				straight(381, 0, speed, speed, 4000, 12000);
-			}
-			else
-			{
-				moveBackwardsAndCorrect();
-				setDirection(0, 0);
-				straight(381, 0, speed, speed, 4000, 12000);
-			}
-		}
-		else
-		{
-			setDirection(0, 0);
-			straight(762, mouse.velocity, speed, speed, 4000, 12000);
-		}
-	
-	}	
-	stopMouse(); */
 }
 
-int wallExists(long data, int dirx, int diry)
-{
-	if(dirx == 0 && diry == 1)	
-		return getN(data);
-	else if(dirx == 0 && diry == -1)
-		return getS(data);
-	else if(dirx == -1 && diry == 0)
-		return getW(data);
-	else if(dirx == 1 && diry == 0)
-		return getE(data);
-}
 
 //Reset and start all mouse constants and timers
 void initializeMouse()
@@ -181,47 +119,4 @@ void stopMouse()
 	enableDrive(0);	
 }
 
-void updateWalls()
-{	
-	int front = isWallFront();
-	int left = isWallLeft();
-	int right = isWallRight();
-	int dirx = mouse.direction.x;
-	int diry = mouse.direction.y;
-	int N = 0;
-	int E = 0;
-	int S = 0;
-	int W = 0;
 
-	//Translate our robot's sensors to the maze coordinates
-	if(dirx == 0 && diry == 1)
-	{
-		N = front;
-		E = right;
-		W = left;
-	}
-	else if(dirx == 0 && diry == -1)
-	{
-		S = front;
-		W = right;
-		E = left;
-	}
-	else if(dirx == 1 && diry == 0)
-	{
-		E = front;
-		S = right;
-		N = left;
-	}
-	else if(dirx == -1 && diry == 0)
-	{
-		W = front;
-		N = right;
-		S = left;
-	}
-	
-	//Update Bits that have turned to 1
-	if(N) setN(&maze[mouse.x][mouse.y], N);	
-	if(W) setW(&maze[mouse.x][mouse.y], W);		
-	if(S) setS(&maze[mouse.x][mouse.y], S);		
-	if(E) setE(&maze[mouse.x][mouse.y], E);
-}
