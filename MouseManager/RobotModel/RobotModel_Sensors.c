@@ -3,6 +3,9 @@
 #include <avr/interrupt.h>
 
 #include "RobotModel_Sensors.h"
+#include "RobotModel.h"
+
+extern volatile Mouse mouse;
 
 float getLeftIR()
 {
@@ -65,24 +68,6 @@ int getPotSensorValue(int analogChannel)
 	return ReadADC(analogChannel);
 }
 
-volatile int gyroSum = 0;
-volatile int gyroComp;
-
-int updateGyroValue()
-{
-	int dif = ReadADC(7) - gyroComp;
-	
-	if(dif > 2 || dif < -2)
-		gyroSum += dif;
-		
-	return gyroSum; 
-}
-
-void calibrateGyro()
-{
-	gyroComp = ReadADC(7);
-}
-
 int isButtonPushed(int analogChannel)
 {
 	return !(ReadADC(analogChannel) > 512);
@@ -108,7 +93,7 @@ void setupADC()
 {
 	//Setup Registers
 	ADMUX = (1 << REFS0);// | (1 << MUX0) | (1 << MUX1) | (1 << MUX2);
-	ADCSRA = (1 << ADEN) | (1 << ADPS0) | (1 << ADPS1) | (1 << ADPS2);	
+	ADCSRA = (1 << ADEN) | (1 << ADPS0) /*  | (1 << ADPS1) */  | (1 << ADPS2)  ;	
 	
 	//IR Triggers
 	DDRD |= (1 << PORTD4) | (1 << PORTD7);
@@ -125,10 +110,10 @@ uint16_t ReadADC(uint8_t ch)
    //Select ADC Channel ch must be 0-7
    ch=ch&0b00000111;
    ADMUX= (1 << REFS0) | ch;
-
+   
    //Start Single conversion
    ADCSRA|=(1<<ADSC);
-	
+
    //Wait for conversion to complete
    while(!(ADCSRA & (1<<ADIF)));
 
@@ -150,4 +135,3 @@ float linearizeIRSensorValues_Front(float input)
 	else
 		return -3.8522217222*log( input ) + 31.2529127395;
 }
-

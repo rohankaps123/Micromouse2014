@@ -1,5 +1,5 @@
-#ifndef MOUSEMANAGER_H
-#define MOUSEMANAGER_H
+#ifndef MOUSEMANAGER_SEARCH_H
+#define MOUSEMANAGER_SEARCH_H
 
 void searchMove(void);
 

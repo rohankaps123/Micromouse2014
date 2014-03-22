@@ -3,6 +3,7 @@
 
 //Needed for Mouse Pofile
 #include "RobotModel_StepperMotor.h"
+#include "RobotModel_Sensors.h"
 
 #define WHEEL_CIRCUM 		18.8495 //Cm
 #define STEPS_PER_ROTATION	800 
@@ -11,10 +12,17 @@
 
 #define TURN_CONST (2 * 3.141529 * STEPS_PER_ROTATION) / (360 * WHEEL_CIRCUM) //Multiply by Radius (cm) and Degrees to get arcLength
 
+//Directions
 #define dNORTH 	0
 #define dWEST 	1
 #define dSOUTH 	2
 #define dEAST	4
+
+//Sensor Array Numbers
+#define LEFT_IR			0
+#define RIGHT_IR		1
+#define LEFT_FRONT_IR	2
+#define RIGHT_FRONT_IR	3
 
 typedef struct Vector
 {
@@ -37,6 +45,10 @@ typedef struct Mouse
 	volatile StepperMotor leftMotor;
 	volatile StepperMotor rightMotor;
 	
+	//Mouse Sensors
+	volatile Sensor sensor[4];
+	volatile int currentChannel;//For ADC conversion
+	
 	//Mouse Movements Values
 	volatile float acceleration;
 	volatile float deceleration;
@@ -47,11 +59,8 @@ typedef struct Mouse
 	volatile int IR_CORRECT;
 	volatile int IR_CORRECT_LEFT;
 	volatile int IR_CORRECT_RIGHT;
-	//FloodFill maze;
 	
 } Mouse;
-
-
 
 //Read Sensors to determine if there is a wall
 int isWallFront(void);

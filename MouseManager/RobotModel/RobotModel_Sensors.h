@@ -1,6 +1,14 @@
 #ifndef ROBOTMODEL_SENSORS_H
 #define ROBOTMODEL_SENSORS_H
 
+typedef struct Sensor
+{
+	volatile float value;
+	volatile float previousValue;
+	
+	volatile uint8_t *port;
+} Sensor;
+
 //Sensor Functions
 float getLeftIR(void);
 float getRightIR(void);

@@ -18,22 +18,22 @@
 #include "FloodFill/FloodFill_Stack.h"
 #include "FloodFill/FloodFill_Debug.h"
 
-#include "USART.h"
-
 //Our Mouse and Maze
 extern volatile long maze[16][16];
 extern volatile Mouse mouse;
 
-void searchMove()
+void returnMove()
 {
 	long current = maze[mouse.x][mouse.y];
 	long cstraight = maze[mouse.x + mouse.direction.x][mouse.y - mouse.direction.y];
 	long left = maze[mouse.x - mouse.direction.y][mouse.y - mouse.direction.x];
 	long right = maze[mouse.x + mouse.direction.y][mouse.y + mouse.direction.x];
+	long cback = maze[mouse.x + mouse.direction.x][mouse.y + mouse.direction.y];
 	
 	char dStraight = getDist(cstraight);
 	char dLeft = getDist(left);
 	char dRight = getDist(right);
+	char dBack = getDist(cback);
 	
 	char canWeGoStraight = !wallExists(current, mouse.direction.x, mouse.direction.y);
 	char canWeGoLeft = !wallExists(current, -mouse.direction.y, mouse.direction.x);
@@ -41,22 +41,6 @@ void searchMove()
 
 	int dirx = mouse.direction.x;
 	int diry = mouse.direction.y;
-	
-	//Correct for straight distance
-	if(!canWeGoStraight)
-	{
-		float left = getFrontLeftIR();
-		float right = getFrontRightIR();
-		float length = (left+right)/2;
-		
-		length = length - 3;
-		if(length < 0)
-		{
-			setDirection(1, 1);
-			length = -length;
-		}
-		straight((length)*42, mouse.velocity, mouse.maxVelocity, 0, mouse.acceleration, mouse.deceleration);
-	}
 	
 	if(!canWeGoStraight && !canWeGoLeft && !canWeGoRight)
 	{
@@ -68,14 +52,16 @@ void searchMove()
 	else if( 
 		canWeGoStraight && 
 		((dStraight <= dLeft) || (!canWeGoLeft)) &&
-		((dStraight <= dRight) || (!canWeGoRight)) )
+		((dStraight <= dRight) || (!canWeGoRight)) &&
+		((dStraight <= dBack)) )
 	{
 		//Go forward
 	}
 	else if(
 		canWeGoLeft && 
 		((dLeft <= dStraight) || (!canWeGoStraight)) &&
-		((dLeft <= dRight) || (!canWeGoRight)) )
+		((dLeft <= dRight) || (!canWeGoRight)) &&
+		((dLeft <= dBack)) )
 	{	
 		//Turn left
 		mouse.direction.x = -diry;
@@ -94,7 +80,8 @@ void searchMove()
 	else if(
 		canWeGoRight &&
 		((dRight <= dStraight) || (!canWeGoStraight)) &&
-		((dRight <= dLeft) || (!canWeGoLeft)) )
+		((dRight <= dLeft) || (!canWeGoLeft)) &&
+		((dRight <= dBack)) )
 	{		
 		//Turn Right
 		mouse.direction.x = diry;
@@ -110,7 +97,6 @@ void searchMove()
 			rotateRight();
 		}
 	}
-	//Must go backwards
 	else
 	{
 		//Reverse and go back

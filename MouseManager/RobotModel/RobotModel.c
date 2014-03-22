@@ -20,19 +20,20 @@ volatile Mouse mouse;
 
 int isWallFront()
 {
-    float value = getFrontLeftIR();
-	float value2 = getFrontRightIR();
+    float value = mouse.sensor[LEFT_FRONT_IR].value;
+	float value2 = mouse.sensor[RIGHT_FRONT_IR].value;
 	
 	//Average front sensors
 	value = (value + value2)/2;
 	
 	//If there is something less then 16 cm away from sensor
-	return (value < 10);		
+	//return (value < 10);		
+	return (value < 17);
 }
 
 int isWallRight()
 {
-	float value = getRightIR();
+	float value = mouse.sensor[RIGHT_IR].value; //getRightIR();
 	
 	//If there is something less then 8 cm away from sensor 
 	return (value < 14);
@@ -40,7 +41,7 @@ int isWallRight()
 
 int isWallLeft()
 {
-	float value = getLeftIR();
+	float value = mouse.sensor[LEFT_IR].value;//getLeftIR();
 	
 	//If there is something less then 8 cm away from sensor 
 	return (value < 14);
