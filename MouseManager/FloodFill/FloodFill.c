@@ -41,6 +41,7 @@ void floodFill(long mazecells[16][16], char goal, int endX, int endY)
 {
 	//What is the current number?
 	int level=0;
+	int canGoInUnexploredCells = 1;
 	
 	//Reset Stack to null
 	init_stack(&stack1);
@@ -69,9 +70,29 @@ void floodFill(long mazecells[16][16], char goal, int endX, int endY)
 	{
 		push(mazecells[5][5], &stack1);
 	}
-	else if(goal == 'S')
+	else if(goal == '7')
 	{
+		push(mazecells[10][5], &stack1);
+	}
+	else if(goal == '8')
+	{
+		canGoInUnexploredCells = 0;
+		push(mazecells[5][5], &stack1);
+	}
+	else if(goal == '9')
+	{
+		canGoInUnexploredCells = 0;
+		push(mazecells[10][5], &stack1);
+	}
+	else if(goal == 'L')
+	{
+		//canGoInUnexploredCells = 0;
 		push(mazecells[0][0], &stack1);
+	}
+	else if(goal == 'R')
+	{
+		//canGoInUnexploredCells = 0;
+		push(mazecells[15][0], &stack1);
 	}
 	//Otherwise, default to start point
 	else
@@ -80,7 +101,7 @@ void floodFill(long mazecells[16][16], char goal, int endX, int endY)
 	}
 
 	int lc = 0;
-	while(1==1)
+	while(!stackIsEmpty(&stack1))
 	{
 		//printMaze(mazecells);
 		while(!stackIsEmpty(&stack1))
@@ -99,27 +120,27 @@ void floodFill(long mazecells[16][16], char goal, int endX, int endY)
 			{
 				mazecells[x][y] = temp;
 				
-				if(x == endX && y == endY)
+			/* 	if(x == endX && y == endY)
 					return;
-				
+				 */
 				//Check each neighbouring cell and push it to the stack if possible
 				if(x < 15 && getE(temp) == 0 && getDist(mazecells[x+1][y]) == 255
-					&& !getW(mazecells[x+1][y]) )//Check the next cell too as it may contain wall data
+					&& !getW(mazecells[x+1][y]) && (canGoInUnexploredCells || getExp(mazecells[x+1][y]) == 1) )//Check the next cell too as it may contain wall data
 				{
 					push(mazecells[x+1][y], &stack2);
 				}
 				if(x > 0 && getW(temp) == 0 && getDist(mazecells[x-1][y]) == 255
-					&& !getE(mazecells[x-1][y]) )
+					&& !getE(mazecells[x-1][y]) && (canGoInUnexploredCells || getExp(mazecells[x-1][y]) == 1))
 				{
 					push(mazecells[x-1][y], &stack2);
 				}
 				if(y < 15 && getS(temp) == 0 && getDist(mazecells[x][y+1]) == 255
-					&& !getN(mazecells[x][y+1]) )
+					&& !getN(mazecells[x][y+1]) && (canGoInUnexploredCells || getExp(mazecells[x][y+1]) == 1))
 				{
 					push(mazecells[x][y+1], &stack2);
 				}
 				if(y > 0 && getN(temp) == 0 && getDist(mazecells[x][y-1]) == 255
-					&& !getS(mazecells[x][y-1]) )
+					&& !getS(mazecells[x][y-1]) && (canGoInUnexploredCells || getExp(mazecells[x][y-1]) == 1))
 				{
 					push(mazecells[x][y-1], &stack2);
 				}
@@ -180,4 +201,11 @@ void initializeMaze(long cell[16][16])
 			setW(&cell[i][j],0); //sets Wwall bit of cells to 0
 		}
 	}
-}
+// set the outer walls
+	for(int i=0; i < 16;i++){
+		setN(&cell[i][0],1);
+		setS(&cell[i][15],1);
+		setW(&cell[0][i],1);
+		setE(&cell[15][i],1);
+		}
+	}

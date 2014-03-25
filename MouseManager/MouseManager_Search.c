@@ -39,6 +39,10 @@ void searchMove()
 	char canWeGoLeft = !wallExists(current, -mouse.direction.y, mouse.direction.x);
 	char canWeGoRight = !wallExists(current, mouse.direction.y, -mouse.direction.x);	 
 	 
+	char isExploredStraight = getExp(cstraight);
+	char isExploredLeft = getExp(left);
+	char isExploredRight = getExp(right);
+
 	/* All Directions Blocked*/
 	if(!canWeGoStraight && !canWeGoLeft && !canWeGoRight)
 	{
@@ -48,7 +52,9 @@ void searchMove()
 	else if( 
 		canWeGoStraight && 
 		((dStraight <= dLeft) || (!canWeGoLeft)) &&
-		((dStraight <= dRight) || (!canWeGoRight)) )
+		((dStraight <= dRight) || (!canWeGoRight)) &&
+		(isExploredRight >= isExploredStraight || (!canWeGoRight) || (dStraight!=dRight)) && 
+		(isExploredLeft >= isExploredStraight || (!canWeGoLeft) || (dStraight!=dLeft)) ) 
 	{
 		//Correct Using Walls?
 		if(!canWeGoRight)
@@ -66,7 +72,9 @@ void searchMove()
 	else if(
 		canWeGoLeft && 
 		((dLeft <= dStraight) || (!canWeGoStraight)) &&
-		((dLeft <= dRight) || (!canWeGoRight)) )
+		((dLeft <= dRight) || (!canWeGoRight))  &&
+		(isExploredRight >= isExploredLeft || (!canWeGoRight) || (dLeft != dRight)) && 
+		(isExploredStraight >= isExploredLeft || (!canWeGoStraight) || (dStraight != dLeft)) )
 	{	
 		
 		RotateLeft(canWeGoStraight);
@@ -75,9 +83,15 @@ void searchMove()
 	else if(
 		canWeGoRight &&
 		((dRight <= dStraight) || (!canWeGoStraight)) &&
-		((dRight <= dLeft) || (!canWeGoLeft)) )
+		((dRight <= dLeft) || (!canWeGoLeft)) &&
+		(isExploredLeft >= isExploredRight || (!canWeGoLeft) || (dRight != dLeft)) && 
+		(isExploredStraight >= isExploredRight || (!canWeGoStraight) || (dRight != dStraight)) )
 	{		
 		RotateRight(canWeGoStraight);
+	}
+	else
+	{
+		stopMouse();
 	}
 	
 	//Reset All IR Corrections to off

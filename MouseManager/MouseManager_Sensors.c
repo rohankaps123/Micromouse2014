@@ -22,6 +22,7 @@
 //Our Mouse and Maze
 extern volatile long maze[16][16];
 extern volatile Mouse mouse;
+extern char firstTurn;
 
 int wallExists(long data, int dirx, int diry)
 {
@@ -73,9 +74,38 @@ void updateWalls()
 		S = left;
 	}
 	
+		
+	//if we're still checking for mouse position
+	if(firstTurn == 'n')
+	{
+		//If we need to flip sides
+		if(!W)
+		{			
+			mouse.x = 15;
+			setS(&maze[mouse.x][mouse.y], getS(maze[0][mouse.y]));
+			setS(&maze[0][mouse.y], 0);
+			for(int i=0;i<15;i++)
+			{
+				setExp(&maze[15][i], getExp(&maze[0][i]));
+				setExp(&maze[0][i], 0);
+				setW(&maze[15][i],getE(maze[0][i]));
+				setE(&maze[0][i],0); 
+			}
+			
+			firstTurn = 'R';
+			
+		}
+		else if(!E)
+		{
+			firstTurn = 'L';
+		}
+	}
+	
 	//Update Bits that have turned to 1
 	if(N) setN(&maze[mouse.x][mouse.y], N);	
 	if(W) setW(&maze[mouse.x][mouse.y], W);		
 	if(S) setS(&maze[mouse.x][mouse.y], S);		
 	if(E) setE(&maze[mouse.x][mouse.y], E);
+
+	setExp(&maze[mouse.x][mouse.y], 1);
 }

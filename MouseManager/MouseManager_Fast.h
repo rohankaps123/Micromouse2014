@@ -1,6 +1,6 @@
 #ifndef MOUSEMANAGER_FAST_H
 #define MOUSEMANAGER_FAST_H
 
-void returnMove(void);
+void fastMove(void);
 
 #endif

@@ -5,7 +5,7 @@
 //Mouse Manager
 #include "MouseManager.h"
 #include "MouseManager_Search.h"
-
+#include "MouseManager_Fast.h"
 //Mouse Profile
 #include "RobotModel/RobotModel.h"
 #include "RobotModel/RobotModel_Controls.h"
@@ -18,109 +18,73 @@
 #include "FloodFill/FloodFill_Stack.h"
 #include "FloodFill/FloodFill_Debug.h"
 
+#include "USART.h"
+
 //Our Mouse and Maze
 extern volatile long maze[16][16];
 extern volatile Mouse mouse;
 
-void returnMove()
+void fastMove()
 {
 	long current = maze[mouse.x][mouse.y];
 	long cstraight = maze[mouse.x + mouse.direction.x][mouse.y - mouse.direction.y];
 	long left = maze[mouse.x - mouse.direction.y][mouse.y - mouse.direction.x];
 	long right = maze[mouse.x + mouse.direction.y][mouse.y + mouse.direction.x];
-	long cback = maze[mouse.x + mouse.direction.x][mouse.y + mouse.direction.y];
 	
 	char dStraight = getDist(cstraight);
 	char dLeft = getDist(left);
 	char dRight = getDist(right);
-	char dBack = getDist(cback);
 	
 	char canWeGoStraight = !wallExists(current, mouse.direction.x, mouse.direction.y);
 	char canWeGoLeft = !wallExists(current, -mouse.direction.y, mouse.direction.x);
-	char canWeGoRight = !wallExists(current, mouse.direction.y, -mouse.direction.x);
+	char canWeGoRight = !wallExists(current, mouse.direction.y, -mouse.direction.x);	 
 
-	int dirx = mouse.direction.x;
-	int diry = mouse.direction.y;
-	
+	/* All Directions Blocked*/
 	if(!canWeGoStraight && !canWeGoLeft && !canWeGoRight)
 	{
-		//Reverse and go back
-		mouse.direction.x  = -dirx;
-		mouse.direction.y = -diry;
-		moveBackwardsAndCorrect();
+		StopAndGoBack();
 	}
+	/* Forward is Most Optimal*/
 	else if( 
 		canWeGoStraight && 
 		((dStraight <= dLeft) || (!canWeGoLeft)) &&
-		((dStraight <= dRight) || (!canWeGoRight)) &&
-		((dStraight <= dBack)) )
+		((dStraight <= dRight) || (!canWeGoRight)) ) 
 	{
-		//Go forward
+		//Correct Using Walls?
+		if(!canWeGoRight)
+		{
+			mouse.IR_CORRECT_RIGHT = 40;
+		}
+		else if(!canWeGoLeft)
+		{
+			mouse.IR_CORRECT_LEFT = 40;
+		}
+		
+		GoForwardOneBlock();
 	}
+	/* Left is Most Optimal */
 	else if(
 		canWeGoLeft && 
 		((dLeft <= dStraight) || (!canWeGoStraight)) &&
-		((dLeft <= dRight) || (!canWeGoRight)) &&
-		((dLeft <= dBack)) )
+		((dLeft <= dRight) || (!canWeGoRight)) )
 	{	
-		//Turn left
-		mouse.direction.x = -diry;
-		mouse.direction.y = dirx;
-	
-		if(!canWeGoStraight)
-		{
-			float angle = getFrontAngle();
-			rotateLeftWithFix(angle);
-		}
-		else
-		{
-			rotateLeft();
-		}
+		
+		RotateLeft(canWeGoStraight);
 	}
+	/* Right is Most Optimal */
 	else if(
 		canWeGoRight &&
 		((dRight <= dStraight) || (!canWeGoStraight)) &&
-		((dRight <= dLeft) || (!canWeGoLeft)) &&
-		((dRight <= dBack)) )
+		((dRight <= dLeft) || (!canWeGoLeft)) )
 	{		
-		//Turn Right
-		mouse.direction.x = diry;
-		mouse.direction.y = -dirx;
-		
-		if(!canWeGoStraight)
-		{
-			float angle = getFrontAngle();
-			rotateRightWithFix(angle);
-		}
-		else
-		{
-			rotateRight();
-		}
+		RotateRight(canWeGoStraight);
 	}
 	else
 	{
-		//Reverse and go back
-		mouse.direction.x  = -dirx;
-		mouse.direction.y = -diry;
-		moveBackwardsAndCorrect();
+		stopMouse();
 	}
-
-	if(!canWeGoLeft && !canWeGoRight)
-	{
-		mouse.IR_CORRECT = 30;
-	}
-	else if(!canWeGoLeft)
-	{
-		mouse.IR_CORRECT_LEFT = 30;
-	}
-	else if(!canWeGoRight)
-	{
-		mouse.IR_CORRECT_RIGHT = 30;
-	}
-	mouse.x += mouse.direction.x;
-	mouse.y -= mouse.direction.y;
-	moveForwardAndStop();	
 	
+	//Reset All IR Corrections to off
 	mouse.IR_CORRECT = 0;
 	mouse.IR_CORRECT_LEFT = 0;
 	mouse.IR_CORRECT_RIGHT = 0;

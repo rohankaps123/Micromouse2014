@@ -51,9 +51,12 @@ Last Updated: March 16th 2014
 //Our Mouse and Maze
 volatile long maze[16][16];
 volatile Mouse mouse;
+char firstTurn = 'n';
 
 void solveMaze()
-{
+{	
+	
+	
 	//Reset maze to 0
 	initializeMaze(&maze);
 		
@@ -74,17 +77,71 @@ void solveMaze()
 	mouse.x += mouse.direction.x;
 	mouse.y -= mouse.direction.y;
 	
-	while(1==1)
+	/* INITIAL SEARCH */
+	while(!(getDist(maze[mouse.x][mouse.y]) == 0))
+	{
+		updateWalls();		
+		mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
+		if(firstTurn == 'R')
+		{
+			floodFill(maze, '7', mouse.x, mouse.y);
+		}
+		else
+		{
+			floodFill(maze, '6', mouse.x, mouse.y);
+		}
+		searchMove();
+	}	
+	
+	floodFill(maze, firstTurn, mouse.x, mouse.y);
+
+	/* RETURN */
+	while(!(getDist(maze[mouse.x][mouse.y]) == 0))
 	{
 		updateWalls();
 		mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
-		floodFill(maze, '6', mouse.x, mouse.y);
+		floodFill(maze, firstTurn, mouse.x, mouse.y);
 		searchMove();
-		if(mouse.x == 5 && mouse.y == 5)
-			break;
-	}	
+	} 
 	
-	floodFill(maze, 'S', mouse.x, mouse.y);
+	if(firstTurn == 'R')
+	{
+		floodFill(maze, '9', mouse.x, mouse.y);
+	}
+	else
+	{
+		floodFill(maze, '8', mouse.x, mouse.y);
+	}
+	
+	for(int i = 0; i < 2; i++)
+	{
+		/* FAST */
+		while(!(getDist(maze[mouse.x][mouse.y]) == 0))
+		{
+			mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
+			fastMove();
+		}	
+		
+		floodFill(maze, firstTurn, mouse.x, mouse.y);
+
+		while(!(getDist(maze[mouse.x][mouse.y]) == 0))
+		{
+			updateWalls();
+			mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
+			floodFill(maze, firstTurn, mouse.x, mouse.y);
+			searchMove();
+		}  
+		
+		if(firstTurn == 'R')
+		{
+			floodFill(maze, '9', mouse.x, mouse.y);
+		}
+		else
+		{
+			floodFill(maze, '8', mouse.x, mouse.y);
+		}
+	
+	}
 	
 	stopMouse();
 	
