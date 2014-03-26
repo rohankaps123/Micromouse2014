@@ -5,5 +5,5 @@
 void solveMaze(void);
 void initializeMouse(void);
 void stopMouse(void);
-
+int isJunction(void);
 #endif

@@ -54,8 +54,14 @@ volatile Mouse mouse;
 char firstTurn = 'n';
 
 void solveMaze()
-{	
-	
+{		
+    while(1==1)
+	{
+		printNum(getFrontLeftIR());
+		print(", ");
+		printNum(getFrontRightIR());
+		print("\n\r");
+	}  
 	
 	//Reset maze to 0
 	initializeMaze(&maze);
@@ -82,13 +88,17 @@ void solveMaze()
 	{
 		updateWalls();		
 		mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
-		if(firstTurn == 'R')
+
+		if(isJunction()==1)
 		{
-			floodFill(maze, '7', mouse.x, mouse.y);
-		}
-		else
-		{
-			floodFill(maze, '6', mouse.x, mouse.y);
+			if(firstTurn == 'R')
+			{
+				floodFill(maze, '7', mouse.x, mouse.y);
+			}
+			else
+			{
+				floodFill(maze, '6', mouse.x, mouse.y);
+			}
 		}
 		searchMove();
 	}	
@@ -100,7 +110,7 @@ void solveMaze()
 	{
 		updateWalls();
 		mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
-		floodFill(maze, firstTurn, mouse.x, mouse.y);
+		floodFill(maze, firstTurn, mouse.x, mouse.y);		
 		searchMove();
 	} 
 	
@@ -177,3 +187,17 @@ void stopMouse()
 }
 
 
+int isJunction()
+{
+	long current = maze[mouse.x][mouse.y];
+	char canWeGoStraight = !wallExists(current, mouse.direction.x, mouse.direction.y);
+	char canWeGoLeft = !wallExists(current, -mouse.direction.y, mouse.direction.x);
+	char canWeGoRight = !wallExists(current, mouse.direction.y, -mouse.direction.x);	
+
+	if((canWeGoStraight&&!canWeGoLeft&&!canWeGoRight)||
+	(!canWeGoStraight&&!canWeGoLeft&&canWeGoRight)||
+	(!canWeGoStraight&&canWeGoLeft&&!canWeGoRight))
+	return 0;
+	else
+	return 1;
+}

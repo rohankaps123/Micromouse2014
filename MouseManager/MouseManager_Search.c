@@ -59,7 +59,7 @@ void searchMove()
 		//Correct Using Walls?
 		if(!canWeGoRight)
 		{
-			mouse.IR_CORRECT_RIGHT = 40;
+			mouse.IR_CORRECT_RIGHT = 40;			
 		}
 		else if(!canWeGoLeft)
 		{
@@ -106,6 +106,7 @@ void GoForwardOneBlock()
 	//Go forward
 	mouse.x += mouse.direction.x;
 	mouse.y -= mouse.direction.y;
+	
 	moveForward();
 }
 
@@ -150,9 +151,9 @@ void RotateRight(int canWeGoStraight)
 	//Current Mouse Direction
 	int dirx = mouse.direction.x;
 	int diry = mouse.direction.y;
-	
+
 	//Stop at Midpoint in Cell
-	StopFromSpeedHalf();		
+	StopFromSpeedHalf();	
 
 	//Rotate In Place
 	mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;		
@@ -165,7 +166,8 @@ void RotateRight(int canWeGoStraight)
 		rotateRightWithFix(angle);
 	}
 	else
-	{
+	{		
+		mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
 		rotateRight();
 	}
 	

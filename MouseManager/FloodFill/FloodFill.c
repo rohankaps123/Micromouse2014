@@ -120,9 +120,9 @@ void floodFill(long mazecells[16][16], char goal, int endX, int endY)
 			{
 				mazecells[x][y] = temp;
 				
-			/* 	if(x == endX && y == endY)
+			 	if(x == endX && y == endY)
 					return;
-				 */
+				 
 				//Check each neighbouring cell and push it to the stack if possible
 				if(x < 15 && getE(temp) == 0 && getDist(mazecells[x+1][y]) == 255
 					&& !getW(mazecells[x+1][y]) && (canGoInUnexploredCells || getExp(mazecells[x+1][y]) == 1) )//Check the next cell too as it may contain wall data
@@ -208,4 +208,4 @@ void initializeMaze(long cell[16][16])
 		setW(&cell[0][i],1);
 		setE(&cell[15][i],1);
 		}
-	}
+}

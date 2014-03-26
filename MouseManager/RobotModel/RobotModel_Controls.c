@@ -198,7 +198,6 @@ float getOffsetError()
 	}
 	else if(mouse.IR_CORRECT_LEFT != 0)
 	{
-		turnOnLeds(0);	
 		error =  - (left-5) * mouse.IR_CORRECT_LEFT;
 	}
 	else if(mouse.IR_CORRECT_RIGHT != 0)
@@ -207,7 +206,6 @@ float getOffsetError()
 	}
 	else
 	{
-		turnOnLeds(7);
 	}
 		
 	// lPrevious = left;

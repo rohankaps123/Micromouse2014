@@ -60,6 +60,10 @@ typedef struct Mouse
 	volatile int IR_CORRECT_LEFT;
 	volatile int IR_CORRECT_RIGHT;
 	
+	volatile int IR_LONG_CHECK_LEFT;
+	volatile int IR_LONG_CHECK_RIGHT;
+	volatile int IR_LONG_OFF_DISTANCE;
+	
 } Mouse;
 
 //Read Sensors to determine if there is a wall

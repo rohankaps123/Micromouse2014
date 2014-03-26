@@ -28,7 +28,7 @@ int isWallFront()
 	
 	//If there is something less then 16 cm away from sensor
 	//return (value < 10);		
-	return (value < 17);
+	return (value < 19);
 }
 
 int isWallRight()
