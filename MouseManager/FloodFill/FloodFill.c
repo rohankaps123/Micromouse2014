@@ -123,7 +123,7 @@ void floodFill(long mazecells[16][16], char goal, int endX, int endY)
 			 	if(x == endX && y == endY)
 					return;
 				 
-				//Check each neighbouring cell and push it to the stack if possible
+				//Check each neighboring cell and push it to the stack if possible
 				if(x < 15 && getE(temp) == 0 && getDist(mazecells[x+1][y]) == 255
 					&& !getW(mazecells[x+1][y]) && (canGoInUnexploredCells || getExp(mazecells[x+1][y]) == 1) )//Check the next cell too as it may contain wall data
 				{
@@ -168,7 +168,7 @@ void floodFill(long mazecells[16][16], char goal, int endX, int endY)
 			TCCR1B &= ~((1 << CS11) | (1 << CS10));
 			TCCR3B &= ~((1 << CS31) | (1 << CS30));
 			
-			//Blink LED's, signalling something went wrong.  
+			//Blink LED's, signaling something went wrong.  
 			while(!isButtonPushed(1))
 			{
 				turnOnLeds(7);
