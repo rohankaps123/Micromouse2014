@@ -30,24 +30,39 @@ void searchMove()
 	long cstraight = maze[mouse.x + mouse.direction.x][mouse.y - mouse.direction.y];
 	long left = maze[mouse.x - mouse.direction.y][mouse.y - mouse.direction.x];
 	long right = maze[mouse.x + mouse.direction.y][mouse.y + mouse.direction.x];
+	long back = maze[mouse.x + mouse.direction.x][mouse.y + mouse.direction.y];
 	
 	char dStraight = getDist(cstraight);
 	char dLeft = getDist(left);
-	char dRight = getDist(right);
+	char dRight = getDist(right);	
+	char dBack = getDist(back);
 	
 	char canWeGoStraight = !wallExists(current, mouse.direction.x, mouse.direction.y);
 	char canWeGoLeft = !wallExists(current, -mouse.direction.y, mouse.direction.x);
 	char canWeGoRight = !wallExists(current, mouse.direction.y, -mouse.direction.x);	 
-	 
+	
+	
 	char isExploredStraight = getExp(cstraight);
 	char isExploredLeft = getExp(left);
 	char isExploredRight = getExp(right);
-
+	
+	
+	
 	/* All Directions Blocked*/
 	if(!canWeGoStraight && !canWeGoLeft && !canWeGoRight)
 	{
+		mouse.IR_LONG_CHECK_LEFT = 0;
+		mouse.IR_LONG_CHECK_RIGHT = 0;
+		mouse.IR_LONG_OFF_DISTANCE = 0;
 		StopAndGoBack();
-	}
+	}	
+/* 	else if((dBack <= dStraight || !canWeGoStraight) && (dBack <= dLeft || !canWeGoLeft) && (dBack <= dRight || !canWeGoRight))
+	{
+		mouse.IR_LONG_CHECK_LEFT = 0;
+		mouse.IR_LONG_CHECK_RIGHT = 0;
+		mouse.IR_LONG_OFF_DISTANCE = 0;
+		StopAndGoBack();
+	} */
 	/* Forward is Most Optimal*/
 	else if( 
 		canWeGoStraight && 
@@ -59,12 +74,17 @@ void searchMove()
 		//Correct Using Walls?
 		if(!canWeGoRight)
 		{
-			mouse.IR_CORRECT_RIGHT = 40;			
+			mouse.IR_CORRECT_RIGHT = 40;				
 		}
 		else if(!canWeGoLeft)
 		{
 			mouse.IR_CORRECT_LEFT = 40;
 		}
+		
+		if(!canWeGoRight)
+			mouse.IR_LONG_CHECK_RIGHT = 1;
+		if(!canWeGoLeft)
+			mouse.IR_LONG_CHECK_LEFT = 1;
 		
 		GoForwardOneBlock();
 	}
@@ -76,7 +96,6 @@ void searchMove()
 		(isExploredRight >= isExploredLeft || (!canWeGoRight) || (dLeft != dRight)) && 
 		(isExploredStraight >= isExploredLeft || (!canWeGoStraight) || (dStraight != dLeft)) )
 	{	
-		
 		RotateLeft(canWeGoStraight);
 	}
 	/* Right is Most Optimal */
@@ -106,6 +125,7 @@ void GoForwardOneBlock()
 	//Go forward
 	mouse.x += mouse.direction.x;
 	mouse.y -= mouse.direction.y;
+	mouse.IR_LONG_OFF_DISTANCE = 0;
 	
 	moveForward();
 }
@@ -211,20 +231,26 @@ void StopAndGoBack()
 void fixLength()
 {
 	setDirection(0, 0);
-		
-	float left = getFrontLeftIR();
-	float right = getFrontRightIR();
+	
+	updateSensors();
+	float left = mouse.sensor[2].value;//getFrontLeftIR();
+	float right = mouse.sensor[3].value;//getFrontRightIR();
 	float length = (left+right)/2;
 	
 	length = length - 3.5;
 	
-	printlnNum((float)length);
+/* 	print("LEFT = ");
+	printNum(left);
+	print("\t RIGHT = ");
+	printNum(right);
+	print("\t LEN = ");
+	printlnNum((float)length);  */
 	
 	if(length < 0)
 	{
 		setDirection(1, 1);
 		length = -length;
 	}
-	
+	mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
 	straight((length)*42, mouse.velocity, mouse.maxVelocity, 0, mouse.acceleration, mouse.deceleration);
 }

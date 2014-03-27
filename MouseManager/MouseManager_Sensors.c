@@ -19,6 +19,8 @@
 #include "FloodFill/FloodFill_Stack.h"
 #include "FloodFill/FloodFill_Debug.h"
 
+#include "USART.h"
+
 //Our Mouse and Maze
 extern volatile long maze[16][16];
 extern volatile Mouse mouse;
@@ -41,6 +43,20 @@ void updateWalls()
 	int front = isWallFront();
 	int left = isWallLeft();
 	int right = isWallRight();
+	
+/* 	if(front)
+	{
+		turnOnLeds(7);
+		printNum(mouse.sensor[LEFT_FRONT_IR].value);
+		print(" , ");
+		printNum(mouse.sensor[RIGHT_FRONT_IR].value);
+		print("\n\r");
+	}		
+	else
+	{
+		turnOnLeds(0);
+	} */
+		
 	int dirx = mouse.direction.x;
 	int diry = mouse.direction.y;
 	int N = 0;

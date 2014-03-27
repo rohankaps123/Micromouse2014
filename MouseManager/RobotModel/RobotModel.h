@@ -83,6 +83,6 @@ void moveBackwardsAndCorrect(void);
 void fixAngle(float angle);
 void StopFromSpeedHalf(void);
 void moveForwardHalf(void);
-
+void resetMotorStepCount(void);
 
 #endif

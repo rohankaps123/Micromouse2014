@@ -22,13 +22,15 @@ int isWallFront()
 {
     float value = mouse.sensor[LEFT_FRONT_IR].value;
 	float value2 = mouse.sensor[RIGHT_FRONT_IR].value;
+	float value3 = mouse.sensor[LEFT_FRONT_IR].previousValue;
+	float value4 = mouse.sensor[RIGHT_FRONT_IR].previousValue;
 	
 	//Average front sensors
-	value = (value + value2)/2;
+	value = (value + value2 + value3 + value4)/4;
 	
 	//If there is something less then 16 cm away from sensor
 	//return (value < 10);		
-	return (value < 19);
+	return (value < 15);
 }
 
 int isWallRight()
@@ -147,7 +149,7 @@ void rotateLeftWithFix(float angle)
 	//Rotate Left
 	setDirection(0, 1);
 	
-	int addAngle = angle*3;
+	int addAngle = angle*1.5;
 	
 	straight(320+addAngle, 0, mouse.maxVelocity, 0, mouse.acceleration, mouse.deceleration); 	
 }
@@ -156,7 +158,7 @@ void rotateRightWithFix(float angle)
 {
 	setDirection(1, 0);
 
-	int addAngle = -angle*3;
+	int addAngle = -angle*1.5;
 	
 	straight(320+addAngle, 0, mouse.maxVelocity, 0, mouse.acceleration, mouse.deceleration); 	
 }
@@ -176,4 +178,8 @@ void fixAngle(float angle)
 	straight((int)angle*3, 0, mouse.maxVelocity, 0, mouse.acceleration, mouse.deceleration); 
 }
 
+void resetMotorSteps()
+{
+	mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
+}
 

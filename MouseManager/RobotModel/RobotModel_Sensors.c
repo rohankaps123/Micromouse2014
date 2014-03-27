@@ -40,8 +40,8 @@ float getFrontRightIRLong()
 
 float getFrontAngle()
 {
-	float value = getFrontLeftIR();
-	float value2 = getFrontRightIR();
+	float value = (mouse.sensor[LEFT_FRONT_IR].value+mouse.sensor[LEFT_FRONT_IR].previousValue)/2;//getFrontLeftIR();
+	float value2 = (mouse.sensor[RIGHT_FRONT_IR].value+mouse.sensor[RIGHT_FRONT_IR].previousValue)/2;//getFrontRightIR();
 		
 	return 90.0 - atan2(5,value2-value) * 57.2957795; 
 }

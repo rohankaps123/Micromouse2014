@@ -43,7 +43,6 @@ void straight(long stepTarget, int inSpeed, int maxSpeed, int exitSpeed, int acc
 		{
 			return;
 		}
-		_delay_ms(1);
 	}	
 	
 	//Calculate when to start decelerating
@@ -74,8 +73,6 @@ void straight(long stepTarget, int inSpeed, int maxSpeed, int exitSpeed, int acc
 		mouse.velocity = curSpeed;
 		mouse.leftMotor.currentStepDelay =  getDelayFromVelocity(curSpeed);
 		mouse.rightMotor.currentStepDelay = getDelayFromVelocity(curSpeed);
-		
-		_delay_ms(1);
 	}
 
 }
@@ -174,15 +171,25 @@ float getOffsetError()
 	float rPrevious = mouse.sensor[RIGHT_IR].previousValue;
 	
 	//If derivative of IR readings is greater then 1
- 	if(left-lPrevious > 0.5)
+ 	if(left-lPrevious > 0.5 || left-lPrevious < -0.5)
 	{		
 		mouse.IR_CORRECT = 0;
 		mouse.IR_CORRECT_LEFT = 0;
+		
+		if(mouse.IR_LONG_CHECK_LEFT)
+		{
+			//mouse.IR_LONG_OFF_DISTANCE
+		}
 	}
-	if(right-rPrevious > 0.5)
+	if(right-rPrevious > 0.5 || right-rPrevious < -0.5)
 	{
 		mouse.IR_CORRECT = 0;
 		mouse.IR_CORRECT_RIGHT = 0;
+		
+		if(mouse.IR_LONG_CHECK_RIGHT)
+		{
+			
+		}
 	} 
 	
 	float error = 0;
@@ -203,6 +210,11 @@ float getOffsetError()
 	else if(mouse.IR_CORRECT_RIGHT != 0)
 	{
 		error = (right-5) * mouse.IR_CORRECT_RIGHT;
+		
+		mouse.sensor[1].previousAverage = (mouse.sensor[1].previousValue - mouse.sensor[1].value + mouse.sensor[1].previousAverage*99)/100;
+/* 		printNum(mouse.sensor[1].previousAverage);print(" => ");
+		printNum((float)(mouse.sensor[1].previousValue - mouse.sensor[1].value));print(" => ");
+		printlnNum((float)mouse.sensor[1].value); */
 	}
 	else
 	{

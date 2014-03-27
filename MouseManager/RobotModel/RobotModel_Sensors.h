@@ -5,6 +5,7 @@ typedef struct Sensor
 {
 	volatile float value;
 	volatile float previousValue;
+	volatile float previousAverage;
 	
 	volatile uint8_t *port;
 } Sensor;
