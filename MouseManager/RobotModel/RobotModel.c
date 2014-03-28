@@ -116,7 +116,7 @@ void moveForwardBlocks(int count)
 	setDirection(0, 0);
 
 	//Move mouse
-	straight(762*count-100, mouse.velocity, 5000, mouse.maxVelocity, mouse.acceleration, mouse.deceleration);
+	straight(762*count-50, mouse.velocity, 4000, mouse.maxVelocity, mouse.acceleration, mouse.deceleration);
 }
 
 void moveBackwardsAndCorrect()

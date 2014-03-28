@@ -62,8 +62,8 @@ typedef struct Mouse
 	//Longitude corrections
 	volatile int IR_LONG_CHECK_LEFT;
 	volatile int IR_LONG_CHECK_RIGHT;
-	volatile long IR_LONG_OFF_DISTANCE_LEFT;
-	volatile long IR_LONG_OFF_DISTANCE_RIGHT;
+	volatile double IR_LONG_OFF_DISTANCE_LEFT;
+	volatile double IR_LONG_OFF_DISTANCE_RIGHT;
 	
 } Mouse;
 

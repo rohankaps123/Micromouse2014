@@ -8,7 +8,7 @@
 typedef struct StepperMotor
 {
 	volatile long stepCount;
-	volatile long totalCount;
+	volatile double totalCount;
 	
 	volatile float currentStepDelay;
 	

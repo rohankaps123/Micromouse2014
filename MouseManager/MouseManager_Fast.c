@@ -90,7 +90,6 @@ void fastMove()
 		}
 				
 		moveForwardBlocks(countStraight);
-		printlnNum(countStraight);
 		mouse.x += mouse.direction.x*countStraight;
 		mouse.y -= mouse.direction.y*countStraight;		
 	}

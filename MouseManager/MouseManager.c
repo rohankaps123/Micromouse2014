@@ -71,6 +71,7 @@ void solveMaze()
 	enableDrive(0);
 	turnOnTimers(0, 0);
 
+	
 	int areWeSearching = UserInterfaceIntro();
 	
 	if(areWeSearching)
@@ -102,6 +103,8 @@ void solveMaze()
 		/* SEARCH */
 		InitialSearchRun();
 		
+			updateWalls();
+			
 			/* TURN AROUND */
 			mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
 			StopFromSpeedHalf();
@@ -158,6 +161,10 @@ void solveMaze()
 	StopFromSpeedHalf();
 	mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
 	moveBackwards();	
+	
+	//Save Maze to EEPROM
+	saveCurrentMaze();
+	writeMemByte(MOUSE_DIRECTION, firstTurn);
 	
 	stopMouse();
 	
@@ -294,6 +301,7 @@ void turnAroundInPlace()
 	StopFromSpeedHalf();
 	mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
 	moveBackwards();
+	
 	mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
 	moveForwardHalf();
 	
