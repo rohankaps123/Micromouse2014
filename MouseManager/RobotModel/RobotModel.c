@@ -110,6 +110,15 @@ void moveFix(int length)
 	straight(length*42, mouse.velocity, mouse.maxVelocity, 0, mouse.acceleration, mouse.deceleration);
 }
 
+void moveForwardBlocks(int count)
+{
+	//Make the robot go forward
+	setDirection(0, 0);
+
+	//Move mouse
+	straight(762*count-100, mouse.velocity, 5000, mouse.maxVelocity, mouse.acceleration, mouse.deceleration);
+}
+
 void moveBackwardsAndCorrect()
 {		
 	//Rotate Left 180

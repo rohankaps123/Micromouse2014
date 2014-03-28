@@ -11,5 +11,6 @@ void saveCurrentMaze(void);
 void readSavedMaze(void);
 int readMemByte(int position);
 void writeMemByte(int position, int value);
-void UserInterfaceIntro(void);
+int UserInterfaceIntro(void);
+void FastRun(void);
 #endif

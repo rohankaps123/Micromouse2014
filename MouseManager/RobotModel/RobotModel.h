@@ -28,7 +28,6 @@ typedef struct Vector
 {
 	int x;
 	int y;
-	
 } Vector;
 
 //Our Mouse Structure
@@ -60,9 +59,11 @@ typedef struct Mouse
 	volatile int IR_CORRECT_LEFT;
 	volatile int IR_CORRECT_RIGHT;
 	
+	//Longitude corrections
 	volatile int IR_LONG_CHECK_LEFT;
 	volatile int IR_LONG_CHECK_RIGHT;
-	volatile int IR_LONG_OFF_DISTANCE;
+	volatile long IR_LONG_OFF_DISTANCE_LEFT;
+	volatile long IR_LONG_OFF_DISTANCE_RIGHT;
 	
 } Mouse;
 
@@ -84,5 +85,6 @@ void fixAngle(float angle);
 void StopFromSpeedHalf(void);
 void moveForwardHalf(void);
 void resetMotorStepCount(void);
+void moveForwardBlocks(int count);
 
 #endif

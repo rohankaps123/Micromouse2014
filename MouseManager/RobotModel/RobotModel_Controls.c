@@ -176,9 +176,10 @@ float getOffsetError()
 		mouse.IR_CORRECT = 0;
 		mouse.IR_CORRECT_LEFT = 0;
 		
-		if(mouse.IR_LONG_CHECK_LEFT)
+		if(mouse.IR_LONG_CHECK_LEFT == 1)
 		{
-			//mouse.IR_LONG_OFF_DISTANCE
+			mouse.IR_LONG_OFF_DISTANCE_LEFT = mouse.leftMotor.totalCount;
+			mouse.IR_LONG_CHECK_LEFT = 0;
 		}
 	}
 	if(right-rPrevious > 0.5 || right-rPrevious < -0.5)
@@ -186,9 +187,10 @@ float getOffsetError()
 		mouse.IR_CORRECT = 0;
 		mouse.IR_CORRECT_RIGHT = 0;
 		
-		if(mouse.IR_LONG_CHECK_RIGHT)
+		if(mouse.IR_LONG_CHECK_RIGHT == 1)
 		{
-			
+			mouse.IR_LONG_OFF_DISTANCE_RIGHT = mouse.rightMotor.totalCount;
+			mouse.IR_LONG_CHECK_RIGHT = 0;
 		}
 	} 
 	

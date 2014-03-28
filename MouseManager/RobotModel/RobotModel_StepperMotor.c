@@ -20,7 +20,8 @@ ISR(TIMER1_COMPA_vect)
 {
 	pulseMotor(&PORTD, PD1);
 	mouse.leftMotor.stepCount++;		
-
+	mouse.leftMotor.totalCount++;
+	
 	OCR1A = mouse.leftMotor.currentStepDelay;
 }
 
@@ -30,7 +31,8 @@ ISR(TIMER3_COMPA_vect)
 	//Pulse and increment motor
 	pulseMotor(&PORTB, PB7);
 	mouse.rightMotor.stepCount++;
-
+	mouse.rightMotor.totalCount++;
+	
 	OCR3A = mouse.rightMotor.currentStepDelay;
 }
 

@@ -40,29 +40,20 @@ void searchMove()
 	char canWeGoStraight = !wallExists(current, mouse.direction.x, mouse.direction.y);
 	char canWeGoLeft = !wallExists(current, -mouse.direction.y, mouse.direction.x);
 	char canWeGoRight = !wallExists(current, mouse.direction.y, -mouse.direction.x);	 
-	
-	
+		
 	char isExploredStraight = getExp(cstraight);
 	char isExploredLeft = getExp(left);
 	char isExploredRight = getExp(right);
-	
-	
 	
 	/* All Directions Blocked*/
 	if(!canWeGoStraight && !canWeGoLeft && !canWeGoRight)
 	{
 		mouse.IR_LONG_CHECK_LEFT = 0;
 		mouse.IR_LONG_CHECK_RIGHT = 0;
-		mouse.IR_LONG_OFF_DISTANCE = 0;
+		mouse.IR_LONG_OFF_DISTANCE_LEFT = 0;
+		mouse.IR_LONG_OFF_DISTANCE_RIGHT = 0;
 		StopAndGoBack();
 	}	
-/* 	else if((dBack <= dStraight || !canWeGoStraight) && (dBack <= dLeft || !canWeGoLeft) && (dBack <= dRight || !canWeGoRight))
-	{
-		mouse.IR_LONG_CHECK_LEFT = 0;
-		mouse.IR_LONG_CHECK_RIGHT = 0;
-		mouse.IR_LONG_OFF_DISTANCE = 0;
-		StopAndGoBack();
-	} */
 	/* Forward is Most Optimal*/
 	else if( 
 		canWeGoStraight && 
@@ -74,7 +65,7 @@ void searchMove()
 		//Correct Using Walls?
 		if(!canWeGoRight)
 		{
-			mouse.IR_CORRECT_RIGHT = 40;				
+			mouse.IR_CORRECT_RIGHT = 40;	
 		}
 		else if(!canWeGoLeft)
 		{
@@ -82,11 +73,26 @@ void searchMove()
 		}
 		
 		if(!canWeGoRight)
+		{
 			mouse.IR_LONG_CHECK_RIGHT = 1;
+			mouse.IR_LONG_OFF_DISTANCE_RIGHT = mouse.rightMotor.totalCount;
+		}
+		else
+		{
+			mouse.IR_LONG_CHECK_RIGHT = 2;
+		}
 		if(!canWeGoLeft)
+		{
 			mouse.IR_LONG_CHECK_LEFT = 1;
+			mouse.IR_LONG_OFF_DISTANCE_LEFT = mouse.leftMotor.totalCount;
+		}
+		else
+		{
+			mouse.IR_LONG_CHECK_LEFT = 2;
+		}
 		
 		GoForwardOneBlock();
+		
 	}
 	/* Left is Most Optimal */
 	else if(
@@ -125,7 +131,6 @@ void GoForwardOneBlock()
 	//Go forward
 	mouse.x += mouse.direction.x;
 	mouse.y -= mouse.direction.y;
-	mouse.IR_LONG_OFF_DISTANCE = 0;
 	
 	moveForward();
 }
@@ -150,6 +155,26 @@ void RotateLeft(int canWeGoStraight)
 	}
 	else
 	{
+		/* int dist = mouse.leftMotor.totalCount - mouse.IR_LONG_OFF_DISTANCE_LEFT - 600;
+		
+		if(mouse.IR_LONG_CHECK_LEFT == 0)
+		{			
+			if(dist < 0)
+			{
+				setDirection(0, 0);
+				dist = -dist;
+			}
+			else
+			{
+				setDirection(1, 1);
+			}
+			mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
+		
+			straight(dist, mouse.velocity, mouse.maxVelocity, 0, mouse.acceleration, mouse.deceleration); 
+			
+			mouse.IR_LONG_CHECK_LEFT = 2;
+		} */
+		mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
 		rotateLeft();
 	}
 	

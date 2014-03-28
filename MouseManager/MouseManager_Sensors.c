@@ -55,7 +55,7 @@ void updateWalls()
 	else
 	{
 		turnOnLeds(0);
-	} */
+	}  */
 		
 	int dirx = mouse.direction.x;
 	int diry = mouse.direction.y;

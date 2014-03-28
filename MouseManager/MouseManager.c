@@ -49,15 +49,15 @@ Last Updated: March 16th 2014
 //Debugging
 #include "USART.h"
 
+int MOUSE_DIRECTION = 1;
+
 //Our Mouse and Maze
 volatile long maze[16][16];
 volatile Mouse mouse;
 char firstTurn = 'n';
 
 void solveMaze()
-{		
-
-	
+{			 
 	//Reset maze to 0
 	initializeMaze(&maze);
 		
@@ -67,118 +67,98 @@ void solveMaze()
 	mouse.direction.y = -1;
 	mouse.x = 0;
 	mouse.y = 0;
-	
-	updateSensors();
-	updateSensors();
-	
-	setDirection(0, 0);
-	updateWalls();
 
 	enableDrive(0);
 	turnOnTimers(0, 0);
-	while(getFrontLeftIR() > 4)
+
+	int areWeSearching = UserInterfaceIntro();
+	
+	if(areWeSearching)
 	{
-		//Load EEPROM Maze if button is held for 2 seconds
-		if(isButtonPushed(1))
+		/* SEARCH MAZE */
+		for(int i = 0; i < 10; i++)
 		{
-			char flag = 0;
-			for(int i = 0; i < 25; i++)
-			{
-				turnOnLeds(7);
-				_delay_ms(20);
-				turnOnLeds(0);
-				_delay_ms(20);	
-				
-				if(!isButtonPushed(1))
-				{
-					flag = 1;
-					break;
-				}
-			}
-			
-			if(flag == 0)
-			{
-				for(int i = 0; i < 10; i++)
-				{
-					turnOnLeds(7);
-					_delay_ms(10);
-					turnOnLeds(0);
-					_delay_ms(90);
-				}
-				readSavedMaze();
-
-				turnOnTimers(1, 1);
-				//printMaze(&maze);
-				goto FAST_RUNS;
-			}
+			turnOnLeds(7);
+			_delay_ms(10);
+			turnOnLeds(0);
+			_delay_ms(90);
 		}
-	}
-	
-	for(int i = 0; i < 10; i++)
-	{
-		turnOnLeds(7);
-		_delay_ms(10);
-		turnOnLeds(0);
-		_delay_ms(90);
-	}
-	
-	enableDrive(1);
-	turnOnTimers(1, 1);
-	
-	straight(540, 0, mouse.maxVelocity, mouse.maxVelocity, mouse.acceleration, mouse.deceleration);
-
-	mouse.x += mouse.direction.x;
-	mouse.y -= mouse.direction.y;	
-	
-	/* SEARCH */
-	InitialSearchRun();
-	turnAroundInPlace();
-	
-	/* RETURN */
-	ReturnSearchRun();
-	turnAroundInPlace();
-	
-	saveCurrentMaze();
-	writeMemByte(0, 111);
-	
-	/* PICK UP AND PLACE MOUSE */
-	enableDrive(0);
-	while(!isButtonPushed(1))
-	{
-		turnOnLeds(7);
-		_delay_ms(20);
-		turnOnLeds(0);
-		_delay_ms(20);
-	}
-	
-FAST_RUNS:
-	
-	enableDrive(1);
-	mouse.direction.y = -1;
-	mouse.direction.x = 0;	
-
-	if(firstTurn == 'R')	
-		floodFill(maze, '9', mouse.x, mouse.y);	
-	else	
-		floodFill(maze, '8', mouse.x, mouse.y);
 		
-	/* FAST */
-	while(!(getDist(maze[mouse.x][mouse.y]) == 0))
-	{
-		mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
-		fastMove();
-	}	
-	turnAroundInPlace();
-	floodFill(maze, firstTurn, mouse.x, mouse.y);
+		//Init Mouse
+		enableDrive(1);
+		turnOnTimers(1, 1);
+		setDirection(0, 0);
+		
+		//Update Sensors
+		updateSensors();
+		updateSensors();	
+		updateWalls();
+		
+		//Go Forward first block
+		straight(480, 0, mouse.maxVelocity, mouse.maxVelocity, mouse.acceleration, mouse.deceleration);
+		mouse.x += mouse.direction.x;
+		mouse.y -= mouse.direction.y;	
+		
+		/* SEARCH */
+		InitialSearchRun();
+		
+			/* TURN AROUND */
+			mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
+			StopFromSpeedHalf();
+			mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
+			moveBackwards();			
+				
+			//Save Maze to EEPROM
+			saveCurrentMaze();
+			writeMemByte(MOUSE_DIRECTION, firstTurn);
+		
+			mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
+			moveForwardHalf();
+			
+			//Current Mouse Direction
+			int dirx = mouse.direction.x;
+			int diry = mouse.direction.y;
+			
+			//Reverse and go back
+			mouse.direction.x  = -dirx;
+			mouse.direction.y = -diry;
+			
+			//Set Position to next block
+			mouse.x += mouse.direction.x;
+			mouse.y -= mouse.direction.y;
+		
+		/* RETURN SEARCH*/
+		ReturnSearchRun();
+			
+			//Turn Around
+			mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
+			StopFromSpeedHalf();
+			mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
+			moveBackwards();
+		
+			//Save Maze to EEPROM
+			saveCurrentMaze();
+			writeMemByte(MOUSE_DIRECTION, firstTurn);
+		
+		/* PICK UP AND PLACE MOUSE */
+		enableDrive(0);
+		waitForButtonPressed();
+	}
+	
+	/* FAST RUN */
+	FastRun();
+	turnAroundInPlace();	
 
 	/* RETURN */
+	floodFill(maze, firstTurn, mouse.x, mouse.y);
 	ReturnSearchRun();
 	
-	if(firstTurn == 'R')		
-		floodFill(maze, '9', mouse.x, mouse.y);
-	else		
-		floodFill(maze, '8', mouse.x, mouse.y);
-	turnAroundInPlace();	
+	//Turn Around
+	mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
+	StopFromSpeedHalf();
+	mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
+	moveBackwards();	
+	
 	stopMouse();
 	
 	while(!isButtonPushed(1));
@@ -268,6 +248,45 @@ void ReturnSearchRun()
 	} 
 }
 
+
+void FastRun()
+{
+	enableDrive(1);
+	
+	if(firstTurn == 'R')
+	{	
+		mouse.x = 15;
+		mouse.y = 0;
+		floodFill(maze, '9', mouse.x, mouse.y);	
+	}
+	else
+	{	
+		mouse.x = 0;
+		mouse.y = 0;
+		floodFill(maze, '8', mouse.x, mouse.y);
+	}
+	
+	setDirection(0, 0);
+	mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
+	straight(480, 0, mouse.maxVelocity, mouse.maxVelocity, mouse.acceleration, mouse.deceleration);
+	
+	mouse.direction.y = -1;
+	mouse.direction.x = 0;	
+	
+	mouse.x += mouse.direction.x;
+	mouse.y -= mouse.direction.y;	
+		
+	/* FAST */
+	while(!(getDist(maze[mouse.x][mouse.y]) == 0))
+	{
+		print("test");
+		printNum(mouse.x);
+		printNum(mouse.y);
+		mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
+		fastMove();
+	}	
+}
+
 void turnAroundInPlace()
 {
 	/* TURN AROUND */
@@ -291,10 +310,66 @@ void turnAroundInPlace()
 	mouse.y -= mouse.direction.y;
 }
 
-void UserInterfaceIntro()
+int UserInterfaceIntro()
 {
-		
+	while(getFrontLeftIR() > 4)
+	{
+		//Load EEPROM Maze if button is held for 2 seconds
+		if(isButtonPushed(1))
+		{
+			char flag = 0;
+			for(int i = 0; i < 25; i++)
+			{
+				turnOnLeds(7);
+				_delay_ms(20);
+				turnOnLeds(0);
+				_delay_ms(20);	
+				
+				if(!isButtonPushed(1))
+				{
+					flag = 1;
+					break;
+				}
+			}
+			
+			if(flag == 0)
+			{
+				for(int i = 0; i < 10; i++)
+				{
+					turnOnLeds(7);
+					_delay_ms(10);
+					turnOnLeds(0);
+					_delay_ms(90);
+				}
+				readSavedMaze();
+				firstTurn = readMemByte(MOUSE_DIRECTION);
+				
+				turnOnTimers(1, 1);
+				//printMaze(&maze);
+				return 0;
+			}
+		}
+	}	
 
+	return 1;
+}
+
+void waitForButtonPressed()
+{
+	while(!isButtonPushed(1))
+	{
+		turnOnLeds(7);
+		_delay_ms(20);
+		turnOnLeds(0);
+		_delay_ms(20);
+	}
+	for(int i = 0; i < 10; i++)
+	{
+		turnOnLeds(7);
+		_delay_ms(10);
+		turnOnLeds(0);
+		_delay_ms(90);
+	}
 }
 
 void saveCurrentMaze()
