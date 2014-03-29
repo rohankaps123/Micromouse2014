@@ -65,6 +65,15 @@ void floodFill(long mazecells[16][16], char goal, int endX, int endY)
 		push(mazecells[8][7], &stack1);		
 		push(mazecells[8][8], &stack1);
 	}
+	else if(goal == 'S')
+	{
+		//Set our center to "0"
+		canGoInUnexploredCells = 0;
+		push(mazecells[7][7], &stack1);		
+		push(mazecells[7][8], &stack1);		
+		push(mazecells[8][7], &stack1);		
+		push(mazecells[8][8], &stack1);
+	}
 	//If our goal is our testing area
 	else if(goal == '6')
 	{

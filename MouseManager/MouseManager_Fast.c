@@ -55,14 +55,15 @@ void fastMove()
 		((dStraight <= dLeft) || (!canWeGoLeft)) &&
 		((dStraight <= dRight) || (!canWeGoRight)) ) 
 	{
+		print("STRAIGHT(S)\n\r");
 		//Correct Using Walls?
 		if(!canWeGoRight)
 		{
-			mouse.IR_CORRECT_RIGHT = 40;
+			mouse.IR_CORRECT_RIGHT = 70;
 		}
 		else if(!canWeGoLeft)
 		{
-			mouse.IR_CORRECT_LEFT = 40;
+			mouse.IR_CORRECT_LEFT = 70;
 		}
 		
 		int a = mouse.x;
@@ -89,6 +90,7 @@ void fastMove()
 			}
 		}
 				
+		printlnNum(countStraight);
 		moveForwardBlocks(countStraight);
 		mouse.x += mouse.direction.x*countStraight;
 		mouse.y -= mouse.direction.y*countStraight;		
@@ -99,7 +101,7 @@ void fastMove()
 		((dLeft <= dStraight) || (!canWeGoStraight)) &&
 		((dLeft <= dRight) || (!canWeGoRight)) )
 	{	
-		
+		print("LEFT\n\r");		
 		RotateLeft(canWeGoStraight);
 	}
 	/* Right is Most Optimal */
@@ -107,7 +109,8 @@ void fastMove()
 		canWeGoRight &&
 		((dRight <= dStraight) || (!canWeGoStraight)) &&
 		((dRight <= dLeft) || (!canWeGoLeft)) )
-	{		
+	{	
+		print("RIGHT\n\r");
 		RotateRight(canWeGoStraight);
 	}
 	else
@@ -136,7 +139,7 @@ int getNextMove(int a, int b){
 	char canWeGoLeft = !wallExists(current, -mouse.direction.y, mouse.direction.x);
 	char canWeGoRight = !wallExists(current, mouse.direction.y, -mouse.direction.x);	 
 
-	if(dStraight == 0)
+	if(dStraight == 0 && canWeGoStraight)
 	{	
 		return 0;
 	}

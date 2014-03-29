@@ -57,7 +57,13 @@ volatile Mouse mouse;
 char firstTurn = 'n';
 
 void solveMaze()
-{			 
+{		
+/* 	readSavedMaze();
+	printMaze(&maze);
+	stopMouse(); 
+	
+	while(1==1);
+	 */
 	//Reset maze to 0
 	initializeMaze(&maze);
 		
@@ -70,7 +76,6 @@ void solveMaze()
 
 	enableDrive(0);
 	turnOnTimers(0, 0);
-
 	
 	int areWeSearching = UserInterfaceIntro();
 	
@@ -224,15 +229,16 @@ void InitialSearchRun()
 
 		if(isJunction()==1)
 		{
-			if(firstTurn == 'R')
+			floodFill(maze, 'C', mouse.x, mouse.y);
+			/* if(firstTurn == 'R')
 			{
 				floodFill(maze, '7', mouse.x, mouse.y);
 			}
 			else
 			{
 				floodFill(maze, '6', mouse.x, mouse.y);
-			}
-		}		
+			}*/
+		}		 
 		searchMove();
 		
 		stopAndFreezeWithButton();
@@ -264,15 +270,16 @@ void FastRun()
 	{	
 		mouse.x = 15;
 		mouse.y = 0;
-		floodFill(maze, '9', mouse.x, mouse.y);	
+		floodFill(maze, 'S', mouse.x, mouse.y);	
 	}
 	else
 	{	
 		mouse.x = 0;
 		mouse.y = 0;
-		floodFill(maze, '8', mouse.x, mouse.y);
+		floodFill(maze, 'S', mouse.x, mouse.y);
 	}
-	
+	printMaze(&maze);
+	//printMazeExp(&maze);
 	setDirection(0, 0);
 	mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
 	straight(480, 0, mouse.maxVelocity, mouse.maxVelocity, mouse.acceleration, mouse.deceleration);
@@ -286,9 +293,6 @@ void FastRun()
 	/* FAST */
 	while(!(getDist(maze[mouse.x][mouse.y]) == 0))
 	{
-		print("test");
-		printNum(mouse.x);
-		printNum(mouse.y);
 		mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
 		fastMove();
 	}	
@@ -322,10 +326,22 @@ int UserInterfaceIntro()
 {
 	while(getFrontLeftIR() > 4)
 	{
+		int potValue = getPotSensorValue(0) / 256;
+			
+		if(potValue == 0)
+			turnOnLeds(0);
+		else if(potValue == 1)
+			turnOnLeds(2);
+		else if(potValue == 2)
+			turnOnLeds(4);
+		else if(potValue == 3)
+			turnOnLeds(6);
+			
 		//Load EEPROM Maze if button is held for 2 seconds
 		if(isButtonPushed(1))
 		{
 			char flag = 0;
+		
 			for(int i = 0; i < 25; i++)
 			{
 				turnOnLeds(7);
@@ -349,11 +365,13 @@ int UserInterfaceIntro()
 					turnOnLeds(0);
 					_delay_ms(90);
 				}
-				readSavedMaze();
-				firstTurn = readMemByte(MOUSE_DIRECTION);
+				readSavedMaze();				
+				printlnNum(potValue);
 				
+				firstTurn = readMemByte(MOUSE_DIRECTION);
+				mouse.speedMode = potValue;
 				turnOnTimers(1, 1);
-				//printMaze(&maze);
+				
 				return 0;
 			}
 		}

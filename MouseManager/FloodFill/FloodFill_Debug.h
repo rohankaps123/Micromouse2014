@@ -4,5 +4,6 @@
 void printMaze(long maze[16][16]);
 void printWalls(long maze[16][16]);
 void wallFallowingSolve(void);
+void printMazeExp(long maze[16][16]);
 
 #endif

@@ -115,8 +115,19 @@ void moveForwardBlocks(int count)
 	//Make the robot go forward
 	setDirection(0, 0);
 
+	int mouseFastSpeed = 2500;
+	
+	if(mouse.speedMode == SLOW_MODE)
+		mouseFastSpeed = 2500;
+	else if(mouse.speedMode == MEDIUM_MODE)
+		mouseFastSpeed = 3500;
+	else if(mouse.speedMode == FAST_MODE)
+		mouseFastSpeed = 6000;
+	else if(mouse.speedMode == SUPER_MODE)
+		mouseFastSpeed = 8000;
+	
 	//Move mouse
-	straight(762*count-50, mouse.velocity, 4000, mouse.maxVelocity, mouse.acceleration, mouse.deceleration);
+	straight(762*count-0, mouse.velocity, mouseFastSpeed, mouse.maxVelocity, mouse.acceleration, mouse.deceleration);
 }
 
 void moveBackwardsAndCorrect()

@@ -24,6 +24,11 @@
 #define LEFT_FRONT_IR	2
 #define RIGHT_FRONT_IR	3
 
+#define SLOW_MODE		0 //2500 step/sec
+#define MEDIUM_MODE		1 //3500 step/sec
+#define FAST_MODE		2 //6000 step/sec
+#define SUPER_MODE		3 //8000 step/sec
+
 typedef struct Vector
 {
 	int x;
@@ -47,6 +52,7 @@ typedef struct Mouse
 	//Mouse Sensors
 	volatile Sensor sensor[4];
 	volatile int currentChannel;//For ADC conversion
+	volatile int speedMode;
 	
 	//Mouse Movements Values
 	volatile float acceleration;

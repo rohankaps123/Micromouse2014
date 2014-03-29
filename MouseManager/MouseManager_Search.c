@@ -167,10 +167,10 @@ void RotateLeft(int canWeGoStraight)
 	else
 	{
 		int dist = mouse.leftMotor.totalCount - mouse.IR_LONG_OFF_DISTANCE_LEFT - 600;
-		if(dist > 300)
-			dist = 300;
-		else if(dist < -300)
-			dist = -300;
+		if(dist > 150)
+			dist = 150;
+		else if(dist < -150)
+			dist = -150;
 			
 		if(mouse.IR_LONG_CHECK_LEFT == 0)
 		{			
@@ -232,10 +232,10 @@ void RotateRight(int canWeGoStraight)
 	else
 	{		
 		int dist = mouse.rightMotor.totalCount - mouse.IR_LONG_OFF_DISTANCE_RIGHT - 600;
-		if(dist > 300)
-			dist = 300;
-		else if(dist < -300)
-			dist = -300;
+		if(dist > 150)
+			dist = 150;
+		else if(dist < -150)
+			dist = -150;
 			
 		if(mouse.IR_LONG_CHECK_RIGHT == 0)
 		{			
