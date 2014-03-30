@@ -171,7 +171,7 @@ void RotateLeft(int canWeGoStraight)
 			dist = 150;
 		else if(dist < -150)
 			dist = -150;
-			
+		/* 	
 		if(mouse.IR_LONG_CHECK_LEFT == 0)
 		{			
 			if(dist < 0)
@@ -188,7 +188,7 @@ void RotateLeft(int canWeGoStraight)
 			straight(dist, mouse.velocity, mouse.maxVelocity, 0, mouse.acceleration, mouse.deceleration); 
 			
 			mouse.IR_LONG_CHECK_LEFT = 2;
-		} 
+		}  */
 		mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
 		rotateLeft();
 	}
@@ -220,6 +220,7 @@ void RotateRight(int canWeGoStraight)
 	
 	if(!canWeGoStraight)
 	{
+		turnOnLeds(7);
 		fixLength();
 		mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;		
 		float angle = getFrontAngle();
@@ -231,7 +232,8 @@ void RotateRight(int canWeGoStraight)
 	}
 	else
 	{		
-		int dist = mouse.rightMotor.totalCount - mouse.IR_LONG_OFF_DISTANCE_RIGHT - 600;
+		turnOnLeds(0);
+	/* 	int dist = mouse.rightMotor.totalCount - mouse.IR_LONG_OFF_DISTANCE_RIGHT - 600;
 		if(dist > 150)
 			dist = 150;
 		else if(dist < -150)
@@ -250,10 +252,10 @@ void RotateRight(int canWeGoStraight)
 			}
 			mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
 		
-			straight(dist, mouse.velocity, mouse.maxVelocity, 0, mouse.acceleration, mouse.deceleration); 
+			//straight(dist, mouse.velocity, mouse.maxVelocity, 0, mouse.acceleration, mouse.deceleration); 
 			
 			mouse.IR_LONG_CHECK_RIGHT = 2;
-		} 
+		}  */
 		mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
 		rotateRight();
 	}

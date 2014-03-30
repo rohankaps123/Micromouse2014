@@ -1,20 +1,6 @@
 #include "FloodFill_Debug.h"
 #include "FloodFill_BinaryOperations.h"
 
-void printMazeExp(long maze[16][16])
-{
-for(int i = 0; i < 16; i++)
-	{
-		for(int q = 0; q < 16; q++)
-		{
-			if(getExp(maze[q][i]))
-				print("*");
-			else
-				print(" ");
-		}
-		print("\n\r");
-	}
-}
 //Print the maze onto a console via USART
 void printMaze(long maze[16][16])
 {

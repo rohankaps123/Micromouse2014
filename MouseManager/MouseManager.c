@@ -58,12 +58,12 @@ char firstTurn = 'n';
 
 void solveMaze()
 {		
-/* 	readSavedMaze();
-	printMaze(&maze);
-	stopMouse(); 
-	
-	while(1==1);
-	 */
+/* 	while(1==1)
+	{
+		updateSensors();
+		printNum(mouse.sensor[2].value);print(", ");
+		printlnNum(mouse.sensor[3].value);
+	}  */
 	//Reset maze to 0
 	initializeMaze(&maze);
 		
@@ -101,6 +101,8 @@ void solveMaze()
 		updateWalls();
 		
 		//Go Forward first block
+		mouse.IR_LONG_CHECK_LEFT = 2;
+		mouse.IR_LONG_CHECK_RIGHT = 2;
 		straight(480, 0, mouse.maxVelocity, mouse.maxVelocity, mouse.acceleration, mouse.deceleration);
 		mouse.x += mouse.direction.x;
 		mouse.y -= mouse.direction.y;	
@@ -108,6 +110,7 @@ void solveMaze()
 		/* SEARCH */
 		InitialSearchRun();
 		
+			//Search is Complete!
 			updateWalls();
 			
 			/* TURN AROUND */
@@ -155,22 +158,25 @@ void solveMaze()
 	
 	/* FAST RUN */
 	FastRun();
-	turnAroundInPlace();	
-
-	/* RETURN */
-	floodFill(maze, firstTurn, mouse.x, mouse.y);
+	
+		//Completed Search run, go back and search some more
+		turnAroundInPlace();	
+		
+		floodFill(maze, firstTurn, mouse.x, mouse.y);
+	
+	/* RETURN */	
 	ReturnSearchRun();
-	
-	//Turn Around
-	mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
-	StopFromSpeedHalf();
-	mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
-	moveBackwards();	
-	
-	//Save Maze to EEPROM
-	saveCurrentMaze();
-	writeMemByte(MOUSE_DIRECTION, firstTurn);
-	
+		
+		//Turn Around
+		mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
+		StopFromSpeedHalf();
+		mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
+		moveBackwards();	
+		
+		//Save Maze to EEPROM
+		saveCurrentMaze();
+		writeMemByte(MOUSE_DIRECTION, firstTurn);
+		
 	stopMouse();
 	
 	while(!isButtonPushed(1));
@@ -278,8 +284,7 @@ void FastRun()
 		mouse.y = 0;
 		floodFill(maze, 'S', mouse.x, mouse.y);
 	}
-	printMaze(&maze);
-	//printMazeExp(&maze);
+	//printMaze(&maze);
 	setDirection(0, 0);
 	mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
 	straight(480, 0, mouse.maxVelocity, mouse.maxVelocity, mouse.acceleration, mouse.deceleration);
@@ -324,7 +329,7 @@ void turnAroundInPlace()
 
 int UserInterfaceIntro()
 {
-	while(getFrontLeftIR() > 4)
+	while(getFrontLeftIR() > 6)
 	{
 		int potValue = getPotSensorValue(0) / 256;
 			
@@ -444,50 +449,3 @@ void stopAndFreezeWithButton()
 		
 	}
 }
-
-/* 	 readSavedMaze();
-	 int test = readMemByte(0);
-	 printlnNum(test);
-	 printMaze(&maze);
-	
-	 while(1==1); */
-	
- 	// mouse.leftMotor.currentStepDelay = 500;
-	// mouse.rightMotor.currentStepDelay = 500;
-	
-	/* mouse.IR_CORRECT_RIGHT = 40;
-	mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
-
-	moveForward();
-	mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
-	
-	moveForwardAndStop();
-	
-	float degrees = atan(mouse.sensor[1].previousAverage)*180/3.1415;
-	
-	printlnNum(mouse.sensor[1].previousAverage);
-	printlnNum(degrees);
-	print("END");
-	
-	setDirection(1, 0);
-	
-	int multiplier = 5;
-	
-	if(degrees > 0)
-		multiplier = 8;
-	degrees = -degrees;
-
-	
-	mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
-	straight(320+(int)degrees*9, 0, mouse.maxVelocity, 0, mouse.acceleration, mouse.deceleration); 
-	print("FINISH");
-	stopMouse(); */
-	//while(1==1);     
-  	// while(1==1)
-	// {
-		// updateSensors();
-		// printNum(mouse.sensor[2].value);
-		// print(", ");
-		// printNum(mouse.sensor[3].value);
-		// print("\n\r");
-	// }   
