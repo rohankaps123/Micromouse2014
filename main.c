@@ -15,96 +15,24 @@ Authors:
 Contact: jmarple@umass.edu
 	
 Date Started: Feburary 3rd 2014
-Last Updated: March 1st 2014
+Last Updated: March 15th 2014
 
 **********************************************/
 
-//Basic Avr-gcc includes
-#include <avr/io.h>
-#include <util/delay.h>
-#include <avr/interrupt.h>
-#include <math.h>
+//Everything is controlled via mouse manager
+#include "MouseManager/mouseManager.h"
 
-//Mouse Profile
-#include "RobotModel/RobotModel.h"
-#include "RobotModel/RobotModel_Controls.h"
-#include "RobotModel/RobotModel_StepperMotor.h"
-
-//Debugging
-#include "USART.h"
-
-volatile unsigned long milliseconds;
-extern volatile Mouse mouse;
-void startTimer(void);
-
+//Start Point of our program
 int main(void)
 {
-	setupADC();	
-	setupStepperMotor();
-	startTimer();
-
-	USART_init();
+	//Setup mouse timers and functions
+	initializeMouse();
 	
-	mouse.velocity = 0;
-	mouse.maxVelocity = 5000;
-	mouse.acceleration = 2000;
-	mouse.deceleration = 10000;
-
-	enableDrive(1);
-	turnOnTimers(1,1);
+	//Solve our maze
+	solveMaze();
 	
-	for(int i = 0; i < 10; i++)
-	{		
-		int right = isWallRight();
-		int front = isWallFront();
-		int left = isWallLeft();
-		
-		if(!right)
-		{
-			rotateRight();
-		}
-		else if(front && !left)
-		{
-			rotateLeft();
-		}
-		else if(front)
-		{
-			moveBackwardsAndCorrect();
-		}	
-		
-		if(left && right)		
-			mouse.IR_CORRECT = 20;
-		
-		moveForwardAndStop();
-		
-		mouse.IR_CORRECT = 0;
-		
-		
-	}
-
+	//Stop all timers and functions
+	stopMouse();	
 	
-	turnOnTimers(0, 0);
-	enableDrive(0);
-	
-	
-	while(1==1)
-	{
-
-	}	
-}
-
-void startTimer()
-{
-	//Refresh Loop Timer1  
-	TCCR0A = (1 << WGM01);//Set CTC
-	TCCR0B = (1 << CS00) | (1 << CS01);//prescalar to
-	OCR0A = 250;//Compare Ticks 
-    TIMSK0 = (1 << OCIE0A);//Enable Timer Interrupts
-	
-	milliseconds = 0;
-}
-
-ISR(TIMER0_COMPA_vect)
-{
-	milliseconds++;	
+	while(1==1){}	
 }

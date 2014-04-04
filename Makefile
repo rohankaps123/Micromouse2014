@@ -1,6 +1,6 @@
 # Hey Emacs, this is a -*- makefile -*-
 #----------------------------------------------------------------------------
-# WinAVR Makefile Template written by Eric B. Weddington, Jörg Wunsch, et al.
+# WinAVR Makefile Template written by Eric B. Weddington, Jï¿½rg Wunsch, et al.
 #
 # Released to the Public Domain
 #
@@ -81,10 +81,23 @@ OBJDIR = .
 
 # List C source files here. (C dependencies are automatically generated.)
 SRC = $(TARGET).c
-SRC += RobotModel/RobotModel.c
-SRC += RobotModel/RobotModel_controls.c
-SRC += RobotModel/RobotModel_StepperMotor.c
-SRC += USART.c
+
+SRC += MouseManager/MouseManager.c
+SRC += MouseManager/MouseManager_Search.c
+SRC += MouseManager/MouseManager_Fast.c
+SRC += MouseManager/MouseManager_Sensors.c
+
+SRC += MouseManager/RobotModel/RobotModel.c
+SRC += MouseManager/RobotModel/RobotModel_controls.c
+SRC += MouseManager/RobotModel/RobotModel_StepperMotor.c
+SRC += MouseManager/RobotModel/RobotModel_Sensors.c
+
+SRC += MouseManager/FloodFill/FloodFill.c
+SRC += MouseManager/FloodFill/FloodFill_BinaryOperations.c
+SRC += MouseManager/FloodFill/FloodFill_Stack.c
+SRC += MouseManager/FloodFill/FloodFill_Debug.c
+
+SRC += MouseManager/USART.c
 
 # List C++ source files here. (C dependencies are automatically generated.)
 CPPSRC = 

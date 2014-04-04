@@ -62,3 +62,16 @@ void print(char* string)
 {
 	USART_putstring(string);
 }
+
+void printInt(int value)
+{
+	char str[16];
+	itoa(value, str, 10);
+	
+	//Add Leading Zero's for consistency
+	for(int i = 1; i < 4-strlen(str); i++)
+	{
+		USART_putstring("0");
+	}
+	USART_putstring(str);
+}
