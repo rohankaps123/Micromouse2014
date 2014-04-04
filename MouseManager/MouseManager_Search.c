@@ -27,20 +27,25 @@ extern volatile Mouse mouse;
 void searchMove()
 {
 	long current = maze[mouse.x][mouse.y];
+	
+	//Get current maze cells
 	long cstraight = maze[mouse.x + mouse.direction.x][mouse.y - mouse.direction.y];
 	long left = maze[mouse.x - mouse.direction.y][mouse.y - mouse.direction.x];
 	long right = maze[mouse.x + mouse.direction.y][mouse.y + mouse.direction.x];
 	long back = maze[mouse.x + mouse.direction.x][mouse.y + mouse.direction.y];
 	
+	//Get distances in each cell
 	char dStraight = getDist(cstraight);
 	char dLeft = getDist(left);
 	char dRight = getDist(right);	
 	char dBack = getDist(back);
 	
+	//Get wall data for this cell 
 	char canWeGoStraight = !wallExists(current, mouse.direction.x, mouse.direction.y);
 	char canWeGoLeft = !wallExists(current, -mouse.direction.y, mouse.direction.x);
 	char canWeGoRight = !wallExists(current, mouse.direction.y, -mouse.direction.x);	 
-		
+	
+	//Get Explored Bits
 	char isExploredStraight = getExp(cstraight);
 	char isExploredLeft = getExp(left);
 	char isExploredRight = getExp(right);
@@ -70,6 +75,7 @@ void searchMove()
 			mouse.IR_CORRECT_LEFT = 40;
 		}
 		
+		//Look for wall cutoff for longitude correction
 		if(!canWeGoRight)
 		{
 			mouse.IR_LONG_CHECK_RIGHT = 1;
@@ -79,6 +85,8 @@ void searchMove()
 		{
 			mouse.IR_LONG_CHECK_RIGHT = 2;
 		}
+		
+		//Look for wall cutoff for longitude correction
 		if(!canWeGoLeft)
 		{
 			mouse.IR_LONG_CHECK_LEFT = 1;
@@ -89,8 +97,10 @@ void searchMove()
 			mouse.IR_LONG_CHECK_LEFT = 2;
 		}
 		
+		//Move mouse forward
 		GoForwardOneBlock();
 		
+		//reset longitude checks if necessary
 		if(mouse.IR_LONG_CHECK_RIGHT == 1)
 			mouse.IR_LONG_CHECK_RIGHT = 2;
 		if(mouse.IR_LONG_CHECK_LEFT == 1)

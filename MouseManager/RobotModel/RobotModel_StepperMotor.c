@@ -6,36 +6,48 @@
  *
  */
 
+ //Avr Includes
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <util/delay.h>
 #include <math.h>
+
+//Robot Profile
 #include "RobotModel_StepperMotor.h"
 #include "RobotModel.h"
 
+//Mouse variable
 extern volatile Mouse mouse;
 
 /* LEFT MOTOR CONTROL */
 ISR(TIMER1_COMPA_vect)
 {
+	//Pulse Motor
 	pulseMotor(&PORTD, PD1);
+	
+	//Update Counters
 	mouse.leftMotor.stepCount++;		
 	mouse.leftMotor.totalCount++;
 	
+	//Update Timer
 	OCR1A = mouse.leftMotor.currentStepDelay;
 }
 
 /* RIGHT MOTOR CONTROL */
 ISR(TIMER3_COMPA_vect)
 {	
-	//Pulse and increment motor
+	//Pulse motor
 	pulseMotor(&PORTB, PB7);
+	
+	//Update Counters
 	mouse.rightMotor.stepCount++;
 	mouse.rightMotor.totalCount++;
 	
+	//Update Timer
 	OCR3A = mouse.rightMotor.currentStepDelay;
 }
 
+//Setup Registers and timers to start controlling the motors
 void setupStepperMotor()
 {
 	//Motor Pins are D2 and D4 on arduino nano
@@ -64,9 +76,9 @@ void setupStepperMotor()
 	enableDrive(0);	
 }
 
+//Turn on/off the drive in hardware
 void enableDrive(int left)
 {
-	
 	if(left)
 		PORTB &= ~(1 << PB6);
 	else
@@ -82,6 +94,7 @@ void pulseMotor(volatile uint8_t *port, uint8_t pin)
 	(*port) &= ~(1 << pin);
 }
 
+//Set Direction of motors in hardware
 void setDirection(int left, int right)
 {
 	if(left)
@@ -95,25 +108,7 @@ void setDirection(int left, int right)
 		PORTD &= ~(1 << PD6);
 }
 
-
-int eightBitTimerFix(struct StepperMotor *motor)
-{
-	
-	int returnNum;
-
-	if(motor->delayCounter <= 255)
-	{
-		returnNum = motor->delayCounter;
-		motor->delayCounter = 0;	
-	}
-	else
-	{
-		motor->delayCounter -= 255;
-		returnNum = 255;
-	}
-	return returnNum;
-}
-
+//Turn timers on for controlling motors
 void turnOnTimers(int one, int two)
 {
 	if(one)
@@ -127,6 +122,7 @@ void turnOnTimers(int one, int two)
 		TCCR3B &= ~((1 << CS31) | (1 << CS30));
 }
 
+//Convert steps per second to counter pulses per steps
 int getDelayFromVelocity(int stepsPerSecond)
 {
 	if(stepsPerSecond < 10)

@@ -1,43 +1,24 @@
+//Avr includes
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
 
+//Robot Profile
 #include "RobotModel_Sensors.h"
 #include "RobotModel.h"
 
+//Our mouse global variable
 extern volatile Mouse mouse;
 
-float getLeftIR()
-{
-	return linearizeIRSensorValues( getIRSensorValue(&PORTD, PD7, 6) );
-}
+// Read sensor and convert to cm 
+float getLeftIR() { return linearizeIRSensorValues( getIRSensorValue(&PORTD, PD7, 6) ); }
+float getRightIR() { return linearizeIRSensorValues( getIRSensorValue(&PORTC, PC6, 4) ); }
+float getFrontLeftIR() { return linearizeIRSensorValues_Front( getIRSensorValue(&PORTB, PB4, 5) ); }
+float getFrontRightIR() { return linearizeIRSensorValues_Front( getIRSensorValue(&PORTD, PD4, 7) ); }
+float getFrontLeftIRLong() { return linearizeIRSensorValues( getIRSensorValue(&PORTB, PB4, 5) ); }
+float getFrontRightIRLong() { return linearizeIRSensorValues( getIRSensorValue(&PORTD, PD4, 7) ); }
 
-float getRightIR()
-{
-	return linearizeIRSensorValues( getIRSensorValue(&PORTC, PC6, 4) );
-}
-
-float getFrontLeftIR()
-{
-	return linearizeIRSensorValues_Front( getIRSensorValue(&PORTB, PB4, 5) );
-}
-
-float getFrontRightIR()
-{
-	return linearizeIRSensorValues_Front( getIRSensorValue(&PORTD, PD4, 7) );
-}
-
-float getFrontLeftIRLong()
-{
-	return linearizeIRSensorValues( getIRSensorValue(&PORTB, PB4, 5) );
-}
-
-float getFrontRightIRLong()
-{
-	return linearizeIRSensorValues( getIRSensorValue(&PORTD, PD4, 7) );
-}
-
-
+//Calculate angle depending on front IR values
 float getFrontAngle()
 {
 	float value = (mouse.sensor[LEFT_FRONT_IR].value+mouse.sensor[LEFT_FRONT_IR].previousValue)/2;//getFrontLeftIR();
@@ -46,6 +27,7 @@ float getFrontAngle()
 	return 90.0 - atan2(5,value2-value) * 57.2957795; 
 }
 
+//Turn on Emitter and read sensor
 int getIRSensorValue(volatile uint8_t *port, uint8_t pin, int analogChannel)
 {
 	//Turn on Emitter
@@ -63,16 +45,19 @@ int getIRSensorValue(volatile uint8_t *port, uint8_t pin, int analogChannel)
 	return emit;	
 }
 
+//Read POT with ADC
 int getPotSensorValue(int analogChannel)
 { 
 	return ReadADC(analogChannel);
 }
 
+//Convert ADC to boolean
 int isButtonPushed(int analogChannel)
 {
 	return !(ReadADC(analogChannel) > 512);
 }
 
+//Turn on Leds using binary input
 void turnOnLeds(int num)
 {
 	if((num & 4) == 4)	
@@ -105,6 +90,7 @@ void setupADC()
 	DDRE |= (1 << PORTE6);	
 }
 
+//Start and return ADC
 uint16_t ReadADC(uint8_t ch)
 {
    //Select ADC Channel ch must be 0-7
@@ -122,11 +108,13 @@ uint16_t ReadADC(uint8_t ch)
    return(ADC);
 }
 
+//Convert analog values to cm (accuracy far away, not suitable for close reading)
 float linearizeIRSensorValues(float input)
 {
 	return -6.0220498115*log( input ) + 43.5411429577;
 }
 
+//Convert analog values to cm (accuracy up front, poor performance far away)
 float linearizeIRSensorValues_Front(float input)
 {
 	if(input > 978)

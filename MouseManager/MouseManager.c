@@ -19,16 +19,17 @@ Authors:
 Contact: jmarple@umass.edu
 	
 Date Started: March 12th 2014
-Last Updated: March 16th 2014
 
 **********************************************/
 
+//Avr includes
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <util/delay.h>
 #include <avr/eeprom.h>
 #include <math.h>
 
+//Mouse Manager
 #include "MouseManager.h"
 #include "MouseManager_Search.h"
 #include "MouseManager_Fast.h"
@@ -58,12 +59,6 @@ char firstTurn = 'n';
 
 void solveMaze()
 {		
-/* 	while(1==1)
-	{
-		updateSensors();
-		printNum(mouse.sensor[2].value);print(", ");
-		printlnNum(mouse.sensor[3].value);
-	}  */
 	//Reset maze to 0
 	initializeMaze(&maze);
 		
@@ -74,11 +69,13 @@ void solveMaze()
 	mouse.x = 0;
 	mouse.y = 0;
 
+	//Disable the mouse for now
 	enableDrive(0);
 	turnOnTimers(0, 0);
 	
 	int areWeSearching = UserInterfaceIntro();
 	
+	//Does the user want to skip the search phase and load a maze from EEPROM
 	if(areWeSearching)
 	{
 		/* SEARCH MAZE */

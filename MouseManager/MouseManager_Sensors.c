@@ -1,7 +1,17 @@
+/*****************************
+   MouseManager_Sensors.c
+
+Detect and update walls in the
+maze using our IR sensors on 
+the mouse
+   
+*****************************/
+
 #include <avr/io.h>
 #include <util/delay.h>
 #include <math.h>
 
+//Mouse Manager
 #include "MouseManager.h"
 #include "MouseManager_Search.h"
 #include "MouseManager_Fast.h"
@@ -19,6 +29,7 @@
 #include "FloodFill/FloodFill_Stack.h"
 #include "FloodFill/FloodFill_Debug.h"
 
+//Debugging
 #include "USART.h"
 
 //Our Mouse and Maze
@@ -26,6 +37,7 @@ extern volatile long maze[16][16];
 extern volatile Mouse mouse;
 extern char firstTurn;
 
+/* This function returns true/false if there is a wall stored in the maze in a certain direction */
 int wallExists(long data, int dirx, int diry)
 {
 	if(dirx == 0 && diry == 1)	
@@ -38,27 +50,17 @@ int wallExists(long data, int dirx, int diry)
 		return getE(data);
 }
 
+/* This function updates the wall data in the current cell */
 void updateWalls()
 {	
+	//Get what the mouse see's at this moment
 	int front = isWallFront();
 	int left = isWallLeft();
 	int right = isWallRight();
-	
-/* 	if(front)
-	{
-		turnOnLeds(7);
-		printNum(mouse.sensor[LEFT_FRONT_IR].value);
-		print(" , ");
-		printNum(mouse.sensor[RIGHT_FRONT_IR].value);
-		print("\n\r");
-	}		
-	else
-	{
-		turnOnLeds(0);
-	}  */
-		
 	int dirx = mouse.direction.x;
 	int diry = mouse.direction.y;
+	
+	//The variables to see the maze to
 	int N = 0;
 	int E = 0;
 	int S = 0;
@@ -91,7 +93,7 @@ void updateWalls()
 	}
 	
 		
-	//if we're still checking for mouse position
+	//Do we need to flip the (0,y) side to (15, y) and clear (0, y)
 	if(firstTurn == 'n')
 	{
 		//If we need to flip sides
@@ -123,5 +125,6 @@ void updateWalls()
 	if(S) setS(&maze[mouse.x][mouse.y], S);		
 	if(E) setE(&maze[mouse.x][mouse.y], E);
 
+	//Set this cell as explored
 	setExp(&maze[mouse.x][mouse.y], 1);
 }

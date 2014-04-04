@@ -11,24 +11,26 @@
 volatile long milliseconds;
 extern volatile Mouse mouse;
 
-
+//Stepper Driver 
 void straight(long stepTarget, int inSpeed, int maxSpeed, int exitSpeed, int accel, int decel)
 {
+	//Get the initial time
 	unsigned long startTime = milliseconds;
-	//mouse.rightMotor.stepCount = mouse.leftMotor.stepCount = 0;	
 	
+	//Accelerate
 	while(inSpeed + accel*(float)((milliseconds-startTime)/1000.0) < maxSpeed)
 	{
+		//Error Correction
 		updateSensors();
-		
 		float curSpeed = inSpeed + accel*(float)((milliseconds-startTime)/1000.0);
-		
 		float error = getOffsetError();
-		
+
+		//Update mouse step speed
 		mouse.velocity = curSpeed;
 		mouse.leftMotor.currentStepDelay = getDelayFromVelocity(curSpeed - error);
 		mouse.rightMotor.currentStepDelay = getDelayFromVelocity(curSpeed + error);
 		
+		//How many steps would it require for us to decelerate depending on current speed
 		float decelStepsUntilStop = curSpeed * curSpeed / (2.0 * decel) - (float)exitSpeed * (float)exitSpeed / (2.0 * decel);
 		
 		//If we need to start deceleratings
@@ -48,35 +50,39 @@ void straight(long stepTarget, int inSpeed, int maxSpeed, int exitSpeed, int acc
 	//Calculate when to start decelerating
 	float decelSteps = (float)maxSpeed * (float)maxSpeed / (2.0 * decel) - (float)exitSpeed * (float)exitSpeed / (2.0 * decel);
 
-	//Decelerate n stuff
+	//Maintain velocity until 
 	while(mouse.leftMotor.stepCount + decelSteps < stepTarget)
 	{
-		updateSensors();
-		
+		//Error Correction
+		updateSensors();		
 		float curSpeed = maxSpeed;
-		
 		float error = getOffsetError();
 		
+		//Update Motor speed
 		mouse.velocity = curSpeed;
 		mouse.leftMotor.currentStepDelay = getDelayFromVelocity(curSpeed - error);
 		mouse.rightMotor.currentStepDelay = getDelayFromVelocity(curSpeed + error);
 	}
 	
+	//Save current time to compare for deceleration calculations
 	startTime = milliseconds;
 		
+	//Decelerate to endspeed
 	while(maxSpeed - decel*(float)((milliseconds-startTime)/1000.0) > exitSpeed)
 	{	
-		updateSensors();
 		
+		//Get speed
+		updateSensors();	
 		float curSpeed = maxSpeed - decel*(float)((milliseconds-startTime)/1000.0);
 		
+		//Update Motor speed
 		mouse.velocity = curSpeed;
 		mouse.leftMotor.currentStepDelay =  getDelayFromVelocity(curSpeed);
 		mouse.rightMotor.currentStepDelay = getDelayFromVelocity(curSpeed);
 	}
 
 }
-
+/* 
 void smoothTurn(float degrees, float midRadius, int inSpeed, float maxSpeed, int exitSpeed, int accel, int decel)
 {
 	setDirection(0, 0);
@@ -152,19 +158,22 @@ void smoothTurn(float degrees, float midRadius, int inSpeed, float maxSpeed, int
 		if(leftSpeed >= inSpeed)
 			break;
 	}
-}
+} */
 
 volatile int flag;
 
+//Figure out an error value for our robot to turn
 float getOffsetError()
 {
 
+	//First time?  Be sure to update sensors
 	if(flag != 1)
 	{
 		updateSensors();
 		flag = 1;
 	}
 	
+	//Get sensory values
 	float left = mouse.sensor[LEFT_IR].value;
 	float right = mouse.sensor[RIGHT_IR].value;
 	float lPrevious = mouse.sensor[LEFT_IR].previousValue;
@@ -172,10 +181,12 @@ float getOffsetError()
 	
 	//If derivative of IR readings is greater then 1
  	if(left-lPrevious > 0.5 || left-lPrevious < -0.5)
-	{		
+	{	
+		//Turn off offset correction
 		mouse.IR_CORRECT = 0;
 		mouse.IR_CORRECT_LEFT = 0;
 		
+		//Save and shutoff longitude correction
 		if(mouse.IR_LONG_CHECK_LEFT == 1)
 		{
 			mouse.IR_LONG_OFF_DISTANCE_LEFT = mouse.leftMotor.totalCount;
@@ -184,9 +195,11 @@ float getOffsetError()
 	}
 	if(right-rPrevious > 0.5 || right-rPrevious < -0.5)
 	{
+		//Turn off offset correction
 		mouse.IR_CORRECT = 0;
 		mouse.IR_CORRECT_RIGHT = 0;
 		
+		//Save and shutoff longitude correction
 		if(mouse.IR_LONG_CHECK_RIGHT == 1)
 		{
 			mouse.IR_LONG_OFF_DISTANCE_RIGHT = mouse.rightMotor.totalCount;
@@ -196,6 +209,7 @@ float getOffsetError()
 	
 	float error = 0;
 	
+	//Calculate our offset error
 	if(mouse.IR_CORRECT != 0)
 	{
 		error = (right-5)*mouse.IR_CORRECT;
@@ -214,19 +228,11 @@ float getOffsetError()
 		error = (right-5) * mouse.IR_CORRECT_RIGHT;
 		
 		mouse.sensor[1].previousAverage = (mouse.sensor[1].previousValue - mouse.sensor[1].value + mouse.sensor[1].previousAverage*99)/100;
-/* 		printNum(mouse.sensor[1].previousAverage);print(" => ");
-		printNum((float)(mouse.sensor[1].previousValue - mouse.sensor[1].value));print(" => ");
-		printlnNum((float)mouse.sensor[1].value); */
 	}
-	else
-	{
-	}
-		
-	// lPrevious = left;
-	// rPrevious = right;
+
 	return error;
 }
-
+/* 
 float getRightError()
 {
 	float right = mouse.sensor[RIGHT_IR].value;
@@ -237,22 +243,25 @@ float getLeftError()
 {
 	float left = mouse.sensor[LEFT_IR].value;
 	return left - 5;
-}
+} */
 
+//Update Mouse Sensor array with new values
 void updateSensors()
 {
+	//Push old values into different variable
 	mouse.sensor[0].previousValue = mouse.sensor[0].value;
 	mouse.sensor[1].previousValue = mouse.sensor[1].value;
 	mouse.sensor[2].previousValue = mouse.sensor[2].value;
 	mouse.sensor[3].previousValue = mouse.sensor[3].value;
 	
+	//Update our sensor values
 	mouse.sensor[0].value = getLeftIR();
 	mouse.sensor[1].value = getRightIR();
 	mouse.sensor[2].value = getFrontLeftIR();
 	mouse.sensor[3].value = getFrontRightIR();
 }
 
-
+//Start 1kHz Timer
 void startTimer()
 {
 	//Refresh Loop Timer1  
@@ -264,6 +273,7 @@ void startTimer()
 	milliseconds = 0;
 }
 
+//1Khz Timer
 ISR(TIMER0_COMPA_vect)
 {
 	milliseconds++;	
